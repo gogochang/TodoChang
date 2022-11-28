@@ -8,6 +8,6 @@
 import Foundation
 
 protocol PopUpDelegate {
-    func onDelegateEditButtonClicked(title: String?, content: String?)
+    func onDelegateEditButtonClicked(title: String?)
     func onDelegateDeleteButtonClicked()
 }

@@ -44,20 +44,19 @@ struct todoService {
     }
     
     //MARK: - MAKE Parameters
-    private func makeParameter(title: String, isDone: Bool, content: String, index: Int) -> Parameters {
+    private func makeParameter(title: String, isDone: Bool, index: Int) -> Parameters {
         return ["data": [ "title": title,
                           "isDone": isDone,
-                          "content": content,
                           "index": index]]
     }
     
     //MARK: - POST
-    func postDatainfo(title: String, isDone: Bool, content: String, index: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func postDatainfo(title: String, isDone: Bool, index: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         let url = "https://a088-180-226-219-117.jp.ngrok.io/api/todos"
         let header: HTTPHeaders = ["Content-Type": "application/json"]
         let dataRequest = AF.request(url,
                                      method: .post,
-                                     parameters: makeParameter(title: title, isDone: isDone, content: content, index: index),
+                                     parameters: makeParameter(title: title, isDone: isDone, index: index),
                                      encoding: JSONEncoding.default,
                                      headers: header)
         dataRequest.responseData{ dataResponse in
@@ -75,7 +74,7 @@ struct todoService {
     }
     
     //MARK: PUT
-    func putDatainfo(id: Int, title: String, isDone: Bool, content: String, index: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func putDatainfo(id: Int, title: String, isDone: Bool, index: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         print("todoService - putDatainfo() called")
         
         let url = "https://a088-180-226-219-117.jp.ngrok.io/api/todos/" + String(id)
@@ -83,7 +82,7 @@ struct todoService {
         
         let dataRequest = AF.request(url,
                                      method: .put,
-                                     parameters: makeParameter(title: title, isDone: isDone, content: content, index: index),
+                                     parameters: makeParameter(title: title, isDone: isDone, index: index),
                                      encoding: JSONEncoding.default,
                                      headers: header)
         dataRequest.responseData{ dataResponse in

@@ -44,7 +44,7 @@ class CustomPopUpViewController: UIViewController {
         print("CustomPopUpViewController - onEditButtonClicked() called")
         
         self.dismiss(animated: true)
-        myPopUpDelegate?.onDelegateEditButtonClicked(title: textFieldTitle?.text, content: textFieldContent?.text)
+        myPopUpDelegate?.onDelegateEditButtonClicked(title: textFieldTitle?.text)
     }
     
     @IBAction func onDeleteButtonClicked(_ sender: UIButton) {

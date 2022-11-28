@@ -22,6 +22,6 @@ struct data: Codable {
     let createdAt: String
     let updatedAt: String
     let publishedAt: String
-    var content: String
+    //var content: String
     var index: Int
 }

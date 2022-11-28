@@ -60,46 +60,34 @@
                                 <rect key="frame" x="0.0" y="444" width="414" height="366"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="129" id="PS4-hc-bDb" customClass="CustomCell" customModule="myTodoApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="129"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="54" id="PS4-hc-bDb" customClass="CustomCell" customModule="myTodoApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PS4-hc-bDb" id="csZ-om-cCk">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="129"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CrH-uK-3zP">
                                                     <rect key="frame" x="20" y="0.0" width="368" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AOC-hu-Ud9">
-                                                    <rect key="frame" x="20" y="52" width="374" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lfn-M1-mou" userLabel="UISwitch">
-                                                    <rect key="frame" x="337" y="13" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="31" id="WOw-ri-F55"/>
-                                                        <constraint firstAttribute="width" constant="49" id="pSe-r4-ks6"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="337" y="11.5" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="UISwitchClicked:" destination="BYZ-38-t0r" eventType="valueChanged" id="gnd-0J-DYp"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="lfn-M1-mou" firstAttribute="top" secondItem="csZ-om-cCk" secondAttribute="top" constant="13" id="LT5-gc-3Ug"/>
-                                                <constraint firstAttribute="trailing" secondItem="lfn-M1-mou" secondAttribute="trailing" constant="28" id="jfz-hW-np4"/>
+                                                <constraint firstAttribute="trailing" secondItem="lfn-M1-mou" secondAttribute="trailing" constant="28" id="PNU-K9-dEY"/>
+                                                <constraint firstItem="lfn-M1-mou" firstAttribute="centerY" secondItem="csZ-om-cCk" secondAttribute="centerY" id="TQZ-MH-8h8"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="UISwitch" destination="lfn-M1-mou" id="TZT-wt-yX2"/>
-                                            <outlet property="labelContent" destination="AOC-hu-Ud9" id="tR6-gf-aZi"/>
                                             <outlet property="labelTitle" destination="CrH-uK-3zP" id="AdP-6P-zsC"/>
                                         </connections>
                                     </tableViewCell>

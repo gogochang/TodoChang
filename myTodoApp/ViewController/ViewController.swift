@@ -55,6 +55,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         guard let tableview else { return }
         guard let countLabel else { return }
+        
         resetArray()
         
         tableview.layer.cornerRadius = 15
@@ -63,8 +64,8 @@ class ViewController: UIViewController {
         tableview.delegate = self
         tableview.dataSource = self
         tableview.dragInteractionEnabled = true
-        tableview.dragDelegate = self
-        tableview.dropDelegate = self
+        //tableview.dragDelegate = self
+        //tableview.dropDelegate = self
         
         // calendar 지정
         calendarCollectionView.delegate = self
@@ -144,13 +145,12 @@ class ViewController: UIViewController {
         let cell = contentView?.superview as! UITableViewCell
         
         if let indexPath = tableview.indexPath(for: cell) {
-            //let orderindex = self.orderIndex[indexPath.row]
+            
             self.tempArray[indexPath.row].attributes.isDone = sender.isOn
             // post를 해줘야될텐데,
             todoService.shared.putDatainfo(id: tempArray[indexPath.row].id,//indexPath.row,
                                            title: tempArray[indexPath.row].attributes.title,
                                            isDone: tempArray[indexPath.row].attributes.isDone,
-                                           content: tempArray[indexPath.row].attributes.content,
                                            index: tempArray[indexPath.row].attributes.index,
                                            completion: { (response) in
                 switch(response) {
@@ -211,15 +211,12 @@ class ViewController: UIViewController {
 class CustomCell: UITableViewCell {
     @IBOutlet var labelTitle: UILabel!
     @IBOutlet var UISwitch: UISwitch!
-    @IBOutlet var labelContent: UILabel!
     var ofIndex: Int?
 }
 
 //MARK: - 리스트 테이블뷰 Cell 개수, Cell 구현부
 extension ViewController: UITableViewDataSource,
                           UITableViewDelegate,
-                          UITableViewDragDelegate,
-                          UITableViewDropDelegate,
                           PopUpDelegate {
    
     // 테이블뷰의 갯수를 리턴해준다.
@@ -236,7 +233,6 @@ extension ViewController: UITableViewDataSource,
         }
 
         cell.labelTitle.text = tempArray[indexPath.row].attributes.title
-        cell.labelContent.text = tempArray[indexPath.row].attributes.content
         cell.UISwitch.isOn = tempArray[indexPath.row].attributes.isDone
         
         return cell
@@ -244,13 +240,13 @@ extension ViewController: UITableViewDataSource,
     
     // cell 높이
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
+        return 50.0
     }
     
     // Table View Click 이벤트 함수
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("ViewController - tableview Clicked ------ \(indexPath.row)")
-        //let orderindex = self.orderIndex[indexPath.row]
+        
         isClickedButtonName = "tableView"
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -261,7 +257,6 @@ extension ViewController: UITableViewDataSource,
         
         // 선택된 테이블뷰의 내용을 팝업창에 미리 입력할수 있도록 저자
         customPopUpVC.seletedItemTitle = tempArray[self.currentIndexPath].attributes.title
-        customPopUpVC.seletedItemContent = tempArray[self.currentIndexPath].attributes.content
         
         // 뷰컨트롤러가 보여지는 스타일
         customPopUpVC.modalPresentationStyle = .overCurrentContext
@@ -276,13 +271,12 @@ extension ViewController: UITableViewDataSource,
     }
     
     //MARK: - (팝업창 edit버튼 클릭시 동작) 테이블뷰 데이터 가져오기 위한 델리겟의 구현부.
-    func onDelegateEditButtonClicked(title: String?, content: String?) {
+    func onDelegateEditButtonClicked(title: String?) {
         // 문자열 출력
         print("ViewController - onDelegateEditButtonClicked() called")
         //self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
         //가져온 데이터 타이틀이랑 내용 존재여부 확인 부분
         guard let title = title else { return }
-        guard let content = content else { return }
         
         switch (isClickedButtonName) {
         case "tableView":
@@ -290,7 +284,6 @@ extension ViewController: UITableViewDataSource,
             // currentIndexPath에 저장된 클릭된 테이블뷰의 인덱스값을 가져와서
             // tempArray에 대응하는 title과 content에 대입.
             tempArray[self.currentIndexPath].attributes.title = title
-            tempArray[self.currentIndexPath].attributes.content = content
             
             self.isResetArray = true
             
@@ -298,7 +291,6 @@ extension ViewController: UITableViewDataSource,
             todoService.shared.putDatainfo(id: tempArray[self.currentIndexPath].id,
                                            title: tempArray[self.currentIndexPath].attributes.title,
                                            isDone: tempArray[self.currentIndexPath].attributes.isDone,
-                                           content: tempArray[self.currentIndexPath].attributes.content,
                                            index: tempArray[self.currentIndexPath].attributes.index,
                                            completion: { (response) in
                 switch(response) {
@@ -320,7 +312,7 @@ extension ViewController: UITableViewDataSource,
         case "addButton":
             print("ViewController - onDelegateEditButtonClicked() - addButton Switch called")
             self.isResetArray = true
-            todoService.shared.postDatainfo(title: title, isDone: false, content: content, index: self.tempArray.count, completion: { response in
+            todoService.shared.postDatainfo(title: title, isDone: false, index: self.tempArray.count, completion: { response in
                 switch(response) {
                 case .success(let todoData):
                     print("success - \(todoData)")
@@ -369,36 +361,6 @@ extension ViewController: UITableViewDataSource,
         
         resetArray()
     }
-    
-    //MARK: - UITableView UITableViewDragDelegate
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        print("ViewController - tableView Drag()  \(tempArray[indexPath.row].attributes.title)")
-        return [UIDragItem(itemProvider: NSItemProvider())]
-    }
-    
-    //MARK: - UITableView UITableViewDropDelegate
-    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        print("ViewController - tableView Drop()")
-        if session.localDragSession != nil {
-            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-        }
-        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
-    }
-        
-    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {}
-    
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        print("ViewController - moveRowAt() Called")
-        let moveCell = self.tempArray[sourceIndexPath.row]
-        self.tempArray.remove(at: sourceIndexPath.row)
-        self.tempArray.insert(moveCell, at: destinationIndexPath.row)
-        print("CCCCCCC sourceIndexPath : \(sourceIndexPath) ,  destinationIndexPath : \(destinationIndexPath.row)")
-        
-        self.tempArray[destinationIndexPath.row].attributes.index = destinationIndexPath.row
-        self.tempArray[sourceIndexPath.row].attributes.index = sourceIndexPath.row
-        
-    }
-    
 }
 
 //MARK: - 달력 컬렉션뷰 구현부
