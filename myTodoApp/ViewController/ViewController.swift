@@ -117,28 +117,8 @@ class ViewController: UIViewController {
             case .success(let todoData):
                 if let data = todoData as? [dataInfo] {
                     
-                    if self.tempArray.isEmpty {
-                        self.tempArray = data
-                    }
-                    
-                    var testIndex: [[Int]] = []
-                    print(self.tempArray)
-                    var tempData: [dataInfo] = self.tempArray
-                    
-                    for i in 0...self.tempArray.count - 1 {
-                        testIndex.append([self.tempArray[i].attributes.index, i])
-                    }
-                    
-                    testIndex = testIndex.sorted(by: {$0[0] < $1[0]})
-                                        
-                    self.tempArray.removeAll()
-                    
-                    for i in 0...testIndex.count - 1 {
-                        self.tempArray.append(tempData[testIndex[i][1]])
-                    }
+                    self.tempArray = data
 
-                    
-                    print("EEEE###################", self.tempArray)
                     self.tableview.reloadData()
                     
                 } else {
@@ -254,15 +234,9 @@ extension ViewController: UITableViewDataSource,
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else {
             return UITableViewCell()
         }
-        // cell의 labelTit
-        //let orderindex = tempArray[indexPath.row].attributes.index
-        
-        //print(" \(indexPath.row) index is  -=>  \(orderindex)")
-        
+
         cell.labelTitle.text = tempArray[indexPath.row].attributes.title
-        
         cell.labelContent.text = tempArray[indexPath.row].attributes.content
-        
         cell.UISwitch.isOn = tempArray[indexPath.row].attributes.isDone
         
         return cell
@@ -406,10 +380,8 @@ extension ViewController: UITableViewDataSource,
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         print("ViewController - tableView Drop()")
         if session.localDragSession != nil {
-            //print("session.localDragSession is not nil -> \(destinationIndexPath)")
             return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
         }
-        //print("session.localDragSession is nil")
         return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
     }
         
@@ -425,24 +397,6 @@ extension ViewController: UITableViewDataSource,
         self.tempArray[destinationIndexPath.row].attributes.index = destinationIndexPath.row
         self.tempArray[sourceIndexPath.row].attributes.index = sourceIndexPath.row
         
-//        todoService.shared.putDatainfo(id: tempArray[indexPath.row].id,//indexPath.row,
-//                                       title: tempArray[indexPath.row].attributes.title,
-//                                       isDone: tempArray[indexPath.row].attributes.isDone,
-//                                       content: tempArray[indexPath.row].attributes.content,
-//                                       completion: { (response) in
-//            switch(response) {
-//            case .success(let todoData):
-//                print("Test")
-//            case .requestErr(let message):
-//                print("requestErr", message)
-//            case .pathErr:
-//                print("pathErr")
-//            case .serverErr:
-//                print("serverErr")
-//            case .networkFail:
-//                print("networkFail")
-//            }
-//        })
     }
     
 }
