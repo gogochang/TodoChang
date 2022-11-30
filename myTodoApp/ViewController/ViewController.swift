@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  myTodoApp
 //
-//  Created by 김창규 on 2022/11/16.
+//  Created by gogochang on 2022/11/16.
 //
 
 import UIKit
@@ -29,43 +29,42 @@ class ViewController: UIViewController {
     var weekdayAdding = 0
     
     var oldCell: MyCollectionViewCell? = nil
-   
+    
+    var currentIndexPath: Int = 0
+    var isClickedButtonName: String?
+    var orderIndex: [Int] = []
+    
     // 리스트 업데이트 할지 안할지
     var isResetArray: Bool = true
     var addingArray: [dataInfo] = []
     var tempArray: [dataInfo] = []
     {
         didSet{
-            //print("isResetArray = \(isResetArray)")
             if isResetArray {
                 print("tempArray - didset")
-                resetArray()
+                
+                getDatainfo()
+                
+                self.tableview.reloadData()
+                
                 self.isResetArray = false
             }
         }
     }
-    
-    //var addingArray: [dataInfo] = []
-    var currentIndexPath: Int = 0
-    var isClickedButtonName: String?
-    var orderIndex: [Int] = []
-    
+
     override func viewDidLoad() {
         print("ViewController - viewDidLoad() called")
         super.viewDidLoad()
         guard let tableview else { return }
         guard let countLabel else { return }
         
-        resetArray()
-        
+        getDatainfo()
         tableview.layer.cornerRadius = 15
         countLabel.text = "총 \(tempArray.count) 개의 메모가 있습니다."
         
         tableview.delegate = self
         tableview.dataSource = self
         tableview.dragInteractionEnabled = true
-        //tableview.dragDelegate = self
-        //tableview.dropDelegate = self
         
         // calendar 지정
         calendarCollectionView.delegate = self
@@ -86,11 +85,7 @@ class ViewController: UIViewController {
         
         let storyboard = UIStoryboard.init(name: "PopUp", bundle: nil)
         let customPopUpVC = storyboard.instantiateViewController(withIdentifier: "AlertPopUpVC") as! CustomPopUpViewController
-        
-        // 선택된 테이블뷰의 내용을 팝업창에 미리 입력할수 있도록 저자
-        //customPopUpVC.seletedItemTitle = tempArray[self.currentIndexPath].attributes.title
-        //customPopUpVC.seletedItemContent = tempArray[self.currentIndexPath].attributes.content
-        
+
         // 뷰컨트롤러가 보여지는 스타일
         customPopUpVC.modalPresentationStyle = .overCurrentContext
         // 뷰컨트롤러가 사라지는 스타일
@@ -106,103 +101,26 @@ class ViewController: UIViewController {
     @IBAction func resetButtonClicked(_ sender: UIButton) {
         print("ViewController - resetButtonClicked() called")
         self.isResetArray = true
-        resetArray()
+        getDatainfo()
         self.view.makeToast("아이템 목록이 리셋되었습니다", duration: 1.0)
-    }
-    
-    //MARK: - todo list 리셋
-    func resetArray() {
-        print("ViewController - resetArray() called")
-        todoService.shared.getDataInfo { (response) in
-            switch(response) {
-            case .success(let todoData):
-                if let data = todoData as? [dataInfo] {
-                    
-                    self.tempArray = data
-
-                    self.tableview.reloadData()
-                    
-                } else {
-                    print("fail")
-                }
-            case .requestErr(let message):
-                print("requestErr", message)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-            case .networkFail:
-                print("networkFail")
-            }
-        }
     }
     
     //MARK: - Switch 버튼 클릭 이벤트 함수 true/false
     @IBAction func UISwitchClicked(_ sender: UISwitch) {
         print("ViewController - UISwitchClicked() called")
-        //self.isResetArray = true
         let contentView = sender.superview
         let cell = contentView?.superview as! UITableViewCell
         
         if let indexPath = tableview.indexPath(for: cell) {
             
             self.tempArray[indexPath.row].attributes.isDone = sender.isOn
-            // post를 해줘야될텐데,
-            todoService.shared.putDatainfo(id: tempArray[indexPath.row].id,//indexPath.row,
-                                           title: tempArray[indexPath.row].attributes.title,
-                                           isDone: tempArray[indexPath.row].attributes.isDone,
-                                           index: tempArray[indexPath.row].attributes.index,
-                                           completion: { (response) in
-                switch(response) {
-                case .success(let todoData):
-                    print("Test")
-                case .requestErr(let message):
-                    print("requestErr", message)
-                case .pathErr:
-                    print("pathErr")
-                case .serverErr:
-                    print("serverErr")
-                case .networkFail:
-                    print("networkFail")
-                }
-            })
+            
+            putDatainfo(id: tempArray[indexPath.row].id,
+                        title: tempArray[indexPath.row].attributes.title,
+                        isDone: tempArray[indexPath.row].attributes.isDone,
+                        index: tempArray[indexPath.row].attributes.index)
         }
         self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
-    }
-    
-    private func calendarCalculation() {
-        print("ViewController - calendarCalculation() called")
-        let firstDayOfMonth = cal.date(from: dateComponent)
-        let firstWeekday: Int = cal.component(.weekday, from: firstDayOfMonth!)
-        daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
-        weekdayAdding = 2 - firstWeekday
-        
-        self.calendarTitle.text = dateFormatter.string(from: firstDayOfMonth!)
-        self.days.removeAll()
-        for day in weekdayAdding...daysCountInMonth {
-            if day < 1 {
-                self.days.append("")
-            } else {
-                self.days.append(String(day))
-            }
-        }
-    }
-    
-    @IBAction func onPrevBtnClicked(_ sender: UIButton) {
-        print("ViewController - onPrevBtnClicked() called")
-        dateComponent.day = 1
-        dateComponent.month = dateComponent.month! - 1
-        self.calendarCalculation()
-        self.calendarCollectionView.reloadData()
-    }
-    
-    @IBAction func onNextBtnClicked(_ sender: UIButton) {
-        print("ViewController - onNextBtnClicked() called")
-        dateComponent.day = 1
-        dateComponent.month = dateComponent.month! + 1
-        self.calendarCalculation()
-        self.calendarCollectionView.reloadData()
-        print(String(cal.component(.day, from: nowDate)))
     }
 
 }
@@ -267,10 +185,9 @@ extension ViewController: UITableViewDataSource,
         
         //현재 VC위에 customPopVC를 보여준다. animation 효과 , 해당액션은 nil
         self.present(customPopUpVC, animated: true, completion: nil)
-        
     }
     
-    //MARK: - (팝업창 edit버튼 클릭시 동작) 테이블뷰 데이터 가져오기 위한 델리겟의 구현부.
+    //MARK: - (팝업창 edit버튼 클릭시 동작) 테이블뷰 데이터 가져오기 위한 델리겟 의 구현부.
     func onDelegateEditButtonClicked(title: String?) {
         // 문자열 출력
         print("ViewController - onDelegateEditButtonClicked() called")
@@ -287,54 +204,27 @@ extension ViewController: UITableViewDataSource,
             
             self.isResetArray = true
             
-            // method : "PUT"
-            todoService.shared.putDatainfo(id: tempArray[self.currentIndexPath].id,
-                                           title: tempArray[self.currentIndexPath].attributes.title,
-                                           isDone: tempArray[self.currentIndexPath].attributes.isDone,
-                                           index: tempArray[self.currentIndexPath].attributes.index,
-                                           completion: { (response) in
-                switch(response) {
-                case .success(let todoData):
-                    print("success - \(todoData)")
-                    //self.resetArray()
-                case .requestErr(let message):
-                    print("requestErr", message)
-                case .pathErr:
-                    print("pathErr")
-                case .serverErr:
-                    print("serverErr")
-                case .networkFail:
-                    print("networkFail")
-                }
-            })
-            resetArray()
+            // PUT
+            putDatainfo(id: tempArray[self.currentIndexPath].id,
+                        title: tempArray[self.currentIndexPath].attributes.title,
+                        isDone: tempArray[self.currentIndexPath].attributes.isDone,
+                        index: tempArray[self.currentIndexPath].attributes.index)
+            
+            // Toast
             self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
+            
         case "addButton":
             print("ViewController - onDelegateEditButtonClicked() - addButton Switch called")
             self.isResetArray = true
-            todoService.shared.postDatainfo(title: title, isDone: false, index: self.tempArray.count, completion: { response in
-                switch(response) {
-                case .success(let todoData):
-                    print("success - \(todoData)")
-                    //self.resetArray()
-                case .requestErr(let message):
-                    print("requestErr", message)
-                case .pathErr:
-                    print("pathErr")
-                case .serverErr:
-                    print("serverErr")
-                case .networkFail:
-                    print("networkFail")
-                }
-            })
             
+            // POST
+            postDatainfo(title: title, isDone: false, index: self.tempArray.count)
+            self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
         case .none:
             break
         case .some(_):
             break
         }
-        resetArray()
-        self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
     }
     
     //MARK: - PopUp Delete버튼 구현부
@@ -343,8 +233,38 @@ extension ViewController: UITableViewDataSource,
         self.view.makeToast("아이템이 삭제되었습니다", duration: 1.0)
         self.isResetArray = true
         // method : "Delete"
-        todoService.shared.deleteDatainfo(id: tempArray[self.currentIndexPath].id,
-                                          completion: { response in
+        deleteDatainfo(id: tempArray[self.currentIndexPath].id)
+    }
+}
+
+//MARK: - Strapi Comunication ( GET, PUT, POST, DELETE )
+extension ViewController {
+    
+    //MARK: - Strapi GET
+    private func getDatainfo() {
+        todoService.shared.getDataInfo { (response) in
+            switch(response) {
+            case .success(let todoData):
+                if let data = todoData as? [dataInfo] {
+                    self.tempArray = data
+                } else {
+                    print("fail")
+                }
+            case .requestErr(let message):
+                print("requestErr", message)
+            case .pathErr:
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
+    }
+    
+    //MARK: - Strapi PUT
+    private func putDatainfo(id: Int, title: String, isDone: Bool, index: Int) {
+        todoService.shared.putDatainfo(id: id, title: title, isDone: isDone, index: index, completion: { (response) in
             switch(response) {
             case .success(let todoData):
                 print("success - \(todoData)")
@@ -358,14 +278,86 @@ extension ViewController: UITableViewDataSource,
                 print("networkFail")
             }
         })
-        
-        resetArray()
+        getDatainfo()
+    }
+    
+    //MARK: Strapi POST
+    private func postDatainfo(title: String, isDone: Bool, index: Int) {
+        todoService.shared.postDatainfo(title: title, isDone: isDone, index: index, completion: { response in
+            switch(response) {
+            case .success(let todoData):
+                print("success - \(todoData)")
+            case .requestErr(let message):
+                print("requestErr", message)
+            case .pathErr:
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        })
+        getDatainfo()
+    }
+    
+    //MARK: - Strapi DELETE
+    private func deleteDatainfo(id: Int) {
+        todoService.shared.deleteDatainfo(id: id, completion: { response in
+            switch(response) {
+            case .success(let todoData):
+                print("success - \(todoData)")
+            case .requestErr(let message):
+                print("requestErr", message)
+            case .pathErr:
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        })
+        getDatainfo()
     }
 }
 
 //MARK: - 달력 컬렉션뷰 구현부
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
+    private func calendarCalculation() {
+        print("ViewController - calendarCalculation() called")
+        let firstDayOfMonth = cal.date(from: dateComponent)
+        let firstWeekday: Int = cal.component(.weekday, from: firstDayOfMonth!)
+        daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
+        weekdayAdding = 2 - firstWeekday
+        
+        self.calendarTitle.text = dateFormatter.string(from: firstDayOfMonth!)
+        self.days.removeAll()
+        for day in weekdayAdding...daysCountInMonth {
+            if day < 1 {
+                self.days.append("")
+            } else {
+                self.days.append(String(day))
+            }
+        }
+    }
+    
+    @IBAction func onPrevBtnClicked(_ sender: UIButton) {
+        print("ViewController - onPrevBtnClicked() called")
+        dateComponent.day = 1
+        dateComponent.month = dateComponent.month! - 1
+        self.calendarCalculation()
+        self.calendarCollectionView.reloadData()
+    }
+    
+    @IBAction func onNextBtnClicked(_ sender: UIButton) {
+        print("ViewController - onNextBtnClicked() called")
+        dateComponent.day = 1
+        dateComponent.month = dateComponent.month! + 1
+        self.calendarCalculation()
+        self.calendarCollectionView.reloadData()
+        print(String(cal.component(.day, from: nowDate)))
+    }
+    
     // 섹션 개수
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
@@ -382,7 +374,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             if let didSelectedCell = oldCell {
                 didSelectedCell.backgroundColor = .white
             }
-            print("clicked")
+            
             cell.backgroundColor = .systemGray5
             
             oldCell = cell
@@ -432,7 +424,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         } else {
             cell.backgroundColor = .white
         }
-        
         return cell
     }
     
