@@ -42,15 +42,14 @@ class ViewController: UIViewController {
         didSet{
             if isResetArray {
                 print("tempArray - didset")
-                
                 getDatainfo()
-                
                 self.tableview.reloadData()
-                
                 self.isResetArray = false
             }
         }
     }
+    
+    var saveArray: [dataInfo] = []
 
     override func viewDidLoad() {
         print("ViewController - viewDidLoad() called")
@@ -58,7 +57,9 @@ class ViewController: UIViewController {
         guard let tableview else { return }
         guard let countLabel else { return }
         
+        //self.isResetArray = false
         getDatainfo()
+        
         tableview.layer.cornerRadius = 15
         countLabel.text = "총 \(tempArray.count) 개의 메모가 있습니다."
         
@@ -122,7 +123,6 @@ class ViewController: UIViewController {
         }
         self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
     }
-
 }
 
 //MARK: - 셀 뷰객체
@@ -150,9 +150,10 @@ extension ViewController: UITableViewDataSource,
             return UITableViewCell()
         }
 
+        saveArray.append(tempArray[indexPath.row])
+        
         cell.labelTitle.text = tempArray[indexPath.row].attributes.title
         cell.UISwitch.isOn = tempArray[indexPath.row].attributes.isDone
-        
         return cell
     }
     
@@ -237,6 +238,21 @@ extension ViewController: UITableViewDataSource,
     }
 }
 
+//MARK: - Strapi에서 가져운 순서를 index순서대로 재비치를 해준다
+extension ViewController {
+
+    func resetIndex(_ array: [dataInfo]) -> [dataInfo] {
+        print("ViewController - resetIndex() called")
+        var changedArray: [dataInfo] = array
+        
+        for i in 0 ..< array.count {
+            changedArray[array[i].attributes.index] = array[i]
+        }
+        
+        return changedArray
+    }
+}
+
 //MARK: - Strapi Comunication ( GET, PUT, POST, DELETE )
 extension ViewController {
     
@@ -246,7 +262,8 @@ extension ViewController {
             switch(response) {
             case .success(let todoData):
                 if let data = todoData as? [dataInfo] {
-                    self.tempArray = data
+                    //self.tempArray = data
+                    self.tempArray = self.resetIndex(data)
                 } else {
                     print("fail")
                 }
