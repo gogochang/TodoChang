@@ -469,11 +469,24 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     // 컨렉션 쎌 구성 설정
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! MyCollectionViewCell
+        var testComponent = DateComponents()
+        
         switch indexPath.section {
         case 0:
             cell.collectionViewLabel.text = weeks[indexPath.row]
         default:
             cell.collectionViewLabel.text = days[indexPath.row]
+            testComponent.year = dateComponent.year
+            testComponent.month = dateComponent.month
+            testComponent.day = Int(days[indexPath.row])
+            let testDate = cal.date(from: testComponent)
+
+            if cal.isDateInToday(testDate!) && (days[indexPath.row] != "") {
+                cell.backgroundColor = .systemGray5
+                oldCell = cell
+            } else {
+                cell.backgroundColor = .white
+            }
         }
         
         if indexPath.row % 7 == 0 {
@@ -484,18 +497,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             cell.collectionViewLabel.textColor = .black
         }
         
-        var testComponent = DateComponents()
-        testComponent.year = dateComponent.year
-        testComponent.month = dateComponent.month
-        testComponent.day = Int(days[indexPath.row])
-        let testDate = cal.date(from: testComponent)
-
-        if cal.isDateInToday(testDate!) {
-            cell.backgroundColor = .systemGray5
-            oldCell = cell
-        } else {
-            cell.backgroundColor = .white
-        }
+        
+        
         return cell
     }
     
@@ -529,15 +532,19 @@ extension ViewController: UITableViewDragDelegate, UITableViewDropDelegate {
     
     // 위치변화에 따라 index를 서로 교환해서 resetDeletedIndex에서 인덱스별로 순서를 재배치하도록 값을 변경함
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let moveCell = self.dataInfoArray[sourceIndexPath.row]
-        var tempDatainfoIndex: Int
-        tempDatainfoIndex = self.dataInfoArray[destinationIndexPath.row].attributes.index
-        self.dataInfoArray[destinationIndexPath.row].attributes.index = self.dataInfoArray[sourceIndexPath.row].attributes.index
-        self.dataInfoArray[sourceIndexPath.row].attributes.index = tempDatainfoIndex
+        
+        //let moveCell = self.dataInfoArray[sourceIndexPath.row]
+        var tempDatainfo: dataInfo
+        
+        tempDatainfo = self.dataInfoArray[sourceIndexPath.row]
+        
+        self.dataInfoArray.remove(at: sourceIndexPath.row)
+        self.dataInfoArray.insert(tempDatainfo, at: destinationIndexPath.row)
+        
+        // 다시 0부터 순서대로 index 부여해준다.,
         for i in 0 ..< self.dataInfoArray.count {
-            print("self.dataInfoArray[i].attributes.index = ",self.dataInfoArray[i].attributes.index)
+            self.dataInfoArray[i].attributes.index = i
         }
         self.dataInfoArray = resetDeletedIndex(self.dataInfoArray)
     }
-    
 }

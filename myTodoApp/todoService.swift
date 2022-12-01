@@ -130,7 +130,7 @@ struct todoService {
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode {
         case 200:
-            print("statuscode 200")
+            //print("statuscode 200")
             return isValidData(data: data)
         case 400:
             //print("statuscode 400")
@@ -146,7 +146,7 @@ struct todoService {
 
     //MARK: - Valid Test
     private func isValidData(data: Data) -> NetworkResult<Any> {
-        print("todoService - isValidData() called ")
+        //print("todoService - isValidData() called ")
         let decoder = JSONDecoder()
         guard let decodeData = try? decoder.decode(todoDataModel.self, from: data) else { return .pathErr }
         return .success(decodeData.data)
