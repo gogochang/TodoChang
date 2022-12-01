@@ -35,17 +35,21 @@ class ViewController: UIViewController {
     var orderIndex: [Int] = []
     
     // 리스트 업데이트 할지 안할지
+    
+    var dataInfoDictionary: [Int: dataInfo] = [:]
+    
     var isResetArray: Bool = true
     var addingArray: [dataInfo] = []
-    var tempArray: [dataInfo] = []
+    var dataInfoArray: [dataInfo] = []
     {
         didSet{
             if isResetArray {
                 print("tempArray - didset")
                 getDatainfo()
-                self.tableview.reloadData()
+                
                 self.isResetArray = false
             }
+            self.tableview.reloadData()
         }
     }
     
@@ -61,11 +65,13 @@ class ViewController: UIViewController {
         getDatainfo()
         
         tableview.layer.cornerRadius = 15
-        countLabel.text = "총 \(tempArray.count) 개의 메모가 있습니다."
+        countLabel.text = "총 \(dataInfoArray.count) 개의 메모가 있습니다."
         
         tableview.delegate = self
         tableview.dataSource = self
         tableview.dragInteractionEnabled = true
+        tableview.dragDelegate = self
+        tableview.dropDelegate = self
         
         // calendar 지정
         calendarCollectionView.delegate = self
@@ -77,6 +83,8 @@ class ViewController: UIViewController {
         dateComponent.day = 1
         
         self.calendarCalculation()
+        
+
     }
     
     //MARK: - Add 버튼
@@ -114,12 +122,12 @@ class ViewController: UIViewController {
         
         if let indexPath = tableview.indexPath(for: cell) {
             
-            self.tempArray[indexPath.row].attributes.isDone = sender.isOn
+            self.dataInfoArray[indexPath.row].attributes.isDone = sender.isOn
             
-            putDatainfo(id: tempArray[indexPath.row].id,
-                        title: tempArray[indexPath.row].attributes.title,
-                        isDone: tempArray[indexPath.row].attributes.isDone,
-                        index: tempArray[indexPath.row].attributes.index)
+            putDatainfo(id: dataInfoArray[indexPath.row].id,
+                        title: dataInfoArray[indexPath.row].attributes.title,
+                        isDone: dataInfoArray[indexPath.row].attributes.isDone,
+                        index: dataInfoArray[indexPath.row].attributes.index)
         }
         self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
     }
@@ -140,7 +148,7 @@ extension ViewController: UITableViewDataSource,
     // 테이블뷰의 갯수를 리턴해준다.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("ViewController - tableview() called ")
-        return tempArray.count
+        return dataInfoArray.count
     }
     
     // 테이블뷰 Cell의 형태를 구현하는 부분
@@ -150,10 +158,10 @@ extension ViewController: UITableViewDataSource,
             return UITableViewCell()
         }
 
-        saveArray.append(tempArray[indexPath.row])
+        saveArray.append(dataInfoArray[indexPath.row])
         
-        cell.labelTitle.text = tempArray[indexPath.row].attributes.title
-        cell.UISwitch.isOn = tempArray[indexPath.row].attributes.isDone
+        cell.labelTitle.text = dataInfoArray[indexPath.row].attributes.title
+        cell.UISwitch.isOn = dataInfoArray[indexPath.row].attributes.isDone
         return cell
     }
     
@@ -175,7 +183,7 @@ extension ViewController: UITableViewDataSource,
         let customPopUpVC = storyboard.instantiateViewController(withIdentifier: "AlertPopUpVC") as! CustomPopUpViewController
         
         // 선택된 테이블뷰의 내용을 팝업창에 미리 입력할수 있도록 저자
-        customPopUpVC.seletedItemTitle = tempArray[self.currentIndexPath].attributes.title
+        customPopUpVC.seletedItemTitle = dataInfoArray[self.currentIndexPath].attributes.title
         
         // 뷰컨트롤러가 보여지는 스타일
         customPopUpVC.modalPresentationStyle = .overCurrentContext
@@ -197,29 +205,31 @@ extension ViewController: UITableViewDataSource,
         guard let title = title else { return }
         
         switch (isClickedButtonName) {
+        // 테이블뷰 아이템 클릭
         case "tableView":
             print("ViewController - onDelegateEditButtonClicked() - tableView Switch called")
             // currentIndexPath에 저장된 클릭된 테이블뷰의 인덱스값을 가져와서
             // tempArray에 대응하는 title과 content에 대입.
-            tempArray[self.currentIndexPath].attributes.title = title
+            dataInfoArray[self.currentIndexPath].attributes.title = title
             
+            // 테이블뷰 아이템 배열을 리셋하겠다. ( didSet의 내용을 실행하겠다. )
             self.isResetArray = true
             
             // PUT
-            putDatainfo(id: tempArray[self.currentIndexPath].id,
-                        title: tempArray[self.currentIndexPath].attributes.title,
-                        isDone: tempArray[self.currentIndexPath].attributes.isDone,
-                        index: tempArray[self.currentIndexPath].attributes.index)
+            putDatainfo(id: dataInfoArray[self.currentIndexPath].id,
+                        title: dataInfoArray[self.currentIndexPath].attributes.title,
+                        isDone: dataInfoArray[self.currentIndexPath].attributes.isDone,
+                        index: dataInfoArray[self.currentIndexPath].attributes.index)
             
             // Toast
             self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
-            
+        // 아이템 추가 버튼 클릭
         case "addButton":
             print("ViewController - onDelegateEditButtonClicked() - addButton Switch called")
             self.isResetArray = true
             
             // POST
-            postDatainfo(title: title, isDone: false, index: self.tempArray.count)
+            postDatainfo(title: title, isDone: false, index: self.dataInfoArray.count)
             self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
         case .none:
             break
@@ -234,7 +244,7 @@ extension ViewController: UITableViewDataSource,
         self.view.makeToast("아이템이 삭제되었습니다", duration: 1.0)
         self.isResetArray = true
         // method : "Delete"
-        deleteDatainfo(id: tempArray[self.currentIndexPath].id)
+        deleteDatainfo(id: dataInfoArray[self.currentIndexPath].id)
     }
 }
 
@@ -244,13 +254,50 @@ extension ViewController {
     func resetIndex(_ array: [dataInfo]) -> [dataInfo] {
         print("ViewController - resetIndex() called")
         var changedArray: [dataInfo] = array
-        
+        print(array.count)
         for i in 0 ..< array.count {
+            print("i = \(array[i])")
             changedArray[array[i].attributes.index] = array[i]
         }
-        
         return changedArray
     }
+    
+    func resetDeletedIndex(_ array: [dataInfo]) -> [dataInfo] {
+        print("ViewController - resetDeletedIndex() called")
+        var changedArray: [dataInfo] = array
+        var resultArray: [dataInfo] = []
+        var sortedArray: [Int: dataInfo] = [:]
+        
+        // i번째 인덱스값을 키로, i번째 datainfo를 값으로,
+        for i in 0 ..< array.count {
+            sortedArray.updateValue(changedArray[i], forKey: changedArray[i].attributes.index)
+        }
+        
+        // sortedArray의 키값으로 오름차순 정렬하여 실제로 사용하는 resultDic 딕셔너리에 저장
+        let resultDic = sortedArray.sorted{ $0.0 < $1.0 }
+        
+        print("chang array.count => \(array.count), resultDic.count => \(resultDic.count)")
+        // resultDic[i]번째의 값을 resultArray에 차례대로 넣는다.
+        for i in 0 ..< array.count {
+            resultArray.append(resultDic[i].value)
+        }
+        
+        // 오름차순으로 resultArray를 정렬을 했는데 이게, 0145 띄어질수도 있거든?
+        // 그래서 어차피 오름차순으로 되어있으니 0부터 차례대로 1씩 다시 재 정렬을 해주는거야
+        // 그리고 정렬이 완료 되면, strapi에다가 다시 인덱스 값을 넣어줄거야.
+        for i in 0 ..< resultArray.count {
+            resultArray[i].attributes.index = i
+            print("resultArray -> ", resultArray[i].id)
+            
+            putDatainfo(id: resultArray[i].id,
+                        title: resultArray[i].attributes.title,
+                        isDone: resultArray[i].attributes.isDone,
+                        index: i)
+        }
+        
+        return resultArray
+    }
+
 }
 
 //MARK: - Strapi Comunication ( GET, PUT, POST, DELETE )
@@ -263,7 +310,10 @@ extension ViewController {
             case .success(let todoData):
                 if let data = todoData as? [dataInfo] {
                     //self.tempArray = data
-                    self.tempArray = self.resetIndex(data)
+                    
+                    var testArray: [dataInfo] = self.resetDeletedIndex(data)
+                    
+                    self.dataInfoArray = self.resetIndex(testArray)
                 } else {
                     print("fail")
                 }
@@ -295,7 +345,7 @@ extension ViewController {
                 print("networkFail")
             }
         })
-        getDatainfo()
+        //getDatainfo()
     }
     
     //MARK: Strapi POST
@@ -319,14 +369,19 @@ extension ViewController {
     
     //MARK: - Strapi DELETE
     private func deleteDatainfo(id: Int) {
+        print("Viewcontroller - deletedDatainfo() called")
         todoService.shared.deleteDatainfo(id: id, completion: { response in
             switch(response) {
             case .success(let todoData):
-                print("success - \(todoData)")
+                if let data = todoData as? [dataInfo] {
+                    print("success")
+                } else {
+                    print("fail")
+                }
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
-                print("pathErr")
+                print("@pathErr")
             case .serverErr:
                 print("serverErr")
             case .networkFail:
@@ -450,4 +505,39 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         let cellSize: CGFloat = myBoundSize / 9
         return CGSize(width: cellSize, height: cellSize)
     }
+}
+
+//MARK: - 테이블뷰 순서 바꾸기
+extension ViewController: UITableViewDragDelegate, UITableViewDropDelegate {
+    // Drag
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return [UIDragItem(itemProvider: NSItemProvider())]
+    }
+     
+    //Drop
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        if session.localDragSession != nil {
+            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        }
+        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
+    }
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {}
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    // 위치변화에 따라 index를 서로 교환해서 resetDeletedIndex에서 인덱스별로 순서를 재배치하도록 값을 변경함
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let moveCell = self.dataInfoArray[sourceIndexPath.row]
+        var tempDatainfoIndex: Int
+        tempDatainfoIndex = self.dataInfoArray[destinationIndexPath.row].attributes.index
+        self.dataInfoArray[destinationIndexPath.row].attributes.index = self.dataInfoArray[sourceIndexPath.row].attributes.index
+        self.dataInfoArray[sourceIndexPath.row].attributes.index = tempDatainfoIndex
+        for i in 0 ..< self.dataInfoArray.count {
+            print("self.dataInfoArray[i].attributes.index = ",self.dataInfoArray[i].attributes.index)
+        }
+        self.dataInfoArray = resetDeletedIndex(self.dataInfoArray)
+    }
+    
 }

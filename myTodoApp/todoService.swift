@@ -101,26 +101,27 @@ struct todoService {
     
     //MARK: Delete
     func deleteDatainfo(id: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
-        print("todoService - deleteDatainfo() called")
+        print("todoService - deleteDatainfo() called id = \(String(id))")
         
         let url = "https://a088-180-226-219-117.jp.ngrok.io/api/todos/" + String(id)
-        let header: HTTPHeaders = ["Content-Type": "application/json"]
+        //let header: HTTPHeaders = ["Content-Type": "application/json"]
         
         let dataRequest = AF.request(url,
                                      method: .delete,
-                                     //parameters: makeParameter(title: title, isDone: isDone, content: content),
-                                     encoding: JSONEncoding.default,
-                                     headers: header)
+                                     parameters: nil,
+                                     headers: nil)
         dataRequest.responseData{ dataResponse in
-            //dump(dataResponse)
+            dump(dataResponse)
             print("deleteDatainfo closure")
             switch dataResponse.result {
             case .success:
                 guard let statusCode = dataResponse.response?.statusCode else { return }
                 guard let value = dataResponse.value else { return }
+
                 let networkResult = self.judgeStatus(by: statusCode, value)
-                
-            case .failure: completion(.pathErr)
+                //completion(networkResult)
+            case .failure:
+                completion(.pathErr)
             }
         }
     }
@@ -129,7 +130,7 @@ struct todoService {
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode {
         case 200:
-            //print("statuscode 200")
+            print("statuscode 200")
             return isValidData(data: data)
         case 400:
             //print("statuscode 400")
