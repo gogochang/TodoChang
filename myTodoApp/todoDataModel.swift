@@ -24,4 +24,5 @@ struct data: Codable {
     let publishedAt: String
     //var content: String
     var index: Int
+    var date: String
 }

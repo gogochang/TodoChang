@@ -35,7 +35,6 @@ class ViewController: UIViewController {
     var orderIndex: [Int] = []
     
     // 리스트 업데이트 할지 안할지
-    
     var dataInfoDictionary: [Int: dataInfo] = [:]
     
     var isResetArray: Bool = true
@@ -54,7 +53,8 @@ class ViewController: UIViewController {
     }
     
     var saveArray: [dataInfo] = []
-
+    var selectedDate: String = ""
+    
     override func viewDidLoad() {
         print("ViewController - viewDidLoad() called")
         super.viewDidLoad()
@@ -77,14 +77,13 @@ class ViewController: UIViewController {
         calendarCollectionView.delegate = self
         calendarCollectionView.dataSource = self
         dateFormatter.dateFormat = "yyyy년 MM월"
-        toastFormatter.dateFormat = "yyyy - MM - dd"
+        toastFormatter.dateFormat = "yyyy-MM-dd"
         dateComponent.year = cal.component(.year, from: nowDate)
         dateComponent.month = cal.component(.month, from: nowDate)
         dateComponent.day = 1
         
         self.calendarCalculation()
         
-
     }
     
     //MARK: - Add 버튼
@@ -127,7 +126,8 @@ class ViewController: UIViewController {
             putDatainfo(id: dataInfoArray[indexPath.row].id,
                         title: dataInfoArray[indexPath.row].attributes.title,
                         isDone: dataInfoArray[indexPath.row].attributes.isDone,
-                        index: dataInfoArray[indexPath.row].attributes.index)
+                        index: dataInfoArray[indexPath.row].attributes.index,
+                        date: dataInfoArray[indexPath.row].attributes.date)
         }
         self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
     }
@@ -157,7 +157,8 @@ extension ViewController: UITableViewDataSource,
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else {
             return UITableViewCell()
         }
-
+        //print("selectedDate -> ", self.selectedDate)
+    
         saveArray.append(dataInfoArray[indexPath.row])
         
         cell.labelTitle.text = dataInfoArray[indexPath.row].attributes.title
@@ -219,17 +220,18 @@ extension ViewController: UITableViewDataSource,
             putDatainfo(id: dataInfoArray[self.currentIndexPath].id,
                         title: dataInfoArray[self.currentIndexPath].attributes.title,
                         isDone: dataInfoArray[self.currentIndexPath].attributes.isDone,
-                        index: dataInfoArray[self.currentIndexPath].attributes.index)
+                        index: dataInfoArray[self.currentIndexPath].attributes.index,
+                        date: dataInfoArray[self.currentIndexPath].attributes.date)
             
             // Toast
             self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
         // 아이템 추가 버튼 클릭
         case "addButton":
-            print("ViewController - onDelegateEditButtonClicked() - addButton Switch called")
+            print("ViewController - onDelegateEditButtonClicked() - addButton called")
             self.isResetArray = true
-            
+            print("selectedDate -> ", selectedDate)
             // POST
-            postDatainfo(title: title, isDone: false, index: self.dataInfoArray.count)
+            postDatainfo(title: title, isDone: false, index: self.dataInfoArray.count, date: selectedDate)
             self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
         case .none:
             break
@@ -254,9 +256,9 @@ extension ViewController {
     func resetIndex(_ array: [dataInfo]) -> [dataInfo] {
         print("ViewController - resetIndex() called")
         var changedArray: [dataInfo] = array
-        print(array.count)
+        //print(array.count)
         for i in 0 ..< array.count {
-            print("i = \(array[i])")
+            //print("i = \(array[i])")
             changedArray[array[i].attributes.index] = array[i]
         }
         return changedArray
@@ -276,7 +278,7 @@ extension ViewController {
         // sortedArray의 키값으로 오름차순 정렬하여 실제로 사용하는 resultDic 딕셔너리에 저장
         let resultDic = sortedArray.sorted{ $0.0 < $1.0 }
         
-        print("chang array.count => \(array.count), resultDic.count => \(resultDic.count)")
+        //print("chang array.count => \(array.count), resultDic.count => \(resultDic.count)")
         // resultDic[i]번째의 값을 resultArray에 차례대로 넣는다.
         for i in 0 ..< array.count {
             resultArray.append(resultDic[i].value)
@@ -287,12 +289,13 @@ extension ViewController {
         // 그리고 정렬이 완료 되면, strapi에다가 다시 인덱스 값을 넣어줄거야.
         for i in 0 ..< resultArray.count {
             resultArray[i].attributes.index = i
-            print("resultArray -> ", resultArray[i].id)
+            //print("resultArray -> ", resultArray[i].id)
             
             putDatainfo(id: resultArray[i].id,
                         title: resultArray[i].attributes.title,
                         isDone: resultArray[i].attributes.isDone,
-                        index: i)
+                        index: i,
+                        date: resultArray[i].attributes.date)
         }
         
         return resultArray
@@ -309,9 +312,17 @@ extension ViewController {
             switch(response) {
             case .success(let todoData):
                 if let data = todoData as? [dataInfo] {
-                    //self.tempArray = data
                     
-                    var testArray: [dataInfo] = self.resetDeletedIndex(data)
+                    var tempArray = data
+                    var ttempArray: [dataInfo] = []
+                    for i in 0 ..< tempArray.count {
+                        if tempArray[i].attributes.date == self.selectedDate {
+                            ttempArray.append(tempArray[i])
+                        }
+                    }
+                    print("ttempArray -> ", ttempArray)
+                    
+                    var testArray: [dataInfo] = self.resetDeletedIndex(ttempArray)
                     
                     self.dataInfoArray = self.resetIndex(testArray)
                 } else {
@@ -330,8 +341,8 @@ extension ViewController {
     }
     
     //MARK: - Strapi PUT
-    private func putDatainfo(id: Int, title: String, isDone: Bool, index: Int) {
-        todoService.shared.putDatainfo(id: id, title: title, isDone: isDone, index: index, completion: { (response) in
+    private func putDatainfo(id: Int, title: String, isDone: Bool, index: Int, date: String) {
+        todoService.shared.putDatainfo(id: id, title: title, isDone: isDone, index: index, date: date, completion: { (response) in
             switch(response) {
             case .success(let todoData):
                 print("success - \(todoData)")
@@ -349,8 +360,8 @@ extension ViewController {
     }
     
     //MARK: Strapi POST
-    private func postDatainfo(title: String, isDone: Bool, index: Int) {
-        todoService.shared.postDatainfo(title: title, isDone: isDone, index: index, completion: { response in
+    private func postDatainfo(title: String, isDone: Bool, index: Int, date: String) {
+        todoService.shared.postDatainfo(title: title, isDone: isDone, index: index, date: date, completion: { response in
             switch(response) {
             case .success(let todoData):
                 print("success - \(todoData)")
@@ -427,7 +438,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         dateComponent.month = dateComponent.month! + 1
         self.calendarCalculation()
         self.calendarCollectionView.reloadData()
-        print(String(cal.component(.day, from: nowDate)))
     }
     
     // 섹션 개수
@@ -437,7 +447,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     // Cell 클릭 이벤트 함수
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //print("click index = \(indexPath.row)")
+
         let cell = collectionView.cellForItem(at: indexPath) as! MyCollectionViewCell
         switch indexPath.section {
         case 0:
@@ -450,12 +460,18 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             cell.backgroundColor = .systemGray5
             
             oldCell = cell
-            
+    
             dateComponent.day = Int(days[indexPath.row])
             let toastDate = cal.date(from: dateComponent)
+            
+            selectedDate = toastFormatter.string(from: toastDate!)
+
             self.view.makeToast(toastFormatter.string(from: toastDate!), duration: 1.0)
+            
+            getDatainfo()
         }
     }
+    
     // 컬랙션 셀 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
             switch section {
@@ -480,8 +496,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             testComponent.month = dateComponent.month
             testComponent.day = Int(days[indexPath.row])
             let testDate = cal.date(from: testComponent)
-
+            
             if cal.isDateInToday(testDate!) && (days[indexPath.row] != "") {
+                selectedDate = toastFormatter.string(from: testDate!)
                 cell.backgroundColor = .systemGray5
                 oldCell = cell
             } else {
@@ -541,7 +558,7 @@ extension ViewController: UITableViewDragDelegate, UITableViewDropDelegate {
         self.dataInfoArray.remove(at: sourceIndexPath.row)
         self.dataInfoArray.insert(tempDatainfo, at: destinationIndexPath.row)
         
-        // 다시 0부터 순서대로 index 부여해준다.,
+        // 다시 0부터 순서대로 index 부여해준다.
         for i in 0 ..< self.dataInfoArray.count {
             self.dataInfoArray[i].attributes.index = i
         }

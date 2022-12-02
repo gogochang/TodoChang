@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -28,7 +28,7 @@
                                 <rect key="frame" x="45" y="347" width="300" height="150"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2VE-eJ-8Wf">
-                                        <rect key="frame" x="20" y="20" width="260" height="69"/>
+                                        <rect key="frame" x="20" y="20" width="260" height="30"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="Meg-er-rvc">
                                                 <rect key="frame" x="0.0" y="0.0" width="260" height="30"/>
@@ -44,9 +44,6 @@
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Zb-C3-rdJ">
                                                         <rect key="frame" x="83" y="0.0" width="177" height="30"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="30" id="1Zj-RM-Os7"/>
-                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
@@ -54,36 +51,13 @@
                                                 <constraints>
                                                     <constraint firstItem="9mH-jE-GM8" firstAttribute="centerY" secondItem="Meg-er-rvc" secondAttribute="centerY" id="4kk-qs-xi4"/>
                                                     <constraint firstItem="9mH-jE-GM8" firstAttribute="leading" secondItem="Meg-er-rvc" secondAttribute="leading" id="GS4-T0-oLO"/>
-                                                    <constraint firstItem="3Zb-C3-rdJ" firstAttribute="centerY" secondItem="Meg-er-rvc" secondAttribute="centerY" id="N5Q-9T-a67"/>
                                                     <constraint firstAttribute="trailing" secondItem="3Zb-C3-rdJ" secondAttribute="trailing" id="hCS-sp-meM"/>
                                                 </constraints>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="24" id="31c-0g-Mms">
-                                                <rect key="frame" x="0.0" y="35" width="260" height="34"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nyh-qI-8vc">
-                                                        <rect key="frame" x="0.0" y="0.0" width="60" height="34"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="30" id="lzx-Dw-4RR"/>
-                                                            <constraint firstAttribute="width" constant="60" id="rRY-hl-mru"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nz1-q3-oDP">
-                                                        <rect key="frame" x="84" y="0.0" width="176" height="34"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="100" id="IkQ-BB-a8m"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                    </textField>
-                                                </subviews>
-                                                <viewLayoutGuide key="safeArea" id="GW1-qW-Rgn"/>
-                                            </stackView>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="Meg-er-rvc" secondAttribute="bottom" id="Li9-jP-N8B"/>
+                                        </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="DdN-2w-CCn">
                                         <rect key="frame" x="20" y="109" width="260" height="32"/>
@@ -144,7 +118,6 @@
                         <outlet property="contentView" destination="cmM-KA-fuw" id="cke-38-bwW"/>
                         <outlet property="deleteButton" destination="4qv-72-nDn" id="N9u-YD-HWh"/>
                         <outlet property="editButton" destination="im2-We-84N" id="BDg-9J-dBx"/>
-                        <outlet property="textFieldContent" destination="nz1-q3-oDP" id="uuc-sF-sHN"/>
                         <outlet property="textFieldTitle" destination="3Zb-C3-rdJ" id="UCF-KC-WCC"/>
                     </connections>
                 </viewController>

@@ -14,7 +14,6 @@ class CustomPopUpViewController: UIViewController {
     @IBOutlet var deleteButton: UIButton!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var textFieldTitle: UITextField!
-    @IBOutlet weak var textFieldContent: UITextField!
     
     var myPopUpDelegate: PopUpDelegate?
     
@@ -31,7 +30,6 @@ class CustomPopUpViewController: UIViewController {
         deleteButton.layer.cornerRadius = 15
         
         textFieldTitle.text = self.seletedItemTitle
-        textFieldContent.text = self.seletedItemContent
     }
     
     // 팝업창에서 검은 바탕화면 클릭하면 되돌아오는 기능버튼

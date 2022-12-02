@@ -12,11 +12,11 @@ struct todoService {
     
     //싱글톤 패턴 적용
     static let shared = todoService()
-    
+        
     //MARK: - GET
     func getDataInfo(completion: @escaping (NetworkResult<Any>) -> Void) {
         
-        let URL = "https://a088-180-226-219-117.jp.ngrok.io/api/todos"
+        let URL = "https://d3aa-180-226-219-117.jp.ngrok.io/api/todos"
         let header : HTTPHeaders = ["Content-Type": "application/json"]
         
         // HTTP 통신 요청부분
@@ -44,23 +44,26 @@ struct todoService {
     }
     
     //MARK: - MAKE Parameters
-    private func makeParameter(title: String, isDone: Bool, index: Int) -> Parameters {
+    private func makeParameter(title: String, isDone: Bool, index: Int, date: String) -> Parameters {
         return ["data": [ "title": title,
                           "isDone": isDone,
-                          "index": index]]
+                          "index": index,
+                          "date": date]]
     }
     
     //MARK: - POST
-    func postDatainfo(title: String, isDone: Bool, index: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
-        let url = "https://a088-180-226-219-117.jp.ngrok.io/api/todos"
+    func postDatainfo(title: String, isDone: Bool, index: Int, date: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+        //let url = "https://d3aa-180-226-219-117.jp.ngrok.io/api/todos"
+        let url = "https://d3aa-180-226-219-117.jp.ngrok.io/api/todos"
+        
         let header: HTTPHeaders = ["Content-Type": "application/json"]
         let dataRequest = AF.request(url,
                                      method: .post,
-                                     parameters: makeParameter(title: title, isDone: isDone, index: index),
+                                     parameters: makeParameter(title: title, isDone: isDone, index: index, date: date),
                                      encoding: JSONEncoding.default,
                                      headers: header)
         dataRequest.responseData{ dataResponse in
-            //dump(dataResponse)
+            dump(dataResponse)
             print("postDaainfo closure")
             switch dataResponse.result {
             case .success:
@@ -74,15 +77,15 @@ struct todoService {
     }
     
     //MARK: PUT
-    func putDatainfo(id: Int, title: String, isDone: Bool, index: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func putDatainfo(id: Int, title: String, isDone: Bool, index: Int, date: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         print("todoService - putDatainfo() called")
         
-        let url = "https://a088-180-226-219-117.jp.ngrok.io/api/todos/" + String(id)
+        let url = "https://d3aa-180-226-219-117.jp.ngrok.io/api/todos/" + String(id)
         let header: HTTPHeaders = ["Content-Type": "application/json"]
         
         let dataRequest = AF.request(url,
                                      method: .put,
-                                     parameters: makeParameter(title: title, isDone: isDone, index: index),
+                                     parameters: makeParameter(title: title, isDone: isDone, index: index, date: date),
                                      encoding: JSONEncoding.default,
                                      headers: header)
         dataRequest.responseData{ dataResponse in
@@ -103,7 +106,7 @@ struct todoService {
     func deleteDatainfo(id: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         print("todoService - deleteDatainfo() called id = \(String(id))")
         
-        let url = "https://a088-180-226-219-117.jp.ngrok.io/api/todos/" + String(id)
+        let url = "https://d3aa-180-226-219-117.jp.ngrok.io/api/todos/" + String(id)
         //let header: HTTPHeaders = ["Content-Type": "application/json"]
         
         let dataRequest = AF.request(url,
