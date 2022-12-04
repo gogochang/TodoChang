@@ -13,9 +13,10 @@ class ViewController: UIViewController {
     
     @IBOutlet var tableview: UITableView!
     @IBOutlet var countLabel: UILabel!
-    @IBOutlet var resetButton: UIButton!
+    //@IBOutlet var resetButton: UIButton!
     @IBOutlet var calendarTitle: UILabel!
     @IBOutlet var calendarCollectionView: UICollectionView!
+    @IBOutlet var addButton: UIButton!
     
     //달력 관련된 변수 선언부
     let nowDate = Date()
@@ -89,6 +90,7 @@ class ViewController: UIViewController {
         
         self.calendarCalculation()
         
+        addButton.layer.cornerRadius = 25
     }
     
     //MARK: - Add 버튼
@@ -111,12 +113,12 @@ class ViewController: UIViewController {
     }
     
     //MARK: - Reset 버튼 클릭 이벤트함수
-    @IBAction func resetButtonClicked(_ sender: UIButton) {
-        print("ViewController - resetButtonClicked() called")
-        self.isResetArray = true
-        getDatainfo()
-        self.view.makeToast("아이템 목록이 리셋되었습니다", duration: 1.0)
-    }
+//    @IBAction func resetButtonClicked(_ sender: UIButton) {
+//        print("ViewController - resetButtonClicked() called")
+//        self.isResetArray = true
+//        getDatainfo()
+//        self.view.makeToast("아이템 목록이 리셋되었습니다", duration: 1.0)
+//    }
     
     //MARK: - Switch 버튼 클릭 이벤트 함수 true/false
     @IBAction func UISwitchClicked(_ sender: UISwitch) {
@@ -162,7 +164,6 @@ extension ViewController: UITableViewDataSource,
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else {
             return UITableViewCell()
         }
-        //print("selectedDate -> ", self.selectedDate)
     
         saveArray.append(dataInfoArray[indexPath.row])
         
@@ -234,7 +235,6 @@ extension ViewController: UITableViewDataSource,
         case "addButton":
             print("ViewController - onDelegateEditButtonClicked() - addButton called")
             self.isResetArray = true
-            print("selectedDate -> ", selectedDate)
             // POST
             postDatainfo(title: title, isDone: false, index: self.dataInfoArray.count, date: selectedDate)
             self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
@@ -263,7 +263,6 @@ extension ViewController {
         var changedArray: [dataInfo] = array
         //print(array.count)
         for i in 0 ..< array.count {
-            //print("i = \(array[i])")
             changedArray[array[i].attributes.index] = array[i]
         }
         return changedArray
@@ -326,17 +325,15 @@ extension ViewController {
                         }
                     }
                     self.dateOfDataInfo.removeAll()
-                    print("chang0 -> ", self.dateOfDataInfo)
                     for i in 0 ..< tempArray.count {
                         if self.dateOfDataInfo.contains(tempArray[i].attributes.date) == false {
                             self.dateOfDataInfo.append(tempArray[i].attributes.date)
                         }
                     }
-                    print("chang1 ->", tempArray)
-                    print("chang2 ->",self.dateOfDataInfo)
                     var testArray: [dataInfo] = self.resetDeletedIndex(ttempArray)
                     
                     self.dataInfoArray = self.resetIndex(testArray)
+                    self.countLabel.text = "총 \(self.dataInfoArray.count) 개의 메모가 있습니다."
                 } else {
                     print("fail")
                 }
