@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="52R-J5-TII">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
@@ -44,14 +44,25 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lDb-k5-bre">
+                                                    <rect key="frame" x="63" y="49" width="2.5" height="2.5"/>
+                                                    <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="2.5" id="NP3-ma-S0E"/>
+                                                        <constraint firstAttribute="width" constant="2.5" id="bER-Xg-kEK"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="aen-qA-NES" firstAttribute="top" secondItem="lDb-k5-bre" secondAttribute="bottom" constant="2.5" id="Yvb-uB-CJE"/>
+                                                <constraint firstItem="lDb-k5-bre" firstAttribute="centerX" secondItem="laI-GV-t9D" secondAttribute="centerX" id="ZZd-cB-Jus"/>
                                                 <constraint firstItem="aen-qA-NES" firstAttribute="centerX" secondItem="laI-GV-t9D" secondAttribute="centerX" id="jVp-qp-LJI"/>
                                                 <constraint firstItem="aen-qA-NES" firstAttribute="centerY" secondItem="laI-GV-t9D" secondAttribute="centerY" id="o4T-yw-WMD"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
                                             <outlet property="collectionViewLabel" destination="aen-qA-NES" id="tZU-KO-fJO"/>
+                                            <outlet property="collectionViewMark" destination="lDb-k5-bre" id="MzG-rC-hIf"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

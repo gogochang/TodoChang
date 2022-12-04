@@ -12,4 +12,5 @@ class MyCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var collectionViewLabel: UILabel!
     
+    @IBOutlet var collectionViewMark: UIImageView!
 }

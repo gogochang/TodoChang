@@ -1,4 +1,4 @@
-//
+///
 //  ViewController.swift
 //  myTodoApp
 //
@@ -29,6 +29,7 @@ class ViewController: UIViewController {
     var weekdayAdding = 0
     
     var oldCell: MyCollectionViewCell? = nil
+    var oldCellDay: String = ""
     
     var currentIndexPath: Int = 0
     var isClickedButtonName: String?
@@ -48,12 +49,16 @@ class ViewController: UIViewController {
                 
                 self.isResetArray = false
             }
+            print("tempArray - didset2")
             self.tableview.reloadData()
+            self.calendarCollectionView.reloadData()
         }
     }
     
     var saveArray: [dataInfo] = []
     var selectedDate: String = ""
+    var dateOfDataInfo: [String] = []
+    var initCalendar: Bool = true
     
     override func viewDidLoad() {
         print("ViewController - viewDidLoad() called")
@@ -320,8 +325,15 @@ extension ViewController {
                             ttempArray.append(tempArray[i])
                         }
                     }
-                    print("ttempArray -> ", ttempArray)
-                    
+                    self.dateOfDataInfo.removeAll()
+                    print("chang0 -> ", self.dateOfDataInfo)
+                    for i in 0 ..< tempArray.count {
+                        if self.dateOfDataInfo.contains(tempArray[i].attributes.date) == false {
+                            self.dateOfDataInfo.append(tempArray[i].attributes.date)
+                        }
+                    }
+                    print("chang1 ->", tempArray)
+                    print("chang2 ->",self.dateOfDataInfo)
                     var testArray: [dataInfo] = self.resetDeletedIndex(ttempArray)
                     
                     self.dataInfoArray = self.resetIndex(testArray)
@@ -449,16 +461,23 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         let cell = collectionView.cellForItem(at: indexPath) as! MyCollectionViewCell
+        
         switch indexPath.section {
         case 0:
             return
         default:
+            // 날짜없는부분 클릭하면 무시함
+            if cell.collectionViewLabel.text == "" { return }
+            
             if let didSelectedCell = oldCell {
                 didSelectedCell.backgroundColor = .white
             }
             
-            cell.backgroundColor = .systemGray5
+            // 리로드할때 오늘날짜로 자동 선택하도록 하는거 노노
+            initCalendar = false
             
+            cell.backgroundColor = .systemGray5
+            oldCellDay = cell.collectionViewLabel.text!
             oldCell = cell
     
             dateComponent.day = Int(days[indexPath.row])
@@ -486,10 +505,13 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! MyCollectionViewCell
         var testComponent = DateComponents()
-        
+        cell.backgroundColor = .white
+
         switch indexPath.section {
         case 0:
             cell.collectionViewLabel.text = weeks[indexPath.row]
+            cell.collectionViewMark.isHidden = true
+            //cell.collectionViewMark.backgroundColor = .white
         default:
             cell.collectionViewLabel.text = days[indexPath.row]
             testComponent.year = dateComponent.year
@@ -497,14 +519,34 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             testComponent.day = Int(days[indexPath.row])
             let testDate = cal.date(from: testComponent)
             
-            if cal.isDateInToday(testDate!) && (days[indexPath.row] != "") {
-                selectedDate = toastFormatter.string(from: testDate!)
-                cell.backgroundColor = .systemGray5
-                oldCell = cell
+            // 처음 시작할 때 오늘 날짜 기본으로 표시하도록 하기
+            if initCalendar {
+                if cal.isDateInToday(testDate!) && (days[indexPath.row] != "") {
+                    selectedDate = toastFormatter.string(from: testDate!)
+                    cell.backgroundColor = .systemGray5
+                } else {
+                    cell.backgroundColor = .white
+                }
+            }
+            
+           // print(self.dateOfDataInfo)
+            if self.dateOfDataInfo.contains(toastFormatter.string(from: testDate!)) && (days[indexPath.row] != "") {
+                //print("it is selected date ->1 ", cell.collectionViewLabel.text)
+                cell.collectionViewMark.isHidden = false
+                cell.collectionViewMark.backgroundColor = .orange
             } else {
-                cell.backgroundColor = .white
+                cell.collectionViewMark.isHidden = true
+                //cell.collectionViewMark.backgroundColor = .white
             }
         }
+        
+        // 클릭 날짜 리로드할때 유지하기 위해서
+        if cell.collectionViewLabel.text == oldCellDay && (days[indexPath.row] != ""){
+            cell.backgroundColor = .systemGray5
+            oldCell = cell
+        }
+        
+
         
         if indexPath.row % 7 == 0 {
             cell.collectionViewLabel.textColor = .red
