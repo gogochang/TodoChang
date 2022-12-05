@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import Toast_Swift
+import Lottie
 
 class ViewController: UIViewController {
     
@@ -61,9 +62,29 @@ class ViewController: UIViewController {
     var dateOfDataInfo: [String] = []
     var initCalendar: Bool = true
     
+    //시작 애니매이션
+    private func animationLogo() {
+        let animationView: LottieAnimationView = {
+            let animView = LottieAnimationView(name:"46477-splash-screen")
+            animView.frame = CGRect(x:0, y:0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+            animView.contentMode = .scaleAspectFill
+            return animView
+        }()
+        
+        self.view.addSubview(animationView)
+        animationView.center = view.center
+        
+        animationView.play{ (finish) in
+            print("Animation finished!")
+            
+            animationView.removeFromSuperview()
+
+        }
+    }
     override func viewDidLoad() {
         print("ViewController - viewDidLoad() called")
         super.viewDidLoad()
+        animationLogo()
         guard let tableview else { return }
         guard let countLabel else { return }
         
@@ -78,7 +99,6 @@ class ViewController: UIViewController {
         tableview.dragInteractionEnabled = true
         tableview.dragDelegate = self
         tableview.dropDelegate = self
-        
         // calendar 지정
         calendarCollectionView.delegate = self
         calendarCollectionView.dataSource = self
@@ -91,6 +111,7 @@ class ViewController: UIViewController {
         self.calendarCalculation()
         
         addButton.layer.cornerRadius = 25
+        tableview.layer.borderWidth = 1
     }
     
     //MARK: - Add 버튼
@@ -108,17 +129,11 @@ class ViewController: UIViewController {
         
         customPopUpVC.myPopUpDelegate = self
         
+        customPopUpVC.clickedAddBtn = true
+        
         //현재 VC위에 customPopVC를 보여준다. animation 효과 , 해당액션은 nil
         self.present(customPopUpVC, animated: true, completion: nil)
     }
-    
-    //MARK: - Reset 버튼 클릭 이벤트함수
-//    @IBAction func resetButtonClicked(_ sender: UIButton) {
-//        print("ViewController - resetButtonClicked() called")
-//        self.isResetArray = true
-//        getDatainfo()
-//        self.view.makeToast("아이템 목록이 리셋되었습니다", duration: 1.0)
-//    }
     
     //MARK: - Switch 버튼 클릭 이벤트 함수 true/false
     @IBAction func UISwitchClicked(_ sender: UISwitch) {

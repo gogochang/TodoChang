@@ -13,12 +13,13 @@ class CustomPopUpViewController: UIViewController {
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet var deleteButton: UIButton!
     @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var textFieldTitle: UITextField!
+    @IBOutlet var textViewTitle: UITextView!
     
     var myPopUpDelegate: PopUpDelegate?
     
     var seletedItemTitle: String = ""
     var seletedItemContent: String = ""
+    var clickedAddBtn: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +29,19 @@ class CustomPopUpViewController: UIViewController {
         contentView.layer.cornerRadius = 30
         editButton.layer.cornerRadius = 15
         deleteButton.layer.cornerRadius = 15
+        editButton.layer.borderWidth = 1
+        deleteButton.layer.borderWidth = 1
         
-        textFieldTitle.text = self.seletedItemTitle
+        // 텍스트입력창
+        textViewTitle.text = self.seletedItemTitle
+        textViewTitle.layer.borderWidth = 1
+        textViewTitle.layer.borderColor = UIColor.black.cgColor
+        
+        if clickedAddBtn {
+            deleteButton.isHidden = true
+        } else {
+            deleteButton.isHidden = false
+        }
     }
     
     // 팝업창에서 검은 바탕화면 클릭하면 되돌아오는 기능버튼
@@ -42,7 +54,7 @@ class CustomPopUpViewController: UIViewController {
         print("CustomPopUpViewController - onEditButtonClicked() called")
         
         self.dismiss(animated: true)
-        myPopUpDelegate?.onDelegateEditButtonClicked(title: textFieldTitle?.text)
+        myPopUpDelegate?.onDelegateEditButtonClicked(title: textViewTitle?.text)
     }
     
     @IBAction func onDeleteButtonClicked(_ sender: UIButton) {

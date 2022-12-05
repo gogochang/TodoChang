@@ -14,8 +14,8 @@
             filePath = "myTodoApp/ViewController/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "349"
-            endingLineNumber = "349"
+            startingLineNumber = "342"
+            endingLineNumber = "342"
             landmarkName = "getDatainfo()"
             landmarkType = "7">
          </BreakpointContent>

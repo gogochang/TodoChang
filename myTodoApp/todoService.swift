@@ -16,7 +16,7 @@ struct todoService {
     //MARK: - GET
     func getDataInfo(completion: @escaping (NetworkResult<Any>) -> Void) {
         
-        let URL = "https://d3aa-180-226-219-117.jp.ngrok.io/api/todos"
+        let URL = "https://872c-180-226-219-117.jp.ngrok.io/api/todos"
         let header : HTTPHeaders = ["Content-Type": "application/json"]
         
         // HTTP 통신 요청부분
@@ -54,7 +54,7 @@ struct todoService {
     //MARK: - POST
     func postDatainfo(title: String, isDone: Bool, index: Int, date: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         //let url = "https://d3aa-180-226-219-117.jp.ngrok.io/api/todos"
-        let url = "https://d3aa-180-226-219-117.jp.ngrok.io/api/todos"
+        let url = "https://872c-180-226-219-117.jp.ngrok.io/api/todos"
         
         let header: HTTPHeaders = ["Content-Type": "application/json"]
         let dataRequest = AF.request(url,
@@ -80,7 +80,7 @@ struct todoService {
     func putDatainfo(id: Int, title: String, isDone: Bool, index: Int, date: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         print("todoService - putDatainfo() called")
         
-        let url = "https://d3aa-180-226-219-117.jp.ngrok.io/api/todos/" + String(id)
+        let url = "https://872c-180-226-219-117.jp.ngrok.io/api/todos/" + String(id)
         let header: HTTPHeaders = ["Content-Type": "application/json"]
         
         let dataRequest = AF.request(url,
@@ -106,7 +106,7 @@ struct todoService {
     func deleteDatainfo(id: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         print("todoService - deleteDatainfo() called id = \(String(id))")
         
-        let url = "https://d3aa-180-226-219-117.jp.ngrok.io/api/todos/" + String(id)
+        let url = "https://872c-180-226-219-117.jp.ngrok.io/api/todos/" + String(id)
         //let header: HTTPHeaders = ["Content-Type": "application/json"]
         
         let dataRequest = AF.request(url,

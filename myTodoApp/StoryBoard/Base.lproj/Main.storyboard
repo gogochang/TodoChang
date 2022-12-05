@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -68,14 +69,14 @@
                                 </cells>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="NiE-tj-pEU">
-                                <rect key="frame" x="0.0" y="444" width="414" height="366"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <rect key="frame" x="10" y="444" width="394" height="366"/>
+                                <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="54" id="PS4-hc-bDb" customClass="CustomCell" customModule="myTodoApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="54"/>
+                                        <rect key="frame" x="0.0" y="50" width="394" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PS4-hc-bDb" id="csZ-om-cCk">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="394" height="54"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CrH-uK-3zP">
@@ -86,7 +87,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lfn-M1-mou" userLabel="UISwitch">
-                                                    <rect key="frame" x="337" y="11.5" width="51" height="31"/>
+                                                    <rect key="frame" x="317" y="11.5" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="UISwitchClicked:" destination="BYZ-38-t0r" eventType="valueChanged" id="gnd-0J-DYp"/>
                                                     </connections>
@@ -114,10 +115,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="IPq-nH-wD0">
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="IPq-nH-wD0">
                                 <rect key="frame" x="341.5" y="96" width="62.5" height="38"/>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="4GO-rb-dYx">
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4GO-rb-dYx">
                                 <rect key="frame" x="0.0" y="104" width="414" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bk3-xg-BtR">
@@ -127,15 +128,16 @@
                                             <constraint firstAttribute="height" constant="30" id="jZW-Ka-XXR"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="&lt;">
-                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="30"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="chevron.backward.circle" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20"/>
+                                            <color key="baseForegroundColor" systemColor="labelColor"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="onPrevBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="c64-Zb-3tY"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CalendarTitle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUD-SD-ksW">
-                                        <rect key="frame" x="45" y="0.0" width="324" height="30"/>
+                                        <rect key="frame" x="50" y="0.0" width="314" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -147,26 +149,30 @@
                                         </constraints>
                                         <color key="tintColor" name="AccentColor"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="&gt;">
-                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="30"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="chevron.forward.circle" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="20"/>
+                                            <color key="baseForegroundColor" systemColor="labelColor"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="onNextBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EIx-Vw-M3O"/>
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="RUD-SD-ksW" firstAttribute="centerX" secondItem="4GO-rb-dYx" secondAttribute="centerX" id="dYw-3G-Cqe"/>
+                                </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Go5-KU-JHV">
-                                <rect key="frame" x="10" y="820" width="50" height="50"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <rect key="frame" x="5" y="815" width="70" height="70"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="IxV-fq-IBV"/>
-                                    <constraint firstAttribute="height" constant="50" id="OPE-TJ-fCr"/>
+                                    <constraint firstAttribute="width" constant="70" id="IxV-fq-IBV"/>
+                                    <constraint firstAttribute="height" constant="70" id="OPE-TJ-fCr"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="+">
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="30"/>
-                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <imageReference key="image" image="text.badge.plus" catalog="system" symbolScale="large"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25"/>
+                                    <color key="baseForegroundColor" systemColor="labelColor"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="addButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="abx-JK-Oc0"/>
@@ -174,9 +180,10 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="1" green="0.93993809737231271" blue="0.67677318043119228" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Go5-KU-JHV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="3B6-0B-d7l"/>
+                            <constraint firstItem="Go5-KU-JHV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="3B6-0B-d7l"/>
+                            <constraint firstItem="IPq-nH-wD0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="341.5" id="7m8-dx-iRA"/>
                             <constraint firstItem="6zw-Iq-gwr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="47" id="Gi7-H3-yKi"/>
                             <constraint firstItem="6zw-Iq-gwr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Iz0-hI-7ti"/>
                             <constraint firstItem="6zw-Iq-gwr" firstAttribute="top" secondItem="4GO-rb-dYx" secondAttribute="bottom" constant="5" id="LeX-Uj-tT2"/>
@@ -184,14 +191,14 @@
                             <constraint firstItem="6zw-Iq-gwr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Yy9-nY-Hwe"/>
                             <constraint firstItem="IPq-nH-wD0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="4" id="cJT-GB-1GU"/>
                             <constraint firstItem="4GO-rb-dYx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fdP-0Z-Vj2"/>
-                            <constraint firstItem="NiE-tj-pEU" firstAttribute="top" secondItem="6zw-Iq-gwr" secondAttribute="bottom" constant="5" id="g6J-qz-qCS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NiE-tj-pEU" secondAttribute="bottom" constant="52" id="gHE-9B-VTP"/>
-                            <constraint firstItem="NiE-tj-pEU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hQi-m3-KXf"/>
+                            <constraint firstItem="NiE-tj-pEU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="hQi-m3-KXf"/>
                             <constraint firstItem="wuu-kr-Mlu" firstAttribute="firstBaseline" secondItem="NiE-tj-pEU" secondAttribute="baseline" constant="40" id="jwe-m7-NsA"/>
+                            <constraint firstItem="NiE-tj-pEU" firstAttribute="top" secondItem="6zw-Iq-gwr" secondAttribute="bottom" constant="5" id="jxe-1l-O1o"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IPq-nH-wD0" secondAttribute="trailing" constant="10" id="miL-7d-FlM"/>
                             <constraint firstItem="wuu-kr-Mlu" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ptc-wg-Sc4"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NiE-tj-pEU" secondAttribute="trailing" id="pwv-lS-yqf"/>
-                            <constraint firstItem="Go5-KU-JHV" firstAttribute="top" secondItem="NiE-tj-pEU" secondAttribute="bottom" constant="10" id="snq-Iy-3de"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NiE-tj-pEU" secondAttribute="trailing" constant="10" id="pwv-lS-yqf"/>
+                            <constraint firstItem="Go5-KU-JHV" firstAttribute="top" secondItem="NiE-tj-pEU" secondAttribute="bottom" constant="5" id="snq-Iy-3de"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6zw-Iq-gwr" secondAttribute="trailing" id="unE-S6-XOu"/>
                             <constraint firstItem="4GO-rb-dYx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wDr-fK-Xdx"/>
                         </constraints>
@@ -313,13 +320,51 @@
             </objects>
             <point key="canvasLocation" x="2521.739130434783" y="296.65178571428572"/>
         </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="LHy-eK-eBj">
+            <objects>
+                <viewController id="4cj-OK-RAh" customClass="SplashViewController" customModule="myTodoApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1lT-O0-Mri">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="투두창" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bVl-lT-ptZ">
+                                <rect key="frame" x="128" y="413.5" width="158" height="69.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2oV-Sx-BiX"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="bVl-lT-ptZ" firstAttribute="centerY" secondItem="1lT-O0-Mri" secondAttribute="centerY" id="dUF-Ck-kca"/>
+                            <constraint firstItem="bVl-lT-ptZ" firstAttribute="centerX" secondItem="1lT-O0-Mri" secondAttribute="centerX" id="sDw-hx-mFJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="splashText" destination="bVl-lT-ptZ" id="z12-GB-Ked"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nzv-8y-rn0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1762" y="-733"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="chevron.backward.circle" catalog="system" width="128" height="123"/>
+        <image name="chevron.forward.circle" catalog="system" width="128" height="123"/>
+        <image name="text.badge.plus" catalog="system" width="128" height="107"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
