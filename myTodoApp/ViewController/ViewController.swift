@@ -52,8 +52,8 @@ class ViewController: UIViewController {
                 self.isResetArray = false
             }
             print("tempArray - didset2")
-            self.tableview.reloadData()
-            self.calendarCollectionView.reloadData()
+            //self.tableview.reloadData()
+            //self.calendarCollectionView.reloadData()
         }
     }
     
@@ -84,10 +84,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         print("ViewController - viewDidLoad() called")
         super.viewDidLoad()
+        
         animationLogo()
         guard let tableview else { return }
         guard let countLabel else { return }
         
+        self.overrideUserInterfaceStyle = .light
         //self.isResetArray = false
         getDatainfo()
         
@@ -349,6 +351,8 @@ extension ViewController {
                     
                     self.dataInfoArray = self.resetIndex(testArray)
                     self.countLabel.text = "총 \(self.dataInfoArray.count) 개의 메모가 있습니다."
+                    self.calendarCollectionView.reloadData()
+                    self.tableview.reloadData()
                 } else {
                     print("fail")
                 }
