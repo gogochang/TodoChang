@@ -92,7 +92,7 @@ class ViewController: UIViewController {
         self.overrideUserInterfaceStyle = .light
         //self.isResetArray = false
         getDatainfo()
-        
+
         tableview.layer.cornerRadius = 15
         countLabel.text = "총 \(dataInfoArray.count) 개의 메모가 있습니다."
         
@@ -246,7 +246,11 @@ extension ViewController: UITableViewDataSource,
                         index: dataInfoArray[self.currentIndexPath].attributes.index,
                         date: dataInfoArray[self.currentIndexPath].attributes.date)
             
+            getDatainfo()
+            //self.calendarCollectionView.reloadData()
+            //self.tableview.reloadData()
             // Toast
+            print("################################# clicked")
             self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
         // 아이템 추가 버튼 클릭
         case "addButton":
@@ -254,6 +258,8 @@ extension ViewController: UITableViewDataSource,
             self.isResetArray = true
             // POST
             postDatainfo(title: title, isDone: false, index: self.dataInfoArray.count, date: selectedDate)
+            getDatainfo()
+
             self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
         case .none:
             break
@@ -269,6 +275,7 @@ extension ViewController: UITableViewDataSource,
         self.isResetArray = true
         // method : "Delete"
         deleteDatainfo(id: dataInfoArray[self.currentIndexPath].id)
+        getDatainfo()
     }
 }
 
@@ -311,12 +318,26 @@ extension ViewController {
         for i in 0 ..< resultArray.count {
             resultArray[i].attributes.index = i
             //print("resultArray -> ", resultArray[i].id)
-            
-            putDatainfo(id: resultArray[i].id,
-                        title: resultArray[i].attributes.title,
-                        isDone: resultArray[i].attributes.isDone,
-                        index: i,
-                        date: resultArray[i].attributes.date)
+            todoService.shared.putDatainfo(id: resultArray[i].id,
+                                           title: resultArray[i].attributes.title,
+                                           isDone: resultArray[i].attributes.isDone,
+                                           index: i,
+                                           date: resultArray[i].attributes.date,
+                                           completion: { (response) in
+                switch(response) {
+                case .success(let todoData):
+                    self.tableview.reloadData()
+                    print("success - \(todoData)")
+                case .requestErr(let message):
+                    print("requestErr", message)
+                case .pathErr:
+                    print("pathErr")
+                case .serverErr:
+                    print("serverErr")
+                case .networkFail:
+                    print("networkFail")
+                }
+            })
         }
         
         return resultArray
@@ -353,6 +374,7 @@ extension ViewController {
                     self.countLabel.text = "총 \(self.dataInfoArray.count) 개의 메모가 있습니다."
                     self.calendarCollectionView.reloadData()
                     self.tableview.reloadData()
+                    print("###########################@@@#@#@")
                 } else {
                     print("fail")
                 }
@@ -366,6 +388,7 @@ extension ViewController {
                 print("networkFail")
             }
         }
+        print("####################################Get")
     }
     
     //MARK: - Strapi PUT
@@ -373,6 +396,7 @@ extension ViewController {
         todoService.shared.putDatainfo(id: id, title: title, isDone: isDone, index: index, date: date, completion: { (response) in
             switch(response) {
             case .success(let todoData):
+                self.tableview.reloadData()
                 print("success - \(todoData)")
             case .requestErr(let message):
                 print("requestErr", message)
@@ -384,7 +408,7 @@ extension ViewController {
                 print("networkFail")
             }
         })
-        //getDatainfo()
+        print("####################################Put")
     }
     
     //MARK: Strapi POST
@@ -402,8 +426,9 @@ extension ViewController {
             case .networkFail:
                 print("networkFail")
             }
+            
         })
-        getDatainfo()
+        print("####################################Post")
     }
     
     //MARK: - Strapi DELETE
@@ -426,8 +451,9 @@ extension ViewController {
             case .networkFail:
                 print("networkFail")
             }
+            
         })
-        getDatainfo()
+        print("####################################Delete")
     }
 }
 
@@ -465,7 +491,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         dateComponent.day = 1
         dateComponent.month = dateComponent.month! + 1
         self.calendarCalculation()
-        self.calendarCollectionView.reloadData()
+        //self.calendarCollectionView.reloadData()
     }
     
     // 섹션 개수

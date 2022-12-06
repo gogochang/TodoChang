@@ -33,10 +33,10 @@ struct todoService {
                 guard let statusCode = dataResponse.response?.statusCode else { return }
                 guard let value = dataResponse.value else { return }
                 
-                //print("Test1",statusCode)
                 let networkResult = self.judgeStatus(by: statusCode, value)
-                //print("Test2", networkResult)
+                
                 completion(networkResult)
+                //print("#####################1111111111111111")
             // 실패하면 .pathErr ~
             case .failure: completion(.pathErr)
             }
@@ -62,7 +62,7 @@ struct todoService {
                                      encoding: JSONEncoding.default,
                                      headers: header)
         dataRequest.responseData{ dataResponse in
-            dump(dataResponse)
+            //dump(dataResponse)
             print("postDaainfo closure")
             switch dataResponse.result {
             case .success:
@@ -88,14 +88,14 @@ struct todoService {
                                      encoding: JSONEncoding.default,
                                      headers: header)
         dataRequest.responseData{ dataResponse in
-            print("putDatainfo closure")
+            //print("putDatainfo closure")
             //dump(dataResponse)
             switch dataResponse.result {
             case .success:
                 guard let statusCode = dataResponse.response?.statusCode else { return }
                 guard let value = dataResponse.value else { return }
                 let networkResult = self.judgeStatus(by: statusCode, value)
-
+                
             case .failure: completion(.pathErr)
             }
         }
@@ -113,7 +113,7 @@ struct todoService {
                                      parameters: nil,
                                      headers: nil)
         dataRequest.responseData{ dataResponse in
-            dump(dataResponse)
+            //dump(dataResponse)
             print("deleteDatainfo closure")
             switch dataResponse.result {
             case .success:
