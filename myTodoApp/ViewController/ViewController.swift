@@ -85,7 +85,7 @@ class ViewController: UIViewController {
         print("ViewController - viewDidLoad() called")
         super.viewDidLoad()
         
-        animationLogo()
+        //animationLogo()
         guard let tableview else { return }
         guard let countLabel else { return }
         

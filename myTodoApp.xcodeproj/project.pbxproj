@@ -15,6 +15,7 @@
 		95099737293CBB4B009DF177 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95099736293CBB4B009DF177 /* SplashViewController.swift */; };
 		95099739293CBC7D009DF177 /* 46477-splash-screen.json in Resources */ = {isa = PBXBuildFile; fileRef = 95099738293CBC7D009DF177 /* 46477-splash-screen.json */; };
 		9509973B293CC4BB009DF177 /* lf30_editor_gdz69twm.json in Resources */ = {isa = PBXBuildFile; fileRef = 9509973A293CC4BB009DF177 /* lf30_editor_gdz69twm.json */; };
+		95691C7429409A290096B15C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95691C7329409A290096B15C /* LaunchScreen.storyboard */; };
 		95A98D9F29251503000D78A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A98D9E29251503000D78A9 /* AppDelegate.swift */; };
 		95A98DA129251503000D78A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A98DA029251503000D78A9 /* SceneDelegate.swift */; };
 		95A98DA329251503000D78A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A98DA229251503000D78A9 /* ViewController.swift */; };
@@ -64,6 +65,7 @@
 		95099736293CBB4B009DF177 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		95099738293CBC7D009DF177 /* 46477-splash-screen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "46477-splash-screen.json"; path = "../../../Downloads/46477-splash-screen.json"; sourceTree = "<group>"; };
 		9509973A293CC4BB009DF177 /* lf30_editor_gdz69twm.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = lf30_editor_gdz69twm.json; path = ../../../Downloads/lf30_editor_gdz69twm.json; sourceTree = "<group>"; };
+		95691C7329409A290096B15C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		95A98D9B29251503000D78A9 /* myTodoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myTodoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95A98D9E29251503000D78A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		95A98DA029251503000D78A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			children = (
 				95A98DA429251503000D78A9 /* Main.storyboard */,
 				95A98DD8292A151E000D78A9 /* PopUp.storyboard */,
+				95691C7329409A290096B15C /* LaunchScreen.storyboard */,
 			);
 			path = StoryBoard;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				95A98DA829251504000D78A9 /* Assets.xcassets in Resources */,
 				95099739293CBC7D009DF177 /* 46477-splash-screen.json in Resources */,
 				95A98DA629251503000D78A9 /* Main.storyboard in Resources */,
+				95691C7429409A290096B15C /* LaunchScreen.storyboard in Resources */,
 				9509973B293CC4BB009DF177 /* lf30_editor_gdz69twm.json in Resources */,
 				95A98DD9292A151E000D78A9 /* PopUp.storyboard in Resources */,
 			);
@@ -664,9 +668,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ChangGyuKim.myTodoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -696,9 +703,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ChangGyuKim.myTodoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

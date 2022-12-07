@@ -16,8 +16,8 @@ class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.splashText.alpha = 0
+        print("SplashViewController - viewDidLoad() called")
+        //self.splashText.alpha = 0
         //UIView.animate(withDuration: 1.0, animations: <#T##() -> Void#>)
     }
 }

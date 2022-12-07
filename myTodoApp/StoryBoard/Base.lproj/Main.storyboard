@@ -322,35 +322,6 @@
             </objects>
             <point key="canvasLocation" x="2521.739130434783" y="296.65178571428572"/>
         </scene>
-        <!--Splash View Controller-->
-        <scene sceneID="LHy-eK-eBj">
-            <objects>
-                <viewController id="4cj-OK-RAh" customClass="SplashViewController" customModule="myTodoApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="1lT-O0-Mri">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="투두창" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bVl-lT-ptZ">
-                                <rect key="frame" x="128" y="413.5" width="158" height="69"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="2oV-Sx-BiX"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="bVl-lT-ptZ" firstAttribute="centerY" secondItem="1lT-O0-Mri" secondAttribute="centerY" id="dUF-Ck-kca"/>
-                            <constraint firstItem="bVl-lT-ptZ" firstAttribute="centerX" secondItem="1lT-O0-Mri" secondAttribute="centerX" id="sDw-hx-mFJ"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="splashText" destination="bVl-lT-ptZ" id="z12-GB-Ked"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Nzv-8y-rn0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1762" y="-733"/>
-        </scene>
     </scenes>
     <resources>
         <image name="chevron.backward.circle" catalog="system" width="128" height="123"/>
