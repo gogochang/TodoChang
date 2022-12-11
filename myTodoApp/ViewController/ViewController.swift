@@ -491,7 +491,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         dateComponent.day = 1
         dateComponent.month = dateComponent.month! + 1
         self.calendarCalculation()
-        //self.calendarCollectionView.reloadData()
+        self.calendarCollectionView.reloadData()
     }
     
     // 섹션 개수

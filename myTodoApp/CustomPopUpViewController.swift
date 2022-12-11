@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 class CustomPopUpViewController: UIViewController {
     
@@ -52,14 +53,18 @@ class CustomPopUpViewController: UIViewController {
     
     @IBAction func onEditButtonClicked(_ sender: UIButton) {
         print("CustomPopUpViewController - onEditButtonClicked() called")
-        
-        self.dismiss(animated: true)
-        myPopUpDelegate?.onDelegateEditButtonClicked(title: textViewTitle?.text)
+        if textViewTitle.text != "" {
+            self.dismiss(animated: true)
+            myPopUpDelegate?.onDelegateEditButtonClicked(title: textViewTitle?.text)
+        } else {
+            self.view.makeToast("내용을 입력하세요.", duration: 1.0)
+        }
     }
     
     @IBAction func onDeleteButtonClicked(_ sender: UIButton) {
         print("CustomPopUpViewController - onDeleteButtonClicked() called")
         self.dismiss(animated: true)
+
         myPopUpDelegate?.onDelegateDeleteButtonClicked()
     }
 }
