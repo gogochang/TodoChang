@@ -36,10 +36,10 @@ struct todoService {
                 let networkResult = self.judgeStatus(by: statusCode, value)
                 
                 completion(networkResult)
-                //print("#####################1111111111111111")
-            // 실패하면 .pathErr ~
+
             case .failure: completion(.pathErr)
             }
+            print("todoService - getDatainfo() called")
         }
     }
     
@@ -69,9 +69,11 @@ struct todoService {
                 guard let statusCode = dataResponse.response?.statusCode else { return }
                 guard let value = dataResponse.value else { return }
                 let networkResult = self.judgeStatus(by: statusCode, value)
-                
+                print("todoService - postDatainfo() success")
+                completion(networkResult)
             case .failure: completion(.pathErr)
             }
+            print("todoService - postDatainfo() called")
         }
     }
     
@@ -95,9 +97,11 @@ struct todoService {
                 guard let statusCode = dataResponse.response?.statusCode else { return }
                 guard let value = dataResponse.value else { return }
                 let networkResult = self.judgeStatus(by: statusCode, value)
-                
+                print("todoService - putDatainfo() success")
+                completion(networkResult)
             case .failure: completion(.pathErr)
             }
+            
         }
     }
     
@@ -121,9 +125,9 @@ struct todoService {
                 guard let value = dataResponse.value else { return }
 
                 let networkResult = self.judgeStatus(by: statusCode, value)
-                //completion(networkResult)
-            case .failure:
-                completion(.pathErr)
+                print("todoService - deleteDatainfo() success")
+                completion(networkResult)
+            case .failure: completion(.pathErr)
             }
         }
     }

@@ -231,7 +231,7 @@ extension ViewController: UITableViewDataSource,
         switch (isClickedButtonName) {
         // 테이블뷰 아이템 클릭
         case "tableView":
-            print("ViewController - onDelegateEditButtonClicked() - tableView Switch called")
+            print("ViewController - onDelegateEditButtonClicked() - tableView edit called")
             // currentIndexPath에 저장된 클릭된 테이블뷰의 인덱스값을 가져와서
             // tempArray에 대응하는 title과 content에 대입.
             dataInfoArray[self.currentIndexPath].attributes.title = title
@@ -317,7 +317,7 @@ extension ViewController {
         // 그리고 정렬이 완료 되면, strapi에다가 다시 인덱스 값을 넣어줄거야.
         for i in 0 ..< resultArray.count {
             resultArray[i].attributes.index = i
-            //print("resultArray -> ", resultArray[i].id)
+
             todoService.shared.putDatainfo(id: resultArray[i].id,
                                            title: resultArray[i].attributes.title,
                                            isDone: resultArray[i].attributes.isDone,
@@ -326,7 +326,7 @@ extension ViewController {
                                            completion: { (response) in
                 switch(response) {
                 case .success(let todoData):
-                    self.tableview.reloadData()
+                    //self.tableview.reloadData()
                     print("success - \(todoData)")
                 case .requestErr(let message):
                     print("requestErr", message)
@@ -350,6 +350,7 @@ extension ViewController {
     
     //MARK: - Strapi GET
     private func getDatainfo() {
+        print("ViewController - getDatainfo() called")
         todoService.shared.getDataInfo { (response) in
             switch(response) {
             case .success(let todoData):
@@ -374,7 +375,7 @@ extension ViewController {
                     self.countLabel.text = "총 \(self.dataInfoArray.count) 개의 메모가 있습니다."
                     self.calendarCollectionView.reloadData()
                     self.tableview.reloadData()
-                    print("###########################@@@#@#@")
+                    
                 } else {
                     print("fail")
                 }
@@ -388,11 +389,11 @@ extension ViewController {
                 print("networkFail")
             }
         }
-        print("####################################Get")
     }
     
     //MARK: - Strapi PUT
     private func putDatainfo(id: Int, title: String, isDone: Bool, index: Int, date: String) {
+        print("ViewController - putDatainfo() called")
         todoService.shared.putDatainfo(id: id, title: title, isDone: isDone, index: index, date: date, completion: { (response) in
             switch(response) {
             case .success(let todoData):
@@ -407,12 +408,15 @@ extension ViewController {
             case .networkFail:
                 print("networkFail")
             }
+            // postDatainfo의 클로저가 끝나면, 테이블뷰를 업데이트해주는 getDatainfo 를 호출한다.
+            self.getDatainfo()
+
         })
-        print("####################################Put")
     }
     
     //MARK: Strapi POST
     private func postDatainfo(title: String, isDone: Bool, index: Int, date: String) {
+        print("ViewController - postDatainfo() called")
         todoService.shared.postDatainfo(title: title, isDone: isDone, index: index, date: date, completion: { response in
             switch(response) {
             case .success(let todoData):
@@ -426,9 +430,9 @@ extension ViewController {
             case .networkFail:
                 print("networkFail")
             }
-            
+            // postDatainfo의 클로저가 끝나면, 테이블뷰를 업데이트해주는 getDatainfo 를 호출한다.
+            self.getDatainfo()
         })
-        print("####################################Post")
     }
     
     //MARK: - Strapi DELETE
@@ -451,9 +455,9 @@ extension ViewController {
             case .networkFail:
                 print("networkFail")
             }
-            
+            // postDatainfo의 클로저가 끝나면, 테이블뷰를 업데이트해주는 getDatainfo 를 호출한다.
+            self.getDatainfo()
         })
-        print("####################################Delete")
     }
 }
 
