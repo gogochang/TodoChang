@@ -14,7 +14,6 @@ class ViewController: UIViewController {
     
     @IBOutlet var tableview: UITableView!
     @IBOutlet var countLabel: UILabel!
-    //@IBOutlet var resetButton: UIButton!
     @IBOutlet var calendarTitle: UILabel!
     @IBOutlet var calendarCollectionView: UICollectionView!
     @IBOutlet var addButton: UIButton!
@@ -51,9 +50,6 @@ class ViewController: UIViewController {
                 
                 self.isResetArray = false
             }
-            print("tempArray - didset2")
-            //self.tableview.reloadData()
-            //self.calendarCollectionView.reloadData()
         }
     }
     
@@ -62,25 +58,6 @@ class ViewController: UIViewController {
     var dateOfDataInfo: [String] = []
     var initCalendar: Bool = true
     
-    //시작 애니매이션
-    private func animationLogo() {
-        let animationView: LottieAnimationView = {
-            let animView = LottieAnimationView(name:"46477-splash-screen")
-            animView.frame = CGRect(x:0, y:0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-            animView.contentMode = .scaleAspectFill
-            return animView
-        }()
-        
-        self.view.addSubview(animationView)
-        animationView.center = view.center
-        
-        animationView.play{ (finish) in
-            print("Animation finished!")
-            
-            animationView.removeFromSuperview()
-
-        }
-    }
     override func viewDidLoad() {
         print("ViewController - viewDidLoad() called")
         super.viewDidLoad()
@@ -114,13 +91,27 @@ class ViewController: UIViewController {
         
         addButton.layer.cornerRadius = 25
         tableview.layer.borderWidth = 1
+        
+        getLoginScreen()
     }
     
+    private func getLoginScreen() {
+        print("GET Login Screen")
+        let storyboard = UIStoryboard.init(name: "Login", bundle: nil)
+        let customPopUpVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+        // 뷰컨트롤러가 보여지는 스타일
+        customPopUpVC.modalPresentationStyle = .overCurrentContext
+        // 뷰컨트롤러가 사라지는 스타일
+        customPopUpVC.modalTransitionStyle = .crossDissolve
+        //customPopUpVC.myPopUpDelegate = self
+        //customPopUpVC.clickedAddBtn = true
+        self.present(customPopUpVC, animated: true, completion: nil)
+    }
     //MARK: - Add 버튼
     @IBAction func addButtonClicked(_ sender: UIButton) {
         print("ViewController - addButtonClicked() called")
         isClickedButtonName = "addButton"
-        
+
         let storyboard = UIStoryboard.init(name: "PopUp", bundle: nil)
         let customPopUpVC = storyboard.instantiateViewController(withIdentifier: "AlertPopUpVC") as! CustomPopUpViewController
 
@@ -128,11 +119,11 @@ class ViewController: UIViewController {
         customPopUpVC.modalPresentationStyle = .overCurrentContext
         // 뷰컨트롤러가 사라지는 스타일
         customPopUpVC.modalTransitionStyle = .crossDissolve
-        
+
         customPopUpVC.myPopUpDelegate = self
-        
+
         customPopUpVC.clickedAddBtn = true
-        
+
         //현재 VC위에 customPopVC를 보여준다. animation 효과 , 해당액션은 nil
         self.present(customPopUpVC, animated: true, completion: nil)
     }
