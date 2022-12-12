@@ -110,7 +110,6 @@ struct todoService {
         print("todoService - deleteDatainfo() called id = \(String(id))")
         
         let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/todos/" + String(id)
-        //let header: HTTPHeaders = ["Content-Type": "application/json"]
         
         let dataRequest = AF.request(url,
                                      method: .delete,

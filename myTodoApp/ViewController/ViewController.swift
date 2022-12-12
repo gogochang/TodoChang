@@ -57,17 +57,21 @@ class ViewController: UIViewController {
     var selectedDate: String = ""
     var dateOfDataInfo: [String] = []
     var initCalendar: Bool = true
+
+    // LoginVC에서 가져오는 계정 정보 데이터
+    var id: String?
+    var password: String?
     
     override func viewDidLoad() {
         print("ViewController - viewDidLoad() called")
         super.viewDidLoad()
         
-        //animationLogo()
+//        print("chang -> ID: \(id!), PASSWORD: \(password!) ")
+//
         guard let tableview else { return }
         guard let countLabel else { return }
         
         self.overrideUserInterfaceStyle = .light
-        //self.isResetArray = false
         getDatainfo()
 
         tableview.layer.cornerRadius = 15
@@ -92,21 +96,8 @@ class ViewController: UIViewController {
         addButton.layer.cornerRadius = 25
         tableview.layer.borderWidth = 1
         
-        getLoginScreen()
     }
     
-    private func getLoginScreen() {
-        print("GET Login Screen")
-        let storyboard = UIStoryboard.init(name: "Login", bundle: nil)
-        let customPopUpVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-        // 뷰컨트롤러가 보여지는 스타일
-        customPopUpVC.modalPresentationStyle = .overCurrentContext
-        // 뷰컨트롤러가 사라지는 스타일
-        customPopUpVC.modalTransitionStyle = .crossDissolve
-        //customPopUpVC.myPopUpDelegate = self
-        //customPopUpVC.clickedAddBtn = true
-        self.present(customPopUpVC, animated: true, completion: nil)
-    }
     //MARK: - Add 버튼
     @IBAction func addButtonClicked(_ sender: UIButton) {
         print("ViewController - addButtonClicked() called")

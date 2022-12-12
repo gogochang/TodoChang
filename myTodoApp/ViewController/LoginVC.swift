@@ -59,7 +59,6 @@ class LoginVC: UIViewController {
         if ID.isEmpty || PASSWORD.isEmpty {
             return false
         } else {
-            //
             return true
         }
     }
@@ -79,11 +78,12 @@ class LoginVC: UIViewController {
         print("LoginVC - clickedLoginBtn() called")
         self.modalTransitionStyle = .crossDissolve
         if checkAccount(id: idText.text, password: passwordText.text) {
-            print("TA")
-            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-            let customPopUpVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
-            self.changeRootViewController(customPopUpVC)
+            guard let id = idText.text else { return }
+            guard let password = passwordText.text else { return }
             
+
+            checkLoginData(id: id, password: password)
+
         } else {
             self.view.makeToast("이메일 혹은 비밀번호를 확인해주세요.", duration: 1.0)
         }
@@ -91,6 +91,34 @@ class LoginVC: UIViewController {
     
     @IBAction func clickedSignInBtn(sender: UIButton!) {
         print("LoginVC - clickedSignInBtn() called")
-        // Sign in 버튼 클릭하면 회원가입하는 창 호출할 수 있도록 코드 입력
+        // TODO: Sign in 화면 호출
+    }
+    
+    private func checkLoginData(id: String, password: String) {
+        print("LoginVC - postLoginData() called, ID: \(id), PASSWORD: \(password)")
+        loginService.shared.postLoginData(id: id, password: password, completion: { response in
+            switch(response) {
+            case .success(let todoData):
+                if let data = todoData as? loginDataModel {
+                    print("chang succes \(data.user)")
+                    let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+                    let MainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+                    
+                    MainVC.id = self.idText.text
+                    MainVC.password = self.passwordText.text
+                    self.changeRootViewController(MainVC)
+                    self.view.makeToast("로그인", duration: 1.0)
+                }
+            case .requestErr(let message):
+                print("requestErr", message)
+            case .pathErr:
+                print("pathErr")
+                self.view.makeToast("아이디 또는 비밀번호를 잘못 입력했습니다.", duration: 1.0)
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        })
     }
 }
