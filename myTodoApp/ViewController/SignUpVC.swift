@@ -10,6 +10,7 @@ import UIKit
 import Toast_Swift
 import Lottie
 
+
 class SignUpVC: UIViewController {
     
     @IBOutlet weak var userNameTextField: UITextField!
@@ -20,6 +21,15 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var signInBtn: UIButton!
     
     var isDuplicate: Bool = false
+    
+    //Lottie Animation
+    lazy var animationView: AnimationView = {
+        let animationView = AnimationView.init(name: "75407-firecrackers-loading-screen")
+        animationView.contentMode = .scaleAspectFit
+        animationView.animationSpeed = 0.9
+        view.addSubview(animationView)
+        return animationView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +67,7 @@ class SignUpVC: UIViewController {
         registerBtn.layer.shadowRadius = 5
         registerBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
-    
+
     @IBAction func clickedregisterBtn() {
         print("SignUpVC - clickedregisterBtn() called")
         checkUsersData()
@@ -137,7 +147,10 @@ extension SignUpVC {
             case .success(let todoData):
                 print("chang 0> success - \(todoData)")
                 self.view.makeToast("회원가입 완료!!", duration: 1.0)
-                self.dismiss(animated: true)
+                self.animationView.play(completion: { (result ) in
+                    self.dismiss(animated: true)
+                })
+                
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
