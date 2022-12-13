@@ -91,7 +91,13 @@ class LoginVC: UIViewController {
     
     @IBAction func clickedSignInBtn(sender: UIButton!) {
         print("LoginVC - clickedSignInBtn() called")
-        // TODO: Sign in 화면 호출
+        
+        let storyboard = UIStoryboard.init(name: "SignUp", bundle: nil)
+        let SignUpVC = storyboard.instantiateViewController(withIdentifier: "SignUpVC")
+        SignUpVC.modalTransitionStyle = .coverVertical
+        SignUpVC.modalPresentationStyle = .automatic
+        self.present(SignUpVC, animated: true, completion: nil)
+        
     }
     
     private func checkLoginData(id: String, password: String) {

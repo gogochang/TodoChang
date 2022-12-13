@@ -384,7 +384,7 @@ extension ViewController {
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
-                print("pathErr")
+                print("pathErr#")
             case .serverErr:
                 print("serverErr")
             case .networkFail:

@@ -19,6 +19,10 @@
 		95793F2F294638A8002CF6D3 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95793F2E294638A8002CF6D3 /* LoginVC.swift */; };
 		95793F3829478809002CF6D3 /* loginDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95793F3729478809002CF6D3 /* loginDataModel.swift */; };
 		95793F3A29479EA2002CF6D3 /* loginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95793F3929479EA2002CF6D3 /* loginService.swift */; };
+		95793F3C2948793D002CF6D3 /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95793F3B2948793D002CF6D3 /* SignUp.storyboard */; };
+		95793F3E29487A4F002CF6D3 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95793F3D29487A4F002CF6D3 /* SignUpVC.swift */; };
+		95793F412948977D002CF6D3 /* signUpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95793F402948977D002CF6D3 /* signUpService.swift */; };
+		95793F43294897CB002CF6D3 /* usersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95793F42294897CB002CF6D3 /* usersDataModel.swift */; };
 		95A98D9F29251503000D78A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A98D9E29251503000D78A9 /* AppDelegate.swift */; };
 		95A98DA129251503000D78A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A98DA029251503000D78A9 /* SceneDelegate.swift */; };
 		95A98DA329251503000D78A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A98DA229251503000D78A9 /* ViewController.swift */; };
@@ -72,6 +76,10 @@
 		95793F2E294638A8002CF6D3 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		95793F3729478809002CF6D3 /* loginDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginDataModel.swift; sourceTree = "<group>"; };
 		95793F3929479EA2002CF6D3 /* loginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginService.swift; sourceTree = "<group>"; };
+		95793F3B2948793D002CF6D3 /* SignUp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
+		95793F3D29487A4F002CF6D3 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		95793F402948977D002CF6D3 /* signUpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signUpService.swift; sourceTree = "<group>"; };
+		95793F42294897CB002CF6D3 /* usersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = usersDataModel.swift; sourceTree = "<group>"; };
 		95A98D9B29251503000D78A9 /* myTodoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myTodoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95A98D9E29251503000D78A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		95A98DA029251503000D78A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +161,7 @@
 				95A98DA229251503000D78A9 /* ViewController.swift */,
 				95A98DDA292A181C000D78A9 /* CustomPopUpViewController.swift */,
 				95793F2E294638A8002CF6D3 /* LoginVC.swift */,
+				95793F3D29487A4F002CF6D3 /* SignUpVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -164,8 +173,22 @@
 				95A98DD8292A151E000D78A9 /* PopUp.storyboard */,
 				95691C7329409A290096B15C /* LaunchScreen.storyboard */,
 				95793F2829462D36002CF6D3 /* Login.storyboard */,
+				95793F3B2948793D002CF6D3 /* SignUp.storyboard */,
 			);
 			path = StoryBoard;
+			sourceTree = "<group>";
+		};
+		95793F3F29489734002CF6D3 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				95A98DD62926935B000D78A9 /* todoService.swift */,
+				95A98DD429269348000D78A9 /* todoDataModel.swift */,
+				95793F3929479EA2002CF6D3 /* loginService.swift */,
+				95793F3729478809002CF6D3 /* loginDataModel.swift */,
+				95793F402948977D002CF6D3 /* signUpService.swift */,
+				95793F42294897CB002CF6D3 /* usersDataModel.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		95A98D9229251503000D78A9 = {
@@ -201,11 +224,8 @@
 				95A98DA729251504000D78A9 /* Assets.xcassets */,
 				9509972E292D1A5F009DF177 /* StoryBoard */,
 				9509972D292D1A16009DF177 /* ViewController */,
+				95793F3F29489734002CF6D3 /* Service */,
 				95A98DD229269336000D78A9 /* NetworkResult.swift */,
-				95A98DD429269348000D78A9 /* todoDataModel.swift */,
-				95A98DD62926935B000D78A9 /* todoService.swift */,
-				95793F3929479EA2002CF6D3 /* loginService.swift */,
-				95793F3729478809002CF6D3 /* loginDataModel.swift */,
 				95A98DDC292A3212000D78A9 /* PopUpDelegate.swift */,
 				95099731292FECF6009DF177 /* MyCollectionViewCell.swift */,
 				95A98DAC29251504000D78A9 /* Info.plist */,
@@ -351,6 +371,7 @@
 				95A98DA629251503000D78A9 /* Main.storyboard in Resources */,
 				95691C7429409A290096B15C /* LaunchScreen.storyboard in Resources */,
 				9509973B293CC4BB009DF177 /* lf30_editor_gdz69twm.json in Resources */,
+				95793F3C2948793D002CF6D3 /* SignUp.storyboard in Resources */,
 				95A98DD9292A151E000D78A9 /* PopUp.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,6 +504,7 @@
 				95793F3829478809002CF6D3 /* loginDataModel.swift in Sources */,
 				95099732292FECF6009DF177 /* MyCollectionViewCell.swift in Sources */,
 				95793F3A29479EA2002CF6D3 /* loginService.swift in Sources */,
+				95793F3E29487A4F002CF6D3 /* SignUpVC.swift in Sources */,
 				95793F2F294638A8002CF6D3 /* LoginVC.swift in Sources */,
 				95A98DA329251503000D78A9 /* ViewController.swift in Sources */,
 				95A98DD329269336000D78A9 /* NetworkResult.swift in Sources */,
@@ -490,8 +512,10 @@
 				95A98DD529269348000D78A9 /* todoDataModel.swift in Sources */,
 				9509972C292D1A0F009DF177 /* MainVC.swift in Sources */,
 				95A98DD72926935B000D78A9 /* todoService.swift in Sources */,
+				95793F43294897CB002CF6D3 /* usersDataModel.swift in Sources */,
 				95A98DDD292A3212000D78A9 /* PopUpDelegate.swift in Sources */,
 				95A98DA129251503000D78A9 /* SceneDelegate.swift in Sources */,
+				95793F412948977D002CF6D3 /* signUpService.swift in Sources */,
 				95A98DDB292A181C000D78A9 /* CustomPopUpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
