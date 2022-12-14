@@ -84,45 +84,42 @@
                                     <action selector="clickedSignInBtnWithSender:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Pfm-6K-et3"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="투두창" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oef-co-mqs">
-                                <rect key="frame" x="75" y="259" width="243" height="77"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="v1.0.2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rEt-eg-KRP">
                                 <rect key="frame" x="334.33333333333331" y="797.66666666666663" width="43.666666666666686" height="20.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Welcome!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="WCA-yz-5hb">
-                                <rect key="frame" x="75" y="174" width="243" height="77"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="투두창" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5m-ai-vod">
+                                <rect key="frame" x="131.66666666666666" y="296" width="129.99999999999997" height="60"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHp-rs-zRB">
+                                <rect key="frame" x="81.333333333333329" y="199" width="230.66666666666669" height="60"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="oef-co-mqs" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="200" id="7hF-Yk-Mcn"/>
-                            <constraint firstItem="oef-co-mqs" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="75" id="IrI-No-55A"/>
+                            <constraint firstItem="Dsm-Ad-PCI" firstAttribute="top" secondItem="q5m-ai-vod" secondAttribute="bottom" constant="20" id="32Y-Pd-Tva"/>
+                            <constraint firstItem="q5m-ai-vod" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="J6P-FF-Jtm"/>
+                            <constraint firstItem="JHp-rs-zRB" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="140" id="Q3e-Le-Ha8"/>
                             <constraint firstItem="jJT-8A-eMt" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="Uch-5i-DfX"/>
                             <constraint firstItem="jJT-8A-eMt" firstAttribute="top" secondItem="FTI-Vi-Lhy" secondAttribute="bottom" constant="20" id="WYo-9d-psl"/>
                             <constraint firstItem="UX6-La-rk4" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="YYH-D1-gaW"/>
                             <constraint firstItem="FTI-Vi-Lhy" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="b4c-ls-lGM"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="rEt-eg-KRP" secondAttribute="trailing" constant="15" id="ch3-V9-zhg"/>
-                            <constraint firstItem="Dsm-Ad-PCI" firstAttribute="top" secondItem="oef-co-mqs" secondAttribute="bottom" constant="40" id="gqf-ri-RpG"/>
                             <constraint firstItem="FTI-Vi-Lhy" firstAttribute="top" secondItem="Dsm-Ad-PCI" secondAttribute="bottom" constant="20" id="hZP-GP-pJK"/>
                             <constraint firstItem="Dsm-Ad-PCI" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="hnW-ON-wCf"/>
                             <constraint firstItem="Dsm-Ad-PCI" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="icE-XL-7SI"/>
+                            <constraint firstItem="JHp-rs-zRB" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="jsA-ZK-FJr"/>
                             <constraint firstItem="UX6-La-rk4" firstAttribute="top" secondItem="jJT-8A-eMt" secondAttribute="bottom" constant="5" id="kTQ-NA-ajs"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="rEt-eg-KRP" secondAttribute="bottom" id="qzl-2L-jtd"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="oef-co-mqs" secondAttribute="trailing" constant="75" id="svt-at-jms"/>
                         </constraints>
                     </view>
                     <connections>

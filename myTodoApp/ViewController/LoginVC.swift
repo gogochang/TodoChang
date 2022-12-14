@@ -10,6 +10,7 @@ import UIKit
 import Toast_Swift
 
 class LoginVC: UIViewController {
+    
 
     @IBOutlet var idText: UITextField!
     @IBOutlet var passwordText: UITextField!
@@ -19,6 +20,10 @@ class LoginVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideKeyboardWhenTappedAround()
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         initButtonStyle()
     }
@@ -127,4 +132,35 @@ class LoginVC: UIViewController {
             }
         })
     }
+    
+
+}
+
+//Keyboard
+extension LoginVC {
+    @objc func keyboardWillShow(notification: NSNotification) {
+                
+            guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+               // if keyboard size is not available for some reason, dont do anything
+               return
+            }
+          
+          // move the root view up by the distance of keyboard height
+          self.view.frame.origin.y = 120 - keyboardSize.height
+        }
+
+        @objc func keyboardWillHide(notification: NSNotification) {
+          // move back the root view origin to zero
+          self.view.frame.origin.y = 0
+        }
+
+    func hideKeyboardWhenTappedAround() {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(LoginVC.dismissKeyboard))
+            tap.cancelsTouchesInView = false
+            view.addGestureRecognizer(tap)
+        }
+        
+        @objc func dismissKeyboard() {
+            view.endEditing(true)
+        }
 }

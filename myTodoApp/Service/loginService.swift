@@ -20,7 +20,7 @@ struct loginService {
     
     //MARK: - Login
     func postLoginData(id: String, password: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        print("todoService - postLoginData() called")
+        print("loginService - postLoginData() called")
         
         let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/auth/local"
         let header: HTTPHeaders = ["Content-Type": "application/json"]
@@ -44,7 +44,7 @@ struct loginService {
                 completion(networkResult)
             case .failure: completion(.pathErr)
             }
-            print("todoService - postLoginData() called")
+            print("loginService - postLoginData() called")
         }
     }
     
@@ -55,7 +55,7 @@ struct loginService {
                 "password": password]
     }
     func registerUser(username: String, email: String, password: String, completion: @escaping (NetworkResult<Any>) -> Void){
-        print("signUpService - registerUser() called")
+        print("loginService - registerUser() called")
         let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/auth/local/register"
         let header: HTTPHeaders = ["Content-Type": "application/json"]
         
@@ -66,18 +66,18 @@ struct loginService {
                                      headers: header)
         
         dataRequest.responseData{ dataResponse in
-            //dump(dataResponse)
+            dump(dataResponse)
             print("postDaainfo closure")
             switch dataResponse.result {
             case .success:
                 guard let statusCode = dataResponse.response?.statusCode else { return }
                 guard let value = dataResponse.value else { return }
                 let networkResult = self.judgeStatus(by: statusCode, value)
-                print("todoService - postDatainfo() success")
+                print("loginService - postDatainfo() success")
                 completion(networkResult)
             case .failure: completion(.pathErr)
             }
-            print("todoService - postDatainfo() called")
+            print("loginService - postDatainfo() called")
         }
     }
     
