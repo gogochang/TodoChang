@@ -31,7 +31,7 @@ class LoadingService {
                 
                 // 아래는 다른 UI를 클릭하는것을 방지한다.
                 loadingIndicatorView.frame = window.frame
-                loadingIndicatorView.color = .black
+                loadingIndicatorView.color = .systemGray
                 
                 window.addSubview(loadingIndicatorView)
                 

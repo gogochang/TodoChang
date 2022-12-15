@@ -21,11 +21,12 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("LoginVC - viewDidload() called")
+        self.overrideUserInterfaceStyle = .light
         hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+
         initButtonStyle()
     }
     
@@ -82,15 +83,16 @@ class LoginVC: UIViewController {
     //MARK: - 로그인버튼
     @IBAction func clickedLoginBtn(sender: UIButton!) {
         print("LoginVC - clickedLoginBtn() called")
+        LoadingService.showLoading()
         self.modalTransitionStyle = .crossDissolve
         if checkAccount(id: idText.text, password: passwordText.text) {
             guard let id = idText.text else { return }
             guard let password = passwordText.text else { return }
             
-
             checkLoginData(id: id, password: password)
 
         } else {
+            LoadingService.hideLoading()
             self.view.makeToast("이메일 혹은 비밀번호를 확인해주세요.", duration: 1.0)
         }
     }
@@ -120,11 +122,13 @@ class LoginVC: UIViewController {
                     MainVC.password = self.passwordText.text
                     self.changeRootViewController(MainVC)
                     self.view.makeToast("로그인", duration: 1.0)
+                    LoadingService.hideLoading()
                 }
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
                 print("pathErr")
+                LoadingService.hideLoading()
                 self.view.makeToast("아이디 또는 비밀번호를 잘못 입력했습니다.", duration: 1.0)
             case .serverErr:
                 print("serverErr")
