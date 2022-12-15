@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 import Toast_Swift
 import Lottie
-
+import SwiftUI
+import SnapKit
 
 class SignUpVC: UIViewController, UITextFieldDelegate {
     
@@ -33,9 +34,16 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     //Lottie Animation
     lazy var animationView: AnimationView = {
         let animationView = AnimationView.init(name: "75407-firecrackers-loading-screen")
-        animationView.contentMode = .scaleAspectFit
+        animationView.contentMode = .scaleAspectFill
+
         animationView.animationSpeed = 0.9
         view.addSubview(animationView)
+        animationView.snp.makeConstraints{ make in
+            make.centerY.equalTo(view).offset(-100)
+            make.centerX.equalTo(view)
+            make.width.equalTo(view.frame.width)
+            make.height.equalTo(view.frame.width)
+        }
         return animationView
     }()
     
@@ -139,6 +147,8 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         guard let email = self.emailTextField.text else { return }
         guard let password = self.passwordTextField.text else { return }
         
+        LoadingService.showLoading()
+        
         self.registerUser(username: userName,
                           email: email,
                           password: password)
@@ -147,6 +157,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     // 로그인하러가는 버튼
     @IBAction func clickedSignInBtn() {
         print("SignUpVC - clickedSignInBtn() called")
+        
         self.dismiss(animated: true)
     }
 }
@@ -279,6 +290,7 @@ extension SignUpVC {
             case .success(let todoData):
                 print("chang 0> success - \(todoData)")
                 self.view.makeToast("회원가입 완료!!", duration: 1.0)
+                LoadingService.hideLoading()
                 self.animationView.play(completion: { (result ) in
                     self.dismiss(animated: true)
                 })
@@ -322,6 +334,7 @@ extension SignUpVC {
 
     @objc func dismissKeyboard() {
         print("SignUpVC - dismissKeyboard() called")
+        
         view.endEditing(true)
     }
 }
