@@ -92,15 +92,24 @@
                                                         <action selector="UISwitchClicked:" destination="BYZ-38-t0r" eventType="valueChanged" id="gnd-0J-DYp"/>
                                                     </connections>
                                                 </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="writer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KXD-98-jub">
+                                                    <rect key="frame" x="20" y="33" width="33" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="lfn-M1-mou" secondAttribute="trailing" constant="28" id="PNU-K9-dEY"/>
                                                 <constraint firstItem="lfn-M1-mou" firstAttribute="centerY" secondItem="csZ-om-cCk" secondAttribute="centerY" id="TQZ-MH-8h8"/>
+                                                <constraint firstItem="KXD-98-jub" firstAttribute="top" secondItem="CrH-uK-3zP" secondAttribute="bottom" constant="-11" id="Xyn-Y5-BS6"/>
+                                                <constraint firstItem="KXD-98-jub" firstAttribute="leading" secondItem="csZ-om-cCk" secondAttribute="leading" constant="20" id="k1g-Oc-xFK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="UISwitch" destination="lfn-M1-mou" id="TZT-wt-yX2"/>
                                             <outlet property="labelTitle" destination="CrH-uK-3zP" id="AdP-6P-zsC"/>
+                                            <outlet property="writerText" destination="KXD-98-jub" id="617-CM-DQz"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -225,6 +234,9 @@
         <image name="text.badge.plus" catalog="system" width="128" height="107"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

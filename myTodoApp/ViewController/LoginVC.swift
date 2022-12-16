@@ -26,7 +26,7 @@ class LoginVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        self.checkLoginData(id: "bmn2526@naver.com", password: "password1234")
+        //self.checkLoginData(id: "bmn2526@naver.com", password: "password1234")
         initButtonStyle()
     }
     
@@ -118,8 +118,9 @@ class LoginVC: UIViewController {
                     let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
                     let MainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
                     
-                    MainVC.id = self.idText.text
-                    MainVC.password = self.passwordText.text
+                    // 메인뷰컨트롤에 로그인한 유저네임 넘기기
+                    MainVC.username = data.user.username
+                    
                     self.changeRootViewController(MainVC)
                     self.view.makeToast("로그인", duration: 1.0)
                     LoadingService.hideLoading()
@@ -141,7 +142,7 @@ class LoginVC: UIViewController {
 
 }
 
-//Keyboard
+//MARK: - Keyboard
 extension LoginVC {
     @objc func keyboardWillShow(notification: NSNotification) {
                 

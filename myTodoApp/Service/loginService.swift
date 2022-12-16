@@ -37,10 +37,7 @@ struct loginService {
             case .success:
                 guard let statusCode = dataResponse.response?.statusCode else { return }
                 guard let value = dataResponse.value else { return }
-                
                 let networkResult = self.judgeStatus(by: statusCode, value)
-                //print("chang@@ -> \(completion(.success(res)))")
-                //completion(.success(value))
                 completion(networkResult)
             case .failure: completion(.pathErr)
             }

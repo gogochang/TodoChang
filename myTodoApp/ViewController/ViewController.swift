@@ -49,7 +49,7 @@ class ViewController: UIViewController {
     var initCalendar: Bool = true
 
     // LoginVC에서 가져오는 계정 정보 데이터
-    var id: String?
+    var username: String?
     var password: String?
     
     override func viewDidLoad() {
@@ -58,6 +58,8 @@ class ViewController: UIViewController {
         
         guard let tableview else { return }
         guard let countLabel else { return }
+        guard let username = self.username else { return }
+        print("Chang MainVC Username = \(username)")
         
         self.overrideUserInterfaceStyle = .light
         getDatainfo()
@@ -122,7 +124,8 @@ class ViewController: UIViewController {
                         title: dataInfoArray[indexPath.row].attributes.title,
                         isDone: dataInfoArray[indexPath.row].attributes.isDone,
                         index: dataInfoArray[indexPath.row].attributes.index,
-                        date: dataInfoArray[indexPath.row].attributes.date)
+                        date: dataInfoArray[indexPath.row].attributes.date,
+                        username: dataInfoArray[indexPath.row].attributes.UserName)
         }
         self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
     }
@@ -132,6 +135,7 @@ class ViewController: UIViewController {
 class CustomCell: UITableViewCell {
     @IBOutlet var labelTitle: UILabel!
     @IBOutlet var UISwitch: UISwitch!
+    @IBOutlet var writerText: UILabel!
     var ofIndex: Int?
 }
 
@@ -157,6 +161,7 @@ extension ViewController: UITableViewDataSource,
         
         cell.labelTitle.text = dataInfoArray[indexPath.row].attributes.title
         cell.UISwitch.isOn = dataInfoArray[indexPath.row].attributes.isDone
+        cell.writerText.text = dataInfoArray[indexPath.row].attributes.UserName
         return cell
     }
     
@@ -215,7 +220,8 @@ extension ViewController: UITableViewDataSource,
                         title: dataInfoArray[self.currentIndexPath].attributes.title,
                         isDone: dataInfoArray[self.currentIndexPath].attributes.isDone,
                         index: dataInfoArray[self.currentIndexPath].attributes.index,
-                        date: dataInfoArray[self.currentIndexPath].attributes.date)
+                        date: dataInfoArray[self.currentIndexPath].attributes.date,
+                        username: dataInfoArray[self.currentIndexPath].attributes.UserName)
             
 
             // Toast
@@ -223,10 +229,10 @@ extension ViewController: UITableViewDataSource,
         // 아이템 추가 버튼 클릭
         case "addButton":
             print("ViewController - onDelegateEditButtonClicked() - addButton called")
+            print("chang username => \(self.username!)")
             self.isResetArray = true
             // POST
-            postDatainfo(title: title, isDone: false, index: self.dataInfoArray.count, date: selectedDate)
-            getDatainfo()
+            postDatainfo(title: title, isDone: false, index: self.dataInfoArray.count, date: selectedDate, username: self.username!)
 
             self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
         case .none:
@@ -258,27 +264,27 @@ extension ViewController: UITableViewDataSource,
 //        }
 //        return changedArray
 //    }
-//    
+//
 //    func resetDeletedIndex(_ array: [dataInfo]) -> [dataInfo] {
 //        print("ViewController - resetDeletedIndex() called")
 //        var changedArray: [dataInfo] = array
 //        var resultArray: [dataInfo] = []
 //        var sortedArray: [Int: dataInfo] = [:]
-//        
+//
 //        // i번째 인덱스값을 키로, i번째 datainfo를 값으로,
 //        for i in 0 ..< array.count {
 //            sortedArray.updateValue(changedArray[i], forKey: changedArray[i].attributes.index)
 //        }
-//        
+//
 //        // sortedArray의 키값으로 오름차순 정렬하여 실제로 사용하는 resultDic 딕셔너리에 저장
 //        let resultDic = sortedArray.sorted{ $0.0 < $1.0 }
-//        
+//
 //        //print("chang array.count => \(array.count), resultDic.count => \(resultDic.count)")
 //        // resultDic[i]번째의 값을 resultArray에 차례대로 넣는다.
 //        for i in 0 ..< array.count {
 //            resultArray.append(resultDic[i].value)
 //        }
-//        
+//
 //        // 오름차순으로 resultArray를 정렬을 했는데 이게, 0145 띄어질수도 있거든?
 //        // 그래서 어차피 오름차순으로 되어있으니 0부터 차례대로 1씩 다시 재 정렬을 해주는거야
 //        // 그리고 정렬이 완료 되면, strapi에다가 다시 인덱스 값을 넣어줄거야.
@@ -306,7 +312,7 @@ extension ViewController: UITableViewDataSource,
 //                }
 //            })
 //        }
-//        
+//
 //        return resultArray
 //    }
 //
@@ -371,9 +377,15 @@ extension ViewController {
     }
     
     //MARK: - Strapi PUT
-    private func putDatainfo(id: Int, title: String, isDone: Bool, index: Int, date: String) {
+    private func putDatainfo(id: Int, title: String, isDone: Bool, index: Int, date: String, username: String) {
         print("ViewController - putDatainfo() called")
-        postService.shared.putDatainfo(id: id, title: title, isDone: isDone, index: index, date: date, completion: { (response) in
+        postService.shared.putDatainfo(id: id,
+                                       title: title,
+                                       isDone: isDone,
+                                       index: index,
+                                       date: date,
+                                       username: username,
+                                       completion: { (response) in
             switch(response) {
             case .success:
                 self.tableview.reloadData()
@@ -395,9 +407,14 @@ extension ViewController {
     }
     
     //MARK: Strapi POST
-    private func postDatainfo(title: String, isDone: Bool, index: Int, date: String) {
+    private func postDatainfo(title: String, isDone: Bool, index: Int, date: String, username: String) {
         print("ViewController - postDatainfo() called")
-        postService.shared.postDatainfo(title: title, isDone: isDone, index: index, date: date, completion: { response in
+        postService.shared.postDatainfo(title: title,
+                                        isDone: isDone,
+                                        index: index,
+                                        date: date,
+                                        username: username,
+                                        completion: { response in
             switch(response) {
             case .success:
                 print("success post ")

@@ -25,6 +25,7 @@ struct postData: Codable {
     let createdAt: String
     let updatedAt: String
     let publishedAt: String
+    let UserName: String
 }
 
 struct metaData: Codable {

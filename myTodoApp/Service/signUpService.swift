@@ -24,7 +24,7 @@ struct signUpService {
                                      headers: header)
     
         dataRequest.responseData { dataResponse in
-            //dump(dataResponse)
+            dump(dataResponse)
             switch dataResponse.result {
             case .success:
                 guard let statusCode = dataResponse.response?.statusCode else { return }

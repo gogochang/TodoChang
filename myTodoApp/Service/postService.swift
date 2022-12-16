@@ -13,21 +13,26 @@ struct postService {
     static let shared = postService()
     
     //MARK: - MAKE Parameters
-    private func makeParameter(title: String, isDone: Bool, index: Int, date: String) -> Parameters {
+    private func makeParameter(title: String, isDone: Bool, index: Int, date: String, username: String) -> Parameters {
         return ["data": [ "title": title,
                           "isDone": isDone,
                           "index": index,
-                          "date": date]]
+                          "date": date,
+                          "UserName": username]]
     }
     
     //MARK: - POST
-    func postDatainfo(title: String, isDone: Bool, index: Int, date: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func postDatainfo(title: String, isDone: Bool, index: Int, date: String, username: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/todos"
         
         let header: HTTPHeaders = ["Content-Type": "application/json"]
         let dataRequest = AF.request(url,
                                      method: .post,
-                                     parameters: makeParameter(title: title, isDone: isDone, index: index, date: date),
+                                     parameters: makeParameter(title: title,
+                                                               isDone: isDone,
+                                                               index: index,
+                                                               date: date,
+                                                               username: username),
                                      encoding: JSONEncoding.default,
                                      headers: header)
         dataRequest.responseData{ dataResponse in
@@ -47,7 +52,7 @@ struct postService {
     }
     
     //MARK: PUT
-    func putDatainfo(id: Int, title: String, isDone: Bool, index: Int, date: String, completion: @escaping (NetworkResult<Any>) -> Void) {
+    func putDatainfo(id: Int, title: String, isDone: Bool, index: Int, date: String, username: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         print("postService - putDatainfo() called")
         
         let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/todos/" + String(id)
@@ -55,7 +60,11 @@ struct postService {
         
         let dataRequest = AF.request(url,
                                      method: .put,
-                                     parameters: makeParameter(title: title, isDone: isDone, index: index, date: date),
+                                     parameters: makeParameter(title: title,
+                                                               isDone: isDone,
+                                                               index: index,
+                                                               date: date,
+                                                               username: username),
                                      encoding: JSONEncoding.default,
                                      headers: header)
         dataRequest.responseData{ dataResponse in
@@ -68,7 +77,6 @@ struct postService {
                 completion(networkResult)
             case .failure: completion(.pathErr)
             }
-            
         }
     }
     
