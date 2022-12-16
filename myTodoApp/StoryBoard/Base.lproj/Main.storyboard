@@ -92,18 +92,29 @@
                                                         <action selector="UISwitchClicked:" destination="BYZ-38-t0r" eventType="valueChanged" id="gnd-0J-DYp"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="writer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KXD-98-jub">
-                                                    <rect key="frame" x="20" y="33" width="33" height="14.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="efJ-Z6-MWW">
+                                                    <rect key="frame" x="20" y="33" width="79.5" height="14.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="작성자 : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PG8-qR-Q1n">
+                                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="14.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="writer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KXD-98-jub">
+                                                            <rect key="frame" x="46.5" y="0.0" width="33" height="14.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="efJ-Z6-MWW" firstAttribute="top" secondItem="CrH-uK-3zP" secondAttribute="bottom" constant="-11" id="DWk-MM-oom"/>
+                                                <constraint firstItem="efJ-Z6-MWW" firstAttribute="leading" secondItem="CrH-uK-3zP" secondAttribute="leading" id="Lus-Nr-OE2"/>
                                                 <constraint firstAttribute="trailing" secondItem="lfn-M1-mou" secondAttribute="trailing" constant="28" id="PNU-K9-dEY"/>
                                                 <constraint firstItem="lfn-M1-mou" firstAttribute="centerY" secondItem="csZ-om-cCk" secondAttribute="centerY" id="TQZ-MH-8h8"/>
-                                                <constraint firstItem="KXD-98-jub" firstAttribute="top" secondItem="CrH-uK-3zP" secondAttribute="bottom" constant="-11" id="Xyn-Y5-BS6"/>
-                                                <constraint firstItem="KXD-98-jub" firstAttribute="leading" secondItem="csZ-om-cCk" secondAttribute="leading" constant="20" id="k1g-Oc-xFK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
