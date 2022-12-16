@@ -38,6 +38,8 @@
 		95AD8E01294B55C9004B7383 /* 75407-firecrackers-loading-screen.json in Resources */ = {isa = PBXBuildFile; fileRef = 95AD8E00294B55C9004B7383 /* 75407-firecrackers-loading-screen.json */; };
 		95AD8E05294B89DE004B7383 /* postService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AD8E04294B89DE004B7383 /* postService.swift */; };
 		95DC34E0294C5E4A00F76135 /* postDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DC34DF294C5E4A00F76135 /* postDataModel.swift */; };
+		95DC34E2294C9C1400F76135 /* ScrollView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95DC34E1294C9C1400F76135 /* ScrollView.storyboard */; };
+		95DC34E4294C9C2100F76135 /* ScrollViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DC34E3294C9C2100F76135 /* ScrollViewVC.swift */; };
 		BA312937FAAEF4A86F6A6E60 /* Pods_myTodoApp_myTodoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C79F6284227EEDCE7A32F6BF /* Pods_myTodoApp_myTodoAppUITests.framework */; };
 		E612549B4F81871C76D63093 /* Pods_myTodoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F00077C2CBD75D7060F4C3 /* Pods_myTodoAppTests.framework */; };
 /* End PBXBuildFile section */
@@ -100,6 +102,8 @@
 		95AD8E00294B55C9004B7383 /* 75407-firecrackers-loading-screen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "75407-firecrackers-loading-screen.json"; path = "../../../Downloads/75407-firecrackers-loading-screen.json"; sourceTree = "<group>"; };
 		95AD8E04294B89DE004B7383 /* postService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = postService.swift; sourceTree = "<group>"; };
 		95DC34DF294C5E4A00F76135 /* postDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = postDataModel.swift; sourceTree = "<group>"; };
+		95DC34E1294C9C1400F76135 /* ScrollView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ScrollView.storyboard; sourceTree = "<group>"; };
+		95DC34E3294C9C2100F76135 /* ScrollViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewVC.swift; sourceTree = "<group>"; };
 		C2E53C5823061F70CC3ED663 /* Pods-myTodoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myTodoAppTests.release.xcconfig"; path = "Target Support Files/Pods-myTodoAppTests/Pods-myTodoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		C79F6284227EEDCE7A32F6BF /* Pods_myTodoApp_myTodoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_myTodoApp_myTodoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -164,6 +168,7 @@
 				95A98DDA292A181C000D78A9 /* CustomPopUpViewController.swift */,
 				95793F2E294638A8002CF6D3 /* LoginVC.swift */,
 				95793F3D29487A4F002CF6D3 /* SignUpVC.swift */,
+				95DC34E3294C9C2100F76135 /* ScrollViewVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -176,6 +181,7 @@
 				95691C7329409A290096B15C /* LaunchScreen.storyboard */,
 				95793F2829462D36002CF6D3 /* Login.storyboard */,
 				95793F3B2948793D002CF6D3 /* SignUp.storyboard */,
+				95DC34E1294C9C1400F76135 /* ScrollView.storyboard */,
 			);
 			path = StoryBoard;
 			sourceTree = "<group>";
@@ -374,6 +380,7 @@
 				95A98DA629251503000D78A9 /* Main.storyboard in Resources */,
 				95691C7429409A290096B15C /* LaunchScreen.storyboard in Resources */,
 				95793F3C2948793D002CF6D3 /* SignUp.storyboard in Resources */,
+				95DC34E2294C9C1400F76135 /* ScrollView.storyboard in Resources */,
 				95A98DD9292A151E000D78A9 /* PopUp.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -510,6 +517,7 @@
 				95AD8E05294B89DE004B7383 /* postService.swift in Sources */,
 				9529DC34294B47CA0077588F /* LoadingService.swift in Sources */,
 				95A98DA329251503000D78A9 /* ViewController.swift in Sources */,
+				95DC34E4294C9C2100F76135 /* ScrollViewVC.swift in Sources */,
 				95A98DD329269336000D78A9 /* NetworkResult.swift in Sources */,
 				95A98D9F29251503000D78A9 /* AppDelegate.swift in Sources */,
 				95A98DD529269348000D78A9 /* todoDataModel.swift in Sources */,

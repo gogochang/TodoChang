@@ -200,7 +200,7 @@ extension ViewController: UITableViewDataSource,
     func onDelegateEditButtonClicked(title: String?) {
         // 문자열 출력
         print("ViewController - onDelegateEditButtonClicked() called")
-        //self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
+        LoadingService.showLoading()
         //가져온 데이터 타이틀이랑 내용 존재여부 확인 부분
         guard let title = title else { return }
         
@@ -225,7 +225,7 @@ extension ViewController: UITableViewDataSource,
             
 
             // Toast
-            self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
+            //self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
         // 아이템 추가 버튼 클릭
         case "addButton":
             print("ViewController - onDelegateEditButtonClicked() - addButton called")
@@ -234,7 +234,7 @@ extension ViewController: UITableViewDataSource,
             // POST
             postDatainfo(title: title, isDone: false, index: self.dataInfoArray.count, date: selectedDate, username: self.username!)
 
-            self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
+            //self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
         case .none:
             break
         case .some(_):
@@ -245,11 +245,11 @@ extension ViewController: UITableViewDataSource,
     //MARK: - PopUp Delete버튼 구현부
     func onDelegateDeleteButtonClicked() {
         print("ViewController - onDelegateDeleteButtonClicked() called")
-        self.view.makeToast("아이템이 삭제되었습니다", duration: 1.0)
+        LoadingService.showLoading()
+        
         self.isResetArray = true
         // method : "Delete"
         deleteDatainfo(id: dataInfoArray[self.currentIndexPath].id)
-        getDatainfo()
     }
 }
 
@@ -353,11 +353,11 @@ extension ViewController {
                     self.calendarCollectionView.reloadData()
                     self.tableview.reloadData()
                     
+                    LoadingService.hideLoading()
                     
 //                    var testArray: [dataInfo] = self.resetDeletedIndex(ttempArray)
 //
 //                    self.dataInfoArray = self.resetIndex(testArray)
-//                    self.countLabel.text = "총 \(self.dataInfoArray.count) 개의 메모가 있습니다."
 //                    self.calendarCollectionView.reloadData()
 //                    self.tableview.reloadData()
 //
@@ -393,7 +393,7 @@ extension ViewController {
                 self.getDatainfo()
                 self.calendarCollectionView.reloadData()
                 self.tableview.reloadData()
-                
+                self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
@@ -422,7 +422,7 @@ extension ViewController {
                 self.getDatainfo()
                 self.calendarCollectionView.reloadData()
                 self.tableview.reloadData()
-                
+                self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
@@ -445,6 +445,7 @@ extension ViewController {
                 self.getDatainfo()
                 self.calendarCollectionView.reloadData()
                 self.tableview.reloadData()
+                self.view.makeToast("아이템이 삭제되었습니다", duration: 1.0)
                 
             case .requestErr(let message):
                 print("requestErr", message)
@@ -559,7 +560,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         case 0:
             cell.collectionViewLabel.text = weeks[indexPath.row]
             cell.collectionViewMark.isHidden = true
-            //cell.collectionViewMark.backgroundColor = .white
         default:
             cell.collectionViewLabel.text = days[indexPath.row]
             testComponent.year = dateComponent.year
