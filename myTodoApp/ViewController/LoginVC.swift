@@ -26,7 +26,7 @@ class LoginVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-
+        self.checkLoginData(id: "bmn2526@naver.com", password: "password1234")
         initButtonStyle()
     }
     

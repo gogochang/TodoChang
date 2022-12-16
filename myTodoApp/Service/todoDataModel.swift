@@ -22,7 +22,18 @@ struct data: Codable {
     let createdAt: String
     let updatedAt: String
     let publishedAt: String
-    //var content: String
     var index: Int
     var date: String
 }
+
+//
+//dataInfo(id: 135,
+//         attributes:
+//            myTodoApp.data(
+//                title: "Api 콤바인 영상 까지 보기",
+//                isDone: false,
+//                createdAt: "2022-12-09T10:54:59.358Z",
+//                updatedAt: "2022-12-16T08:07:27.861Z",
+//                publishedAt: "2022-12-09T10:54:59.356Z",
+//                index: 1,
+//                date: "2022-12-09"))

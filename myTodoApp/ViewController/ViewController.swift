@@ -42,17 +42,7 @@ class ViewController: UIViewController {
     var isResetArray: Bool = true
     var addingArray: [dataInfo] = []
     var dataInfoArray: [dataInfo] = []
-    {
-        didSet{
-            if isResetArray {
-                print("tempArray - didset")
-                getDatainfo()
-                
-                self.isResetArray = false
-            }
-        }
-    }
-    
+
     var saveArray: [dataInfo] = []
     var selectedDate: String = ""
     var dateOfDataInfo: [String] = []
@@ -66,8 +56,6 @@ class ViewController: UIViewController {
         print("ViewController - viewDidLoad() called")
         super.viewDidLoad()
         
-//        print("chang -> ID: \(id!), PASSWORD: \(password!) ")
-//
         guard let tableview else { return }
         guard let countLabel else { return }
         
@@ -80,8 +68,9 @@ class ViewController: UIViewController {
         tableview.delegate = self
         tableview.dataSource = self
         tableview.dragInteractionEnabled = true
-        tableview.dragDelegate = self
-        tableview.dropDelegate = self
+//        tableview.dragDelegate = self
+//        tableview.dropDelegate = self
+        
         // calendar 지정
         calendarCollectionView.delegate = self
         calendarCollectionView.dataSource = self
@@ -228,11 +217,8 @@ extension ViewController: UITableViewDataSource,
                         index: dataInfoArray[self.currentIndexPath].attributes.index,
                         date: dataInfoArray[self.currentIndexPath].attributes.date)
             
-            getDatainfo()
-            //self.calendarCollectionView.reloadData()
-            //self.tableview.reloadData()
+
             // Toast
-            print("################################# clicked")
             self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
         // 아이템 추가 버튼 클릭
         case "addButton":
@@ -262,70 +248,69 @@ extension ViewController: UITableViewDataSource,
 }
 
 //MARK: - Strapi에서 가져운 순서를 index순서대로 재비치를 해준다
-extension ViewController {
-
-    func resetIndex(_ array: [dataInfo]) -> [dataInfo] {
-        print("ViewController - resetIndex() called")
-        var changedArray: [dataInfo] = array
-        //print(array.count)
-        for i in 0 ..< array.count {
-            changedArray[array[i].attributes.index] = array[i]
-        }
-        return changedArray
-    }
-    
-    func resetDeletedIndex(_ array: [dataInfo]) -> [dataInfo] {
-        print("ViewController - resetDeletedIndex() called")
-        var changedArray: [dataInfo] = array
-        var resultArray: [dataInfo] = []
-        var sortedArray: [Int: dataInfo] = [:]
-        
-        // i번째 인덱스값을 키로, i번째 datainfo를 값으로,
-        for i in 0 ..< array.count {
-            sortedArray.updateValue(changedArray[i], forKey: changedArray[i].attributes.index)
-        }
-        
-        // sortedArray의 키값으로 오름차순 정렬하여 실제로 사용하는 resultDic 딕셔너리에 저장
-        let resultDic = sortedArray.sorted{ $0.0 < $1.0 }
-        
-        //print("chang array.count => \(array.count), resultDic.count => \(resultDic.count)")
-        // resultDic[i]번째의 값을 resultArray에 차례대로 넣는다.
-        for i in 0 ..< array.count {
-            resultArray.append(resultDic[i].value)
-        }
-        
-        // 오름차순으로 resultArray를 정렬을 했는데 이게, 0145 띄어질수도 있거든?
-        // 그래서 어차피 오름차순으로 되어있으니 0부터 차례대로 1씩 다시 재 정렬을 해주는거야
-        // 그리고 정렬이 완료 되면, strapi에다가 다시 인덱스 값을 넣어줄거야.
-        for i in 0 ..< resultArray.count {
-            resultArray[i].attributes.index = i
-
-            todoService.shared.putDatainfo(id: resultArray[i].id,
-                                           title: resultArray[i].attributes.title,
-                                           isDone: resultArray[i].attributes.isDone,
-                                           index: i,
-                                           date: resultArray[i].attributes.date,
-                                           completion: { (response) in
-                switch(response) {
-                case .success(let todoData):
-                    //self.tableview.reloadData()
-                    print("success - \(todoData)")
-                case .requestErr(let message):
-                    print("requestErr", message)
-                case .pathErr:
-                    print("pathErr")
-                case .serverErr:
-                    print("serverErr")
-                case .networkFail:
-                    print("networkFail")
-                }
-            })
-        }
-        
-        return resultArray
-    }
-
-}
+//extension ViewController {
+//
+//    func resetIndex(_ array: [dataInfo]) -> [dataInfo] {
+//        print("ViewController - resetIndex() called")
+//        var changedArray: [dataInfo] = array
+//        for i in 0 ..< array.count {
+//            changedArray[array[i].attributes.index] = array[i]
+//        }
+//        return changedArray
+//    }
+//    
+//    func resetDeletedIndex(_ array: [dataInfo]) -> [dataInfo] {
+//        print("ViewController - resetDeletedIndex() called")
+//        var changedArray: [dataInfo] = array
+//        var resultArray: [dataInfo] = []
+//        var sortedArray: [Int: dataInfo] = [:]
+//        
+//        // i번째 인덱스값을 키로, i번째 datainfo를 값으로,
+//        for i in 0 ..< array.count {
+//            sortedArray.updateValue(changedArray[i], forKey: changedArray[i].attributes.index)
+//        }
+//        
+//        // sortedArray의 키값으로 오름차순 정렬하여 실제로 사용하는 resultDic 딕셔너리에 저장
+//        let resultDic = sortedArray.sorted{ $0.0 < $1.0 }
+//        
+//        //print("chang array.count => \(array.count), resultDic.count => \(resultDic.count)")
+//        // resultDic[i]번째의 값을 resultArray에 차례대로 넣는다.
+//        for i in 0 ..< array.count {
+//            resultArray.append(resultDic[i].value)
+//        }
+//        
+//        // 오름차순으로 resultArray를 정렬을 했는데 이게, 0145 띄어질수도 있거든?
+//        // 그래서 어차피 오름차순으로 되어있으니 0부터 차례대로 1씩 다시 재 정렬을 해주는거야
+//        // 그리고 정렬이 완료 되면, strapi에다가 다시 인덱스 값을 넣어줄거야.
+//        for i in 0 ..< resultArray.count {
+//            resultArray[i].attributes.index = i
+//
+//            postService.shared.putDatainfo(id: resultArray[i].id,
+//                                           title: resultArray[i].attributes.title,
+//                                           isDone: resultArray[i].attributes.isDone,
+//                                           index: i,
+//                                           date: resultArray[i].attributes.date,
+//                                           completion: { (response) in
+//                switch(response) {
+//                case .success(let todoData):
+//                    //self.tableview.reloadData()
+//                    print("success - \(todoData)")
+//                case .requestErr(let message):
+//                    print("requestErr", message)
+//                case .pathErr:
+//                    print("pathErr")
+//                case .serverErr:
+//                    print("serverErr")
+//                case .networkFail:
+//                    print("networkFail")
+//                }
+//            })
+//        }
+//        
+//        return resultArray
+//    }
+//
+//}
 
 //MARK: - Strapi Comunication ( GET, PUT, POST, DELETE )
 extension ViewController {
@@ -337,34 +322,46 @@ extension ViewController {
             switch(response) {
             case .success(let todoData):
                 if let data = todoData as? [dataInfo] {
+
+                    var currentArray: [dataInfo] = []
                     
-                    var tempArray = data
-                    var ttempArray: [dataInfo] = []
-                    for i in 0 ..< tempArray.count {
-                        if tempArray[i].attributes.date == self.selectedDate {
-                            ttempArray.append(tempArray[i])
+                    // 선택된 date의 배열을 저장하는 부분
+                    for i in 0 ..< data.count {
+                        if data[i].attributes.date == self.selectedDate {
+                            currentArray.append(data[i])
                         }
                     }
+                    
+                    // 데이터 유무 날짜 표시
                     self.dateOfDataInfo.removeAll()
-                    for i in 0 ..< tempArray.count {
-                        if self.dateOfDataInfo.contains(tempArray[i].attributes.date) == false {
-                            self.dateOfDataInfo.append(tempArray[i].attributes.date)
+                    
+                    for i in 0 ..< data.count {
+                        if self.dateOfDataInfo.contains(data[i].attributes.date) == false {
+                            self.dateOfDataInfo.append(data[i].attributes.date)
                         }
                     }
-                    var testArray: [dataInfo] = self.resetDeletedIndex(ttempArray)
                     
-                    self.dataInfoArray = self.resetIndex(testArray)
+                    self.dataInfoArray = currentArray
                     self.countLabel.text = "총 \(self.dataInfoArray.count) 개의 메모가 있습니다."
+                    
                     self.calendarCollectionView.reloadData()
                     self.tableview.reloadData()
                     
+                    
+//                    var testArray: [dataInfo] = self.resetDeletedIndex(ttempArray)
+//
+//                    self.dataInfoArray = self.resetIndex(testArray)
+//                    self.countLabel.text = "총 \(self.dataInfoArray.count) 개의 메모가 있습니다."
+//                    self.calendarCollectionView.reloadData()
+//                    self.tableview.reloadData()
+//
                 } else {
                     print("fail")
                 }
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
-                print("pathErr")
+                print("pathErr - get ")
             case .serverErr:
                 print("serverErr")
             case .networkFail:
@@ -376,69 +373,71 @@ extension ViewController {
     //MARK: - Strapi PUT
     private func putDatainfo(id: Int, title: String, isDone: Bool, index: Int, date: String) {
         print("ViewController - putDatainfo() called")
-        todoService.shared.putDatainfo(id: id, title: title, isDone: isDone, index: index, date: date, completion: { (response) in
+        postService.shared.putDatainfo(id: id, title: title, isDone: isDone, index: index, date: date, completion: { (response) in
             switch(response) {
-            case .success(let todoData):
+            case .success:
                 self.tableview.reloadData()
-                print("success - \(todoData)")
+                print("success put ")
+                self.getDatainfo()
+                self.calendarCollectionView.reloadData()
+                self.tableview.reloadData()
+                
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
-                print("pathErr#")
+                print("pathErr put")
             case .serverErr:
                 print("serverErr")
             case .networkFail:
                 print("networkFail")
             }
-            // postDatainfo의 클로저가 끝나면, 테이블뷰를 업데이트해주는 getDatainfo 를 호출한다.
-            self.getDatainfo()
-
         })
     }
     
     //MARK: Strapi POST
     private func postDatainfo(title: String, isDone: Bool, index: Int, date: String) {
         print("ViewController - postDatainfo() called")
-        todoService.shared.postDatainfo(title: title, isDone: isDone, index: index, date: date, completion: { response in
+        postService.shared.postDatainfo(title: title, isDone: isDone, index: index, date: date, completion: { response in
             switch(response) {
-            case .success(let todoData):
-                print("success - \(todoData)")
+            case .success:
+                print("success post ")
+                
+                self.getDatainfo()
+                self.calendarCollectionView.reloadData()
+                self.tableview.reloadData()
+                
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
-                print("pathErr")
+                print("pathErr - post")
             case .serverErr:
                 print("serverErr")
             case .networkFail:
                 print("networkFail")
             }
-            // postDatainfo의 클로저가 끝나면, 테이블뷰를 업데이트해주는 getDatainfo 를 호출한다.
-            self.getDatainfo()
         })
     }
     
     //MARK: - Strapi DELETE
     private func deleteDatainfo(id: Int) {
         print("Viewcontroller - deletedDatainfo() called")
-        todoService.shared.deleteDatainfo(id: id, completion: { response in
+        postService.shared.deleteDatainfo(id: id, completion: { response in
             switch(response) {
-            case .success(let todoData):
-                if let data = todoData as? [dataInfo] {
-                    print("success")
-                } else {
-                    print("fail")
-                }
+            case .success:
+                print("succuss delete")
+                self.getDatainfo()
+                self.calendarCollectionView.reloadData()
+                self.tableview.reloadData()
+                
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
-                print("@pathErr")
+                print("pathErr - delete")
             case .serverErr:
                 print("serverErr")
             case .networkFail:
                 print("networkFail")
             }
-            // postDatainfo의 클로저가 끝나면, 테이블뷰를 업데이트해주는 getDatainfo 를 호출한다.
-            self.getDatainfo()
         })
     }
 }
@@ -468,6 +467,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         print("ViewController - onPrevBtnClicked() called")
         dateComponent.day = 1
         dateComponent.month = dateComponent.month! - 1
+        self.dataInfoArray = []
+        self.tableview.reloadData()
         self.calendarCalculation()
         self.calendarCollectionView.reloadData()
     }
@@ -476,6 +477,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         print("ViewController - onNextBtnClicked() called")
         dateComponent.day = 1
         dateComponent.month = dateComponent.month! + 1
+        self.dataInfoArray = []
+        self.tableview.reloadData()
         self.calendarCalculation()
         self.calendarCollectionView.reloadData()
     }
@@ -557,14 +560,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 }
             }
             
-           // print(self.dateOfDataInfo)
             if self.dateOfDataInfo.contains(toastFormatter.string(from: testDate!)) && (days[indexPath.row] != "") {
-                //print("it is selected date ->1 ", cell.collectionViewLabel.text)
                 cell.collectionViewMark.isHidden = false
                 cell.collectionViewMark.backgroundColor = .orange
             } else {
                 cell.collectionViewMark.isHidden = true
-                //cell.collectionViewMark.backgroundColor = .white
             }
         }
         
@@ -598,40 +598,40 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 }
 
 //MARK: - 테이블뷰 순서 바꾸기
-extension ViewController: UITableViewDragDelegate, UITableViewDropDelegate {
-    // Drag
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        return [UIDragItem(itemProvider: NSItemProvider())]
-    }
-     
-    //Drop
-    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        if session.localDragSession != nil {
-            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-        }
-        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
-    }
-    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {}
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    // 위치변화에 따라 index를 서로 교환해서 resetDeletedIndex에서 인덱스별로 순서를 재배치하도록 값을 변경함
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
-        //let moveCell = self.dataInfoArray[sourceIndexPath.row]
-        var tempDatainfo: dataInfo
-        
-        tempDatainfo = self.dataInfoArray[sourceIndexPath.row]
-        
-        self.dataInfoArray.remove(at: sourceIndexPath.row)
-        self.dataInfoArray.insert(tempDatainfo, at: destinationIndexPath.row)
-        
-        // 다시 0부터 순서대로 index 부여해준다.
-        for i in 0 ..< self.dataInfoArray.count {
-            self.dataInfoArray[i].attributes.index = i
-        }
-        self.dataInfoArray = resetDeletedIndex(self.dataInfoArray)
-    }
-}
+//extension ViewController: UITableViewDragDelegate, UITableViewDropDelegate {
+//    // Drag
+//    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+//        return [UIDragItem(itemProvider: NSItemProvider())]
+//    }
+//
+//    //Drop
+//    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+//        if session.localDragSession != nil {
+//            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+//        }
+//        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
+//    }
+//    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {}
+//
+//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
+//
+//    // 위치변화에 따라 index를 서로 교환해서 resetDeletedIndex에서 인덱스별로 순서를 재배치하도록 값을 변경함
+//    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+//
+//        //let moveCell = self.dataInfoArray[sourceIndexPath.row]
+//        var tempDatainfo: dataInfo
+//
+//        tempDatainfo = self.dataInfoArray[sourceIndexPath.row]
+//
+//        self.dataInfoArray.remove(at: sourceIndexPath.row)
+//        self.dataInfoArray.insert(tempDatainfo, at: destinationIndexPath.row)
+//
+//        // 다시 0부터 순서대로 index 부여해준다.
+//        for i in 0 ..< self.dataInfoArray.count {
+//            self.dataInfoArray[i].attributes.index = i
+//        }
+//        self.dataInfoArray = resetDeletedIndex(self.dataInfoArray)
+//    }
+//}

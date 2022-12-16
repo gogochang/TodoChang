@@ -36,6 +36,8 @@
 		95A98DDB292A181C000D78A9 /* CustomPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A98DDA292A181C000D78A9 /* CustomPopUpViewController.swift */; };
 		95A98DDD292A3212000D78A9 /* PopUpDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A98DDC292A3212000D78A9 /* PopUpDelegate.swift */; };
 		95AD8E01294B55C9004B7383 /* 75407-firecrackers-loading-screen.json in Resources */ = {isa = PBXBuildFile; fileRef = 95AD8E00294B55C9004B7383 /* 75407-firecrackers-loading-screen.json */; };
+		95AD8E05294B89DE004B7383 /* postService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AD8E04294B89DE004B7383 /* postService.swift */; };
+		95DC34E0294C5E4A00F76135 /* postDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DC34DF294C5E4A00F76135 /* postDataModel.swift */; };
 		BA312937FAAEF4A86F6A6E60 /* Pods_myTodoApp_myTodoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C79F6284227EEDCE7A32F6BF /* Pods_myTodoApp_myTodoAppUITests.framework */; };
 		E612549B4F81871C76D63093 /* Pods_myTodoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F00077C2CBD75D7060F4C3 /* Pods_myTodoAppTests.framework */; };
 /* End PBXBuildFile section */
@@ -96,6 +98,8 @@
 		95A98DDA292A181C000D78A9 /* CustomPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUpViewController.swift; sourceTree = "<group>"; };
 		95A98DDC292A3212000D78A9 /* PopUpDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpDelegate.swift; sourceTree = "<group>"; };
 		95AD8E00294B55C9004B7383 /* 75407-firecrackers-loading-screen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "75407-firecrackers-loading-screen.json"; path = "../../../Downloads/75407-firecrackers-loading-screen.json"; sourceTree = "<group>"; };
+		95AD8E04294B89DE004B7383 /* postService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = postService.swift; sourceTree = "<group>"; };
+		95DC34DF294C5E4A00F76135 /* postDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = postDataModel.swift; sourceTree = "<group>"; };
 		C2E53C5823061F70CC3ED663 /* Pods-myTodoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myTodoAppTests.release.xcconfig"; path = "Target Support Files/Pods-myTodoAppTests/Pods-myTodoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		C79F6284227EEDCE7A32F6BF /* Pods_myTodoApp_myTodoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_myTodoApp_myTodoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -185,6 +189,8 @@
 				95793F3729478809002CF6D3 /* loginDataModel.swift */,
 				95793F402948977D002CF6D3 /* signUpService.swift */,
 				95793F42294897CB002CF6D3 /* usersDataModel.swift */,
+				95AD8E04294B89DE004B7383 /* postService.swift */,
+				95DC34DF294C5E4A00F76135 /* postDataModel.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -501,6 +507,7 @@
 				95793F3A29479EA2002CF6D3 /* loginService.swift in Sources */,
 				95793F3E29487A4F002CF6D3 /* SignUpVC.swift in Sources */,
 				95793F2F294638A8002CF6D3 /* LoginVC.swift in Sources */,
+				95AD8E05294B89DE004B7383 /* postService.swift in Sources */,
 				9529DC34294B47CA0077588F /* LoadingService.swift in Sources */,
 				95A98DA329251503000D78A9 /* ViewController.swift in Sources */,
 				95A98DD329269336000D78A9 /* NetworkResult.swift in Sources */,
@@ -509,6 +516,7 @@
 				9509972C292D1A0F009DF177 /* MainVC.swift in Sources */,
 				95A98DD72926935B000D78A9 /* todoService.swift in Sources */,
 				95793F43294897CB002CF6D3 /* usersDataModel.swift in Sources */,
+				95DC34E0294C5E4A00F76135 /* postDataModel.swift in Sources */,
 				95A98DDD292A3212000D78A9 /* PopUpDelegate.swift in Sources */,
 				95A98DA129251503000D78A9 /* SceneDelegate.swift in Sources */,
 				95793F412948977D002CF6D3 /* signUpService.swift in Sources */,
