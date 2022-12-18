@@ -15,8 +15,10 @@ class ViewController: UIViewController {
     @IBOutlet var tableview: UITableView!
     @IBOutlet var countLabel: UILabel!
     @IBOutlet var calendarTitle: UILabel!
-    @IBOutlet var calendarCollectionView: UICollectionView!
+    //@IBOutlet var calendarCollectionView: UICollectionView!
+    @IBOutlet var weekdayTitles: UICollectionView!
     @IBOutlet var addButton: UIButton!
+
     
     //달력 관련된 변수 선언부
     let nowDate = Date()
@@ -25,11 +27,14 @@ class ViewController: UIViewController {
     let dateFormatter = DateFormatter()
     let toastFormatter = DateFormatter()
     var weeks: [String] = ["일", "월", "화", "수", "목", "금", "토"]
-    var days: [String] = []
+    
+    var prevDays: [String] = []
+    var crntDays: [String] = []
+    var nextDays: [String] = []
     var daysCountInMonth = 0
     var weekdayAdding = 0
     
-    var oldCell: MyCollectionViewCell? = nil
+    var oldCell: DateCVCell? = nil
     var oldCellDay: String = ""
     
     var currentIndexPath: Int = 0
@@ -52,14 +57,110 @@ class ViewController: UIViewController {
     var username: String?
     var password: String?
     
+    // 스크롤방향을 확인하려는 변수
+    // TODO: 방향을 담기좋은 효율적인 변수를 찾아
+    var swipeDirection: String = ""
+    //###################################################################################
+    lazy var contentScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .orange
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.delegate = self
+        return scrollView
+    }()
+    lazy var previousCalendarCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.allowsMultipleSelection = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(DateCVCell.self, forCellWithReuseIdentifier: "DateCVCell")
+        collectionView.collectionViewLayout.invalidateLayout()
+        return collectionView
+    }()
+    
+    lazy var currentCalendarCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.allowsMultipleSelection = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(DateCVCell.self, forCellWithReuseIdentifier: "DateCVCell")
+        collectionView.collectionViewLayout.invalidateLayout()
+        return collectionView
+    }()
+    
+    lazy var nextCalendarCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.allowsMultipleSelection = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(DateCVCell.self, forCellWithReuseIdentifier: "DateCVCell")
+        collectionView.collectionViewLayout.invalidateLayout()
+        return collectionView
+    }()
+    
+    //###################################################################################
     override func viewDidLoad() {
         print("ViewController - viewDidLoad() called")
         super.viewDidLoad()
         
+        //###################################################################################
+
+        view.addSubview(contentScrollView)
+        contentScrollView.topAnchor.constraint(equalTo: view.topAnchor , constant:120).isActive = true
+        contentScrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        contentScrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        contentScrollView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        let screenSize = UIScreen.main.bounds
+        contentScrollView.contentSize = CGSize(width: screenSize.width, height: 300)
+
+        let width = screenSize.width
+        let xPosition = self.view.frame.width * CGFloat(0)
+        previousCalendarCollectionView.frame = CGRect(x: xPosition, y: 0, width: width, height: 300)
+        contentScrollView.contentSize.width = self.view.frame.width * 1
+
+        contentScrollView.addSubview(previousCalendarCollectionView)
+
+        let xPosition1 = self.view.frame.width * CGFloat(1)
+        currentCalendarCollectionView.frame = CGRect(x: xPosition1, y: 0, width: width, height: 300)
+        contentScrollView.contentSize.width = self.view.frame.width * 2
+        contentScrollView.addSubview(currentCalendarCollectionView)
+
+        let xPosition2 = self.view.frame.width * CGFloat(2)
+        nextCalendarCollectionView.frame = CGRect(x: xPosition2, y: 0, width: width, height: 300)
+        contentScrollView.contentSize.width = self.view.frame.width * 3
+        contentScrollView.addSubview(nextCalendarCollectionView)
+
+        contentScrollView.setContentOffset(CGPoint(x: xPosition1, y: 0), animated: false)
+        //###################################################################################
+        
         guard let tableview else { return }
         guard let countLabel else { return }
-        guard let username = self.username else { return }
-        print("Chang MainVC Username = \(username)")
+        //guard let username = self.username else { return }
+        //print("4")
+        //print("Chang MainVC Username = \(username)")
         
         self.overrideUserInterfaceStyle = .light
         getDatainfo()
@@ -74,25 +175,30 @@ class ViewController: UIViewController {
 //        tableview.dropDelegate = self
         
         // calendar 지정
-        calendarCollectionView.delegate = self
-        calendarCollectionView.dataSource = self
+        //calendarCollectionView.delegate = self
+        //calendarCollectionView.dataSource = self
+        weekdayTitles.delegate = self
+        weekdayTitles.dataSource = self
+        
         dateFormatter.dateFormat = "yyyy년 MM월"
         toastFormatter.dateFormat = "yyyy-MM-dd"
         dateComponent.year = cal.component(.year, from: nowDate)
         dateComponent.month = cal.component(.month, from: nowDate)
         dateComponent.day = 1
-        
+        self.prevCalendarCalculation()
         self.calendarCalculation()
+        self.nextCalendarCalculation()
         
-        addButton.layer.cornerRadius = 25
-        tableview.layer.borderWidth = 1
-        
+        //addButton.layer.cornerRadius = 25
+        tableview.layer.borderWidth = 0.5
+        print("chang!!")
     }
     
     //MARK: - Add 버튼
     @IBAction func addButtonClicked(_ sender: UIButton) {
         print("ViewController - addButtonClicked() called")
         isClickedButtonName = "addButton"
+        
 
         let storyboard = UIStoryboard.init(name: "PopUp", bundle: nil)
         let customPopUpVC = storyboard.instantiateViewController(withIdentifier: "AlertPopUpVC") as! CustomPopUpViewController
@@ -131,13 +237,53 @@ class ViewController: UIViewController {
     }
 }
 
-//MARK: - 셀 뷰객체
+//MARK: - 테이블뷰 셀 뷰객체
 class CustomCell: UITableViewCell {
     @IBOutlet var labelTitle: UILabel!
     @IBOutlet var UISwitch: UISwitch!
     @IBOutlet var writerText: UILabel!
     var ofIndex: Int?
 }
+//MARK: - 달력 요일 텍스트
+class WeekDayTitleCell: UICollectionViewCell {
+    @IBOutlet var weekDayTitle: UILabel!
+}
+
+//MARK: - 달력 콜렉션뷰 셀 뷰객체
+class DataCVCell: UICollectionViewCell {
+    static let identifier: String = "DateCVCell"
+    var monthdayLabel: UILabel = {
+        var label = UILabel()
+        label.text = "MON"
+        label.textAlignment = .center
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setUpView()
+    }
+    
+    private func setUpView() {
+        addSubview(monthdayLabel)
+        monthdayLabel.topAnchor.constraint(equalTo: topAnchor , constant: 5).isActive = true
+        monthdayLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 5).isActive = true
+    
+    }
+    
+    func configureMonthday(to month: String) {
+        monthdayLabel.text = month
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("do not use in storyboard!")
+    }
+}
+
 
 //MARK: - 리스트 테이블뷰 Cell 개수, Cell 구현부
 extension ViewController: UITableViewDataSource,
@@ -146,12 +292,13 @@ extension ViewController: UITableViewDataSource,
    
     // 테이블뷰의 갯수를 리턴해준다.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("ViewController - tableview() called ")
+        print("ViewController - tableview() called count ")
         return dataInfoArray.count
     }
     
     // 테이블뷰 Cell의 형태를 구현하는 부분
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("ViewController - tableView() called cell settingi")
         // 인자로받은 tableView의 셀을 CustomCell로 캐스팅후 없으면 UITableViewCell의 기본클래스로 반환 아니면 다음줄 실행
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else {
             return UITableViewCell()
@@ -224,12 +371,10 @@ extension ViewController: UITableViewDataSource,
                         username: dataInfoArray[self.currentIndexPath].attributes.UserName)
             
 
-            // Toast
-            //self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
         // 아이템 추가 버튼 클릭
         case "addButton":
             print("ViewController - onDelegateEditButtonClicked() - addButton called")
-            print("chang username => \(self.username!)")
+            //print("chang username => \(self.username!)")
             self.isResetArray = true
             // POST
             postDatainfo(title: title, isDone: false, index: self.dataInfoArray.count, date: selectedDate, username: self.username!)
@@ -328,7 +473,8 @@ extension ViewController {
             switch(response) {
             case .success(let todoData):
                 if let data = todoData as? [dataInfo] {
-
+                    print("chang1 -> \(data[0].attributes.date)")
+                    
                     var currentArray: [dataInfo] = []
                     
                     // 선택된 date의 배열을 저장하는 부분
@@ -350,7 +496,7 @@ extension ViewController {
                     self.dataInfoArray = currentArray
                     self.countLabel.text = "총 \(self.dataInfoArray.count) 개의 메모가 있습니다."
                     
-                    self.calendarCollectionView.reloadData()
+                    //self.calendarCollectionView.reloadData()
                     self.tableview.reloadData()
                     
                     LoadingService.hideLoading()
@@ -391,7 +537,7 @@ extension ViewController {
                 self.tableview.reloadData()
                 print("success put ")
                 self.getDatainfo()
-                self.calendarCollectionView.reloadData()
+                //self.calendarCollectionView.reloadData()
                 self.tableview.reloadData()
                 self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
             case .requestErr(let message):
@@ -420,7 +566,7 @@ extension ViewController {
                 print("success post ")
                 
                 self.getDatainfo()
-                self.calendarCollectionView.reloadData()
+                //self.calendarCollectionView.reloadData()
                 self.tableview.reloadData()
                 self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
             case .requestErr(let message):
@@ -443,7 +589,7 @@ extension ViewController {
             case .success:
                 print("succuss delete")
                 self.getDatainfo()
-                self.calendarCollectionView.reloadData()
+                //self.calendarCollectionView.reloadData()
                 self.tableview.reloadData()
                 self.view.makeToast("아이템이 삭제되었습니다", duration: 1.0)
                 
@@ -465,145 +611,235 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 
     private func calendarCalculation() {
         print("ViewController - calendarCalculation() called")
+        
         let firstDayOfMonth = cal.date(from: dateComponent)
         let firstWeekday: Int = cal.component(.weekday, from: firstDayOfMonth!)
+    
         daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
         weekdayAdding = 2 - firstWeekday
         
         self.calendarTitle.text = dateFormatter.string(from: firstDayOfMonth!)
-        self.days.removeAll()
-        for day in weekdayAdding...daysCountInMonth {
-            if day < 1 {
-                self.days.append("")
+        self.crntDays.removeAll()
+        for day in weekdayAdding...42 {
+            if (day < 1) || ( day > daysCountInMonth) {
+                self.crntDays.append("")
             } else {
-                self.days.append(String(day))
+                self.crntDays.append(String(day))
             }
         }
     }
     
-    @IBAction func onPrevBtnClicked(_ sender: UIButton) {
-        print("ViewController - onPrevBtnClicked() called")
+    private func prevCalendarCalculation() {
+        print("ViewController - prevCalendarCalculation() called")
         dateComponent.day = 1
         dateComponent.month = dateComponent.month! - 1
-        self.dataInfoArray = []
-        self.tableview.reloadData()
-        self.calendarCalculation()
-        self.calendarCollectionView.reloadData()
+        let firstDayOfMonth = cal.date(from: dateComponent)
+        let firstWeekday: Int = cal.component(.weekday, from: firstDayOfMonth!)
+        
+        daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
+        weekdayAdding = 2 - firstWeekday
+        
+        self.prevDays.removeAll()
+        for day in weekdayAdding...42 {
+            if (day < 1) || ( day > daysCountInMonth) {
+                self.prevDays.append("")
+            } else {
+                self.prevDays.append(String(day))
+            }
+        }
+        dateComponent.month = dateComponent.month! + 1
     }
     
-    @IBAction func onNextBtnClicked(_ sender: UIButton) {
-        print("ViewController - onNextBtnClicked() called")
+    private func nextCalendarCalculation() {
+        print("ViewController - prevCalendarCalculation() called")
         dateComponent.day = 1
         dateComponent.month = dateComponent.month! + 1
-        self.dataInfoArray = []
-        self.tableview.reloadData()
-        self.calendarCalculation()
-        self.calendarCollectionView.reloadData()
+        let firstDayOfMonth = cal.date(from: dateComponent)
+        let firstWeekday: Int = cal.component(.weekday, from: firstDayOfMonth!)
+        
+        daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
+        weekdayAdding = 2 - firstWeekday
+        self.nextDays.removeAll()
+        for day in weekdayAdding...42 {
+            if (day < 1) || ( day > daysCountInMonth) {
+                self.nextDays.append("")
+            } else {
+                self.nextDays.append(String(day))
+            }
+        }
+        dateComponent.month = dateComponent.month! - 1
     }
-    
-    // 섹션 개수
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
-    }
-    
+
     // Cell 클릭 이벤트 함수
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("ViewController - collectionView() Click Event")
+        let cell = collectionView.cellForItem(at: indexPath) as! DateCVCell
 
-        let cell = collectionView.cellForItem(at: indexPath) as! MyCollectionViewCell
+        // 날짜없는부분 클릭하면 무시함
+        if cell.monthdayLabel.text == "" { return }
         
-        switch indexPath.section {
-        case 0:
-            return
-        default:
-            // 날짜없는부분 클릭하면 무시함
-            if cell.collectionViewLabel.text == "" { return }
-            
-            if let didSelectedCell = oldCell {
-                didSelectedCell.backgroundColor = .white
-            }
-            
-            // 리로드할때 오늘날짜로 자동 선택하도록 하는거 노노
-            initCalendar = false
-            
-            cell.backgroundColor = .systemGray5
-            oldCellDay = cell.collectionViewLabel.text!
-            oldCell = cell
-    
-            dateComponent.day = Int(days[indexPath.row])
-            let toastDate = cal.date(from: dateComponent)
-            
-            selectedDate = toastFormatter.string(from: toastDate!)
-
-            self.view.makeToast(toastFormatter.string(from: toastDate!), duration: 1.0)
-            
-            getDatainfo()
+        if let didSelectedCell = oldCell {
+            didSelectedCell.backgroundColor = .white
         }
+        
+        // 리로드할때 오늘날짜로 자동 선택하도록 하는거 노노
+        initCalendar = false
+        
+        cell.backgroundColor = .systemGray5
+        oldCellDay = cell.monthdayLabel.text!
+        oldCell = cell
+        
+        dateComponent.day = Int(crntDays[indexPath.row])
+        let toastDate = cal.date(from: dateComponent)
+        
+        selectedDate = toastFormatter.string(from: toastDate!)
+        
+        self.view.makeToast(toastFormatter.string(from: toastDate!), duration: 1.0)
+        
+        getDatainfo()
+
     }
     
     // 컬랙션 셀 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            switch section {
-            case 0:
-                return self.weeks.count
-            default:
-                return self.days.count
-            }
+        print("ViewController - collectionView() Cell 개수")
+        switch collectionView {
+        case previousCalendarCollectionView:
+            return self.prevDays.count
+        case currentCalendarCollectionView:
+            return self.crntDays.count
+        case nextCalendarCollectionView:
+            return self.nextDays.count
+        default:
+            break
+        }
+        return 42
     }
 
     // 컨렉션 쎌 구성 설정
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! MyCollectionViewCell
-        var testComponent = DateComponents()
-        cell.backgroundColor = .white
-
-        switch indexPath.section {
-        case 0:
-            cell.collectionViewLabel.text = weeks[indexPath.row]
-            cell.collectionViewMark.isHidden = true
-        default:
-            cell.collectionViewLabel.text = days[indexPath.row]
-            testComponent.year = dateComponent.year
-            testComponent.month = dateComponent.month
-            testComponent.day = Int(days[indexPath.row])
-            let testDate = cal.date(from: testComponent)
+        print("ViewController - collectionView() Cell 설정")
+        if (collectionView == previousCalendarCollectionView) || (collectionView == currentCalendarCollectionView) || (collectionView == nextCalendarCollectionView){
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DateCVCell", for: indexPath) as! DateCVCell
             
-            // 처음 시작할 때 오늘 날짜 기본으로 표시하도록 하기
-            if initCalendar {
-                if cal.isDateInToday(testDate!) && (days[indexPath.row] != "") {
-                    selectedDate = toastFormatter.string(from: testDate!)
-                    cell.backgroundColor = .systemGray5
-                } else {
-                    cell.backgroundColor = .white
-                }
-            }
+            var testComponent = DateComponents()
             
-            if self.dateOfDataInfo.contains(toastFormatter.string(from: testDate!)) && (days[indexPath.row] != "") {
-                cell.collectionViewMark.isHidden = false
-                cell.collectionViewMark.backgroundColor = .orange
+            cell.monthdayLabel.font.withSize(20)
+            cell.layer.cornerRadius = 5
+            cell.backgroundColor = .white
+            
+            if indexPath.row % 7 == 0 {
+                cell.monthdayLabel.textColor = .red
+            } else if indexPath.row % 7 == 6 {
+                cell.monthdayLabel.textColor = .blue
             } else {
-                cell.collectionViewMark.isHidden = true
+                cell.monthdayLabel.textColor = .black
+            }
+            
+            switch collectionView {
+                
+            case previousCalendarCollectionView: cell.monthdayLabel.text = prevDays[indexPath.row]
+                
+            case currentCalendarCollectionView:
+                
+                cell.monthdayLabel.text = crntDays[indexPath.row]
+                
+                testComponent.year = dateComponent.year
+                testComponent.month = dateComponent.month
+                testComponent.day = Int(crntDays[indexPath.row])
+                let testDate = cal.date(from: testComponent)
+                
+                if initCalendar {
+                    if cal.isDateInToday(testDate!) && (crntDays[indexPath.row] != "") {
+                        selectedDate = toastFormatter.string(from: testDate!)
+                        
+                        cell.backgroundColor = .systemGray5
+                    } else {
+                        cell.backgroundColor = .white
+                    }
+                }
+                
+                print("chang0 -> \(selectedDate)")
+                // 클릭 날짜 리로드할때 유지하기 위해서
+                if cell.monthdayLabel.text == oldCellDay && (crntDays[indexPath.row] != ""){
+                    cell.backgroundColor = .systemGray5
+                    oldCell = cell
+                }
+                
+            case nextCalendarCollectionView: cell.monthdayLabel.text = nextDays[indexPath.row]
+                
+            default:
+                break
+            }
+            return cell
+        } else if collectionView == weekdayTitles {
+            //print("chang week day title")
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeekDayCVCell", for: indexPath) as! WeekDayTitleCell
+            print("chang week day title")
+            cell.weekDayTitle.text = weeks[indexPath.row]
+            if indexPath.row % 7 == 0 {
+                cell.weekDayTitle.textColor = .red
+            } else if indexPath.row % 7 == 6 {
+                cell.weekDayTitle.textColor = .blue
+            } else {
+                cell.weekDayTitle.textColor = .black
+            }
+            
+            return cell
+        }
+
+        return DateCVCell()
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if scrollView == contentScrollView {
+            switch targetContentOffset.pointee.x {
+            case 0:
+                self.swipeDirection = "prev"
+            case self.view.frame.width * CGFloat(1):
+                self.swipeDirection = "crnt"
+            case self.view.frame.width * CGFloat(2):
+                self.swipeDirection = "next"
+            default:
+                break
             }
         }
-        
-        // 클릭 날짜 리로드할때 유지하기 위해서
-        if cell.collectionViewLabel.text == oldCellDay && (days[indexPath.row] != ""){
-            cell.backgroundColor = .systemGray5
-            oldCell = cell
-        }
-        
-
-        
-        if indexPath.row % 7 == 0 {
-            cell.collectionViewLabel.textColor = .red
-        } else if indexPath.row % 7 == 6 {
-            cell.collectionViewLabel.textColor = .blue
-        } else {
-            cell.collectionViewLabel.textColor = .black
-        }
-        
-        
-        
-        return cell
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == contentScrollView {
+            oldCellDay = ""
+            switch swipeDirection {
+            case "prev":
+                dateComponent.day = 1
+                dateComponent.month = dateComponent.month! - 1
+                
+                self.prevCalendarCalculation()
+                self.calendarCalculation()
+                self.nextCalendarCalculation()
+                
+                previousCalendarCollectionView.reloadData()
+                currentCalendarCollectionView.reloadData()
+                nextCalendarCollectionView.reloadData()
+                contentScrollView.setContentOffset(CGPoint(x: self.view.frame.width * CGFloat(1), y: 0), animated: false)
+            case "crnt":
+                break
+            case "next":
+                dateComponent.day = 1
+                dateComponent.month = dateComponent.month! + 1
+                
+                self.prevCalendarCalculation()
+                self.calendarCalculation()
+                self.nextCalendarCalculation()
+                
+                previousCalendarCollectionView.reloadData()
+                currentCalendarCollectionView.reloadData()
+                nextCalendarCollectionView.reloadData()
+                contentScrollView.setContentOffset(CGPoint(x: self.view.frame.width * CGFloat(1), y: 0), animated: false)
+              
+            default:
+                break
+            }}
     }
     
     // 컨렉션 쎌 간격/ 사이즈 설정

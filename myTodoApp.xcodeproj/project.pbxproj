@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		09F7C0F81DE307380561E471 /* Pods_myTodoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09984FF054F45C2343B36B77 /* Pods_myTodoApp.framework */; };
-		9509972C292D1A0F009DF177 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509972B292D1A0F009DF177 /* MainVC.swift */; };
 		95099732292FECF6009DF177 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95099731292FECF6009DF177 /* MyCollectionViewCell.swift */; };
 		95099735293CBA57009DF177 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 95099734293CBA57009DF177 /* Lottie */; };
 		9529DC34294B47CA0077588F /* LoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9529DC33294B47CA0077588F /* LoadingService.swift */; };
@@ -38,8 +37,8 @@
 		95AD8E01294B55C9004B7383 /* 75407-firecrackers-loading-screen.json in Resources */ = {isa = PBXBuildFile; fileRef = 95AD8E00294B55C9004B7383 /* 75407-firecrackers-loading-screen.json */; };
 		95AD8E05294B89DE004B7383 /* postService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AD8E04294B89DE004B7383 /* postService.swift */; };
 		95DC34E0294C5E4A00F76135 /* postDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DC34DF294C5E4A00F76135 /* postDataModel.swift */; };
-		95DC34E2294C9C1400F76135 /* ScrollView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95DC34E1294C9C1400F76135 /* ScrollView.storyboard */; };
-		95DC34E4294C9C2100F76135 /* ScrollViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DC34E3294C9C2100F76135 /* ScrollViewVC.swift */; };
+		95DC34F2294D82BF00F76135 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95DC34F1294D82BF00F76135 /* Calendar.storyboard */; };
+		95DC34F4294D831800F76135 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DC34F3294D831800F76135 /* CalendarVC.swift */; };
 		BA312937FAAEF4A86F6A6E60 /* Pods_myTodoApp_myTodoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C79F6284227EEDCE7A32F6BF /* Pods_myTodoApp_myTodoAppUITests.framework */; };
 		E612549B4F81871C76D63093 /* Pods_myTodoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F00077C2CBD75D7060F4C3 /* Pods_myTodoAppTests.framework */; };
 /* End PBXBuildFile section */
@@ -69,7 +68,6 @@
 		48F00077C2CBD75D7060F4C3 /* Pods_myTodoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_myTodoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		737764E3A47CBA1957201ABA /* Pods-myTodoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myTodoAppTests.debug.xcconfig"; path = "Target Support Files/Pods-myTodoAppTests/Pods-myTodoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7DD89C2E17A3FCA8BDA6CE7A /* Pods-myTodoApp-myTodoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myTodoApp-myTodoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-myTodoApp-myTodoAppUITests/Pods-myTodoApp-myTodoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
-		9509972B292D1A0F009DF177 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		95099731292FECF6009DF177 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
 		9529DC33294B47CA0077588F /* LoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingService.swift; sourceTree = "<group>"; };
 		95691C7329409A290096B15C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -102,8 +100,8 @@
 		95AD8E00294B55C9004B7383 /* 75407-firecrackers-loading-screen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "75407-firecrackers-loading-screen.json"; path = "../../../Downloads/75407-firecrackers-loading-screen.json"; sourceTree = "<group>"; };
 		95AD8E04294B89DE004B7383 /* postService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = postService.swift; sourceTree = "<group>"; };
 		95DC34DF294C5E4A00F76135 /* postDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = postDataModel.swift; sourceTree = "<group>"; };
-		95DC34E1294C9C1400F76135 /* ScrollView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ScrollView.storyboard; sourceTree = "<group>"; };
-		95DC34E3294C9C2100F76135 /* ScrollViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewVC.swift; sourceTree = "<group>"; };
+		95DC34F1294D82BF00F76135 /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
+		95DC34F3294D831800F76135 /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		C2E53C5823061F70CC3ED663 /* Pods-myTodoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myTodoAppTests.release.xcconfig"; path = "Target Support Files/Pods-myTodoAppTests/Pods-myTodoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		C79F6284227EEDCE7A32F6BF /* Pods_myTodoApp_myTodoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_myTodoApp_myTodoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -163,12 +161,10 @@
 		9509972D292D1A16009DF177 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				9509972B292D1A0F009DF177 /* MainVC.swift */,
 				95A98DA229251503000D78A9 /* ViewController.swift */,
 				95A98DDA292A181C000D78A9 /* CustomPopUpViewController.swift */,
 				95793F2E294638A8002CF6D3 /* LoginVC.swift */,
 				95793F3D29487A4F002CF6D3 /* SignUpVC.swift */,
-				95DC34E3294C9C2100F76135 /* ScrollViewVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -181,7 +177,6 @@
 				95691C7329409A290096B15C /* LaunchScreen.storyboard */,
 				95793F2829462D36002CF6D3 /* Login.storyboard */,
 				95793F3B2948793D002CF6D3 /* SignUp.storyboard */,
-				95DC34E1294C9C1400F76135 /* ScrollView.storyboard */,
 			);
 			path = StoryBoard;
 			sourceTree = "<group>";
@@ -189,6 +184,7 @@
 		95793F3F29489734002CF6D3 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				9529DC33294B47CA0077588F /* LoadingService.swift */,
 				95A98DD62926935B000D78A9 /* todoService.swift */,
 				95A98DD429269348000D78A9 /* todoDataModel.swift */,
 				95793F3929479EA2002CF6D3 /* loginService.swift */,
@@ -229,15 +225,15 @@
 			children = (
 				95A98D9E29251503000D78A9 /* AppDelegate.swift */,
 				95A98DA029251503000D78A9 /* SceneDelegate.swift */,
+				95A98DDC292A3212000D78A9 /* PopUpDelegate.swift */,
 				95A98DA729251504000D78A9 /* Assets.xcassets */,
 				9509972E292D1A5F009DF177 /* StoryBoard */,
 				9509972D292D1A16009DF177 /* ViewController */,
 				95793F3F29489734002CF6D3 /* Service */,
 				95A98DD229269336000D78A9 /* NetworkResult.swift */,
-				95A98DDC292A3212000D78A9 /* PopUpDelegate.swift */,
 				95099731292FECF6009DF177 /* MyCollectionViewCell.swift */,
+				95DC34F5294DADF800F76135 /* Calendar */,
 				95A98DAC29251504000D78A9 /* Info.plist */,
-				9529DC33294B47CA0077588F /* LoadingService.swift */,
 			);
 			path = myTodoApp;
 			sourceTree = "<group>";
@@ -257,6 +253,15 @@
 				95A98DC129251504000D78A9 /* myTodoAppUITestsLaunchTests.swift */,
 			);
 			path = myTodoAppUITests;
+			sourceTree = "<group>";
+		};
+		95DC34F5294DADF800F76135 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				95DC34F1294D82BF00F76135 /* Calendar.storyboard */,
+				95DC34F3294D831800F76135 /* CalendarVC.swift */,
+			);
+			path = Calendar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -374,13 +379,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95DC34F2294D82BF00F76135 /* Calendar.storyboard in Resources */,
 				95A98DA829251504000D78A9 /* Assets.xcassets in Resources */,
 				95AD8E01294B55C9004B7383 /* 75407-firecrackers-loading-screen.json in Resources */,
 				95793F2929462D36002CF6D3 /* Login.storyboard in Resources */,
 				95A98DA629251503000D78A9 /* Main.storyboard in Resources */,
 				95691C7429409A290096B15C /* LaunchScreen.storyboard in Resources */,
 				95793F3C2948793D002CF6D3 /* SignUp.storyboard in Resources */,
-				95DC34E2294C9C1400F76135 /* ScrollView.storyboard in Resources */,
 				95A98DD9292A151E000D78A9 /* PopUp.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -517,14 +522,13 @@
 				95AD8E05294B89DE004B7383 /* postService.swift in Sources */,
 				9529DC34294B47CA0077588F /* LoadingService.swift in Sources */,
 				95A98DA329251503000D78A9 /* ViewController.swift in Sources */,
-				95DC34E4294C9C2100F76135 /* ScrollViewVC.swift in Sources */,
 				95A98DD329269336000D78A9 /* NetworkResult.swift in Sources */,
 				95A98D9F29251503000D78A9 /* AppDelegate.swift in Sources */,
 				95A98DD529269348000D78A9 /* todoDataModel.swift in Sources */,
-				9509972C292D1A0F009DF177 /* MainVC.swift in Sources */,
 				95A98DD72926935B000D78A9 /* todoService.swift in Sources */,
 				95793F43294897CB002CF6D3 /* usersDataModel.swift in Sources */,
 				95DC34E0294C5E4A00F76135 /* postDataModel.swift in Sources */,
+				95DC34F4294D831800F76135 /* CalendarVC.swift in Sources */,
 				95A98DDD292A3212000D78A9 /* PopUpDelegate.swift in Sources */,
 				95A98DA129251503000D78A9 /* SceneDelegate.swift in Sources */,
 				95793F412948977D002CF6D3 /* signUpService.swift in Sources */,
