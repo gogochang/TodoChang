@@ -57,6 +57,8 @@ class ViewController: UIViewController {
     var username: String?
     var password: String?
     
+    var currentDate: String?
+    
     // 스크롤방향을 확인하려는 변수
     // TODO: 방향을 담기좋은 효율적인 변수를 찾아
     var swipeDirection: String = ""
@@ -191,7 +193,7 @@ class ViewController: UIViewController {
         
         //addButton.layer.cornerRadius = 25
         tableview.layer.borderWidth = 0.5
-        print("chang!!")
+        
     }
     
     //MARK: - Add 버튼
@@ -250,37 +252,55 @@ class WeekDayTitleCell: UICollectionViewCell {
 }
 
 //MARK: - 달력 콜렉션뷰 셀 뷰객체
-class DataCVCell: UICollectionViewCell {
+class DateCVCell: UICollectionViewCell {
     static let identifier: String = "DateCVCell"
+    var cellDate: String?
     var monthdayLabel: UILabel = {
         var label = UILabel()
         label.text = "MON"
         label.textAlignment = .center
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
+    var monthdayImage: UIImageView = {
+       var imageView = UIImageView()
+        imageView.backgroundColor = .red
+        imageView.layer.cornerRadius = 1.25
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setUpView()
     }
-    
+
     private func setUpView() {
         addSubview(monthdayLabel)
         monthdayLabel.topAnchor.constraint(equalTo: topAnchor , constant: 5).isActive = true
         monthdayLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 5).isActive = true
-    
+        
+        addSubview(monthdayImage)
+        monthdayImage.leftAnchor.constraint(equalTo: monthdayLabel.rightAnchor, constant: 2.5).isActive = true
+        monthdayImage.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
+        monthdayImage.widthAnchor.constraint(equalToConstant: 2.5).isActive = true
+        monthdayImage.heightAnchor.constraint(equalToConstant: 2.5).isActive = true
     }
-    
+
     func configureMonthday(to month: String) {
         monthdayLabel.text = month
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("do not use in storyboard!")
+    }
+
+    func setDateOfCell(date: String) {
+        self.cellDate = date
     }
 }
 
@@ -473,7 +493,6 @@ extension ViewController {
             switch(response) {
             case .success(let todoData):
                 if let data = todoData as? [dataInfo] {
-                    print("chang1 -> \(data[0].attributes.date)")
                     
                     var currentArray: [dataInfo] = []
                     
@@ -492,11 +511,10 @@ extension ViewController {
                             self.dateOfDataInfo.append(data[i].attributes.date)
                         }
                     }
-                    
                     self.dataInfoArray = currentArray
                     self.countLabel.text = "총 \(self.dataInfoArray.count) 개의 메모가 있습니다."
                     
-                    //self.calendarCollectionView.reloadData()
+                    self.currentCalendarCollectionView.reloadData()
                     self.tableview.reloadData()
                     
                     LoadingService.hideLoading()
@@ -537,7 +555,7 @@ extension ViewController {
                 self.tableview.reloadData()
                 print("success put ")
                 self.getDatainfo()
-                //self.calendarCollectionView.reloadData()
+                self.currentCalendarCollectionView.reloadData()
                 self.tableview.reloadData()
                 self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
             case .requestErr(let message):
@@ -566,7 +584,7 @@ extension ViewController {
                 print("success post ")
                 
                 self.getDatainfo()
-                //self.calendarCollectionView.reloadData()
+                self.currentCalendarCollectionView.reloadData()
                 self.tableview.reloadData()
                 self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
             case .requestErr(let message):
@@ -589,7 +607,7 @@ extension ViewController {
             case .success:
                 print("succuss delete")
                 self.getDatainfo()
-                //self.calendarCollectionView.reloadData()
+                self.currentCalendarCollectionView.reloadData()
                 self.tableview.reloadData()
                 self.view.makeToast("아이템이 삭제되었습니다", duration: 1.0)
                 
@@ -619,6 +637,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         weekdayAdding = 2 - firstWeekday
         
         self.calendarTitle.text = dateFormatter.string(from: firstDayOfMonth!)
+        self.currentDate = dateFormatter.string(from: firstDayOfMonth!)
         self.crntDays.removeAll()
         for day in weekdayAdding...42 {
             if (day < 1) || ( day > daysCountInMonth) {
@@ -691,11 +710,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         
         dateComponent.day = Int(crntDays[indexPath.row])
         let toastDate = cal.date(from: dateComponent)
-        
         selectedDate = toastFormatter.string(from: toastDate!)
         
         self.view.makeToast(toastFormatter.string(from: toastDate!), duration: 1.0)
-        
         getDatainfo()
 
     }
@@ -721,12 +738,13 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         print("ViewController - collectionView() Cell 설정")
         if (collectionView == previousCalendarCollectionView) || (collectionView == currentCalendarCollectionView) || (collectionView == nextCalendarCollectionView){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DateCVCell", for: indexPath) as! DateCVCell
-            
+            cell.monthdayImage.isHidden = true
             var testComponent = DateComponents()
-            
-            cell.monthdayLabel.font.withSize(20)
+            // ---------------init----------------
             cell.layer.cornerRadius = 5
             cell.backgroundColor = .white
+            cell.monthdayLabel.font = UIFont.systemFont(ofSize: 12)
+            //------------------------------------
             
             if indexPath.row % 7 == 0 {
                 cell.monthdayLabel.textColor = .red
@@ -735,15 +753,36 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             } else {
                 cell.monthdayLabel.textColor = .black
             }
-            
+
             switch collectionView {
                 
-            case previousCalendarCollectionView: cell.monthdayLabel.text = prevDays[indexPath.row]
+            case previousCalendarCollectionView: //cell.monthdayLabel.text = prevDays[indexPath.row]
+                cell.configureMonthday(to: prevDays[indexPath.row])
+                testComponent.year = dateComponent.year
+                testComponent.month = dateComponent.month! - 1
+                testComponent.day = Int(prevDays[indexPath.row])
+                let testDate = cal.date(from: testComponent)
+
+                if cal.isDateInToday(testDate!) && (prevDays[indexPath.row] != "") {
+                    cell.monthdayLabel.font = UIFont.boldSystemFont(ofSize: 15)
+                }
+
+                if self.dateOfDataInfo.contains(toastFormatter.string(from: testDate!)) && (prevDays[indexPath.row] != "") {
+                    cell.monthdayImage.isHidden = false
+                    cell.monthdayImage.backgroundColor = .orange
+                } else {
+                    cell.monthdayImage.isHidden = true
+                }
                 
+                if toastFormatter.string(from: testDate!) == selectedDate {
+                    cell.backgroundColor = .systemGray5
+                    oldCell = cell
+                }
+                testComponent.month = dateComponent.month! + 1
+  
             case currentCalendarCollectionView:
                 
-                cell.monthdayLabel.text = crntDays[indexPath.row]
-                
+                cell.configureMonthday(to: crntDays[indexPath.row])
                 testComponent.year = dateComponent.year
                 testComponent.month = dateComponent.month
                 testComponent.day = Int(crntDays[indexPath.row])
@@ -752,30 +791,61 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 if initCalendar {
                     if cal.isDateInToday(testDate!) && (crntDays[indexPath.row] != "") {
                         selectedDate = toastFormatter.string(from: testDate!)
-                        
+                        oldCell = cell
+                 
                         cell.backgroundColor = .systemGray5
                     } else {
                         cell.backgroundColor = .white
                     }
                 }
+                if cal.isDateInToday(testDate!) && (crntDays[indexPath.row] != "") {
+                    cell.monthdayLabel.font = UIFont.boldSystemFont(ofSize: 15)
+                }
+
+                if self.dateOfDataInfo.contains(toastFormatter.string(from: testDate!)) && (crntDays[indexPath.row] != "") {
+                    cell.monthdayImage.isHidden = false
+                    cell.monthdayImage.backgroundColor = .orange
+                } else {
+                    cell.monthdayImage.isHidden = true
+                }
                 
-                print("chang0 -> \(selectedDate)")
-                // 클릭 날짜 리로드할때 유지하기 위해서
-                if cell.monthdayLabel.text == oldCellDay && (crntDays[indexPath.row] != ""){
+                if toastFormatter.string(from: testDate!) == selectedDate {
                     cell.backgroundColor = .systemGray5
                     oldCell = cell
                 }
                 
-            case nextCalendarCollectionView: cell.monthdayLabel.text = nextDays[indexPath.row]
+                
+            case nextCalendarCollectionView: //cell.monthdayLabel.text = nextDays[indexPath.row]
+                cell.configureMonthday(to: nextDays[indexPath.row])
+                testComponent.year = dateComponent.year
+                testComponent.month = dateComponent.month! + 1
+                testComponent.day = Int(nextDays[indexPath.row])
+                let testDate = cal.date(from: testComponent)
+
+                if cal.isDateInToday(testDate!) && (nextDays[indexPath.row] != "") {
+                    cell.monthdayLabel.font = UIFont.boldSystemFont(ofSize: 15)
+                }
+
+                if self.dateOfDataInfo.contains(toastFormatter.string(from: testDate!)) && (nextDays[indexPath.row] != "") {
+                    cell.monthdayImage.isHidden = false
+                    cell.monthdayImage.backgroundColor = .orange
+                } else {
+                    cell.monthdayImage.isHidden = true
+                }
+                
+                if toastFormatter.string(from: testDate!) == selectedDate {
+                    cell.backgroundColor = .systemGray5
+                    oldCell = cell
+                }
+                testComponent.month = dateComponent.month! - 1
+  
                 
             default:
                 break
             }
             return cell
         } else if collectionView == weekdayTitles {
-            //print("chang week day title")
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeekDayCVCell", for: indexPath) as! WeekDayTitleCell
-            print("chang week day title")
             cell.weekDayTitle.text = weeks[indexPath.row]
             if indexPath.row % 7 == 0 {
                 cell.weekDayTitle.textColor = .red
@@ -807,17 +877,17 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+
         if scrollView == contentScrollView {
-            oldCellDay = ""
             switch swipeDirection {
             case "prev":
                 dateComponent.day = 1
                 dateComponent.month = dateComponent.month! - 1
-                
+
                 self.prevCalendarCalculation()
                 self.calendarCalculation()
                 self.nextCalendarCalculation()
-                
+
                 previousCalendarCollectionView.reloadData()
                 currentCalendarCollectionView.reloadData()
                 nextCalendarCollectionView.reloadData()
@@ -827,11 +897,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             case "next":
                 dateComponent.day = 1
                 dateComponent.month = dateComponent.month! + 1
-                
+
                 self.prevCalendarCalculation()
                 self.calendarCalculation()
                 self.nextCalendarCalculation()
-                
+
                 previousCalendarCollectionView.reloadData()
                 currentCalendarCollectionView.reloadData()
                 nextCalendarCollectionView.reloadData()
