@@ -114,9 +114,9 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="WeekDayCVCell" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0h1-Sd-VSA">
-                                <rect key="frame" x="10" y="85" width="394" height="45"/>
+                                <rect key="frame" x="10" y="85" width="394" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="0mS-pZ-Wfu"/>
+                                    <constraint firstAttribute="height" constant="50" id="0mS-pZ-Wfu"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="j1d-SY-cUx">
                                     <size key="itemSize" width="55" height="39"/>
@@ -182,7 +182,7 @@
                             <constraint firstItem="GOq-dk-ccm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="1vT-N1-Byp"/>
                             <constraint firstItem="Go5-KU-JHV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="3B6-0B-d7l"/>
                             <constraint firstItem="NiE-tj-pEU" firstAttribute="top" secondItem="GOq-dk-ccm" secondAttribute="bottom" constant="10" id="7Nh-Vw-Av2"/>
-                            <constraint firstItem="GOq-dk-ccm" firstAttribute="top" secondItem="0h1-Sd-VSA" secondAttribute="bottom" constant="5" id="BI9-ym-nYS"/>
+                            <constraint firstItem="GOq-dk-ccm" firstAttribute="top" secondItem="0h1-Sd-VSA" secondAttribute="bottom" id="BI9-ym-nYS"/>
                             <constraint firstItem="Go5-KU-JHV" firstAttribute="top" secondItem="NiE-tj-pEU" secondAttribute="bottom" constant="5" id="BkK-ea-0Mw"/>
                             <constraint firstItem="0h1-Sd-VSA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="JuO-9c-lGF"/>
                             <constraint firstItem="NiE-tj-pEU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="M09-Ug-JoL"/>

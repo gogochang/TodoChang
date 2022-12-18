@@ -131,7 +131,7 @@ class ViewController: UIViewController {
         //###################################################################################
 
         view.addSubview(contentScrollView)
-        contentScrollView.topAnchor.constraint(equalTo: view.topAnchor , constant:120).isActive = true
+        contentScrollView.topAnchor.constraint(equalTo: weekdayTitles.bottomAnchor).isActive = true
         contentScrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         contentScrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         contentScrollView.heightAnchor.constraint(equalToConstant: 300).isActive = true
@@ -160,7 +160,7 @@ class ViewController: UIViewController {
         
         guard let tableview else { return }
         guard let countLabel else { return }
-        //guard let username = self.username else { return }
+        guard let username = self.username else { return }
         //print("4")
         //print("Chang MainVC Username = \(username)")
         
