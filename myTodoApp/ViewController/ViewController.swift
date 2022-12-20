@@ -148,6 +148,10 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
          SideMenuManager.default.rightMenuNavigationController?.setNavigationBarHidden(true, animated: true)
      }
     
+    func sideMenuWillDisappear(menu: SideMenuNavigationController, animated: Bool) {
+        self.disabledMainImageView.isHidden = true
+    }
+    
     //###################################################################################
     override func viewDidLoad() {
         print("ViewController - viewDidLoad() called")
@@ -274,7 +278,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     //MARK: - 사이드메뉴 버튼
     @IBAction func menuButtonClicked(_ sender: UIButton) {
         print("ViewController - menuButtonClicked called")
-        
+        self.disabledMainImageView.isHidden = false
         let storyboard = UIStoryboard(name: "SideMenu", bundle: nil)
         let sideMenuVC = storyboard.instantiateViewController(identifier: "SideMenuVC") as! SideMenuVC
         let sideMenuNav = SideMenuNavigationController(rootViewController: sideMenuVC)
