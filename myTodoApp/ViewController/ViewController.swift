@@ -5,20 +5,21 @@
 //  Created by gogochang on 2022/11/16.
 //
 
-import UIKit
-import Alamofire
-import Toast_Swift
-import Lottie
+import UIKit // UI구성
+import Alamofire // http 통신할 때 사용
+import Toast_Swift //액션 결과를 표시할 때 사용
+import Lottie // 회원가입완료 애니메이션할 때 사용
+import SideMenu
+
 
 class ViewController: UIViewController {
     
     @IBOutlet var tableview: UITableView!
     @IBOutlet var countLabel: UILabel!
     @IBOutlet var calendarTitle: UILabel!
-    //@IBOutlet var calendarCollectionView: UICollectionView!
     @IBOutlet var weekdayTitles: UICollectionView!
     @IBOutlet var addButton: UIButton!
-
+    @IBOutlet var menuButton: UIButton!
     
     //달력 관련된 변수 선언부
     let nowDate = Date()
@@ -47,12 +48,12 @@ class ViewController: UIViewController {
     var isResetArray: Bool = true
     var addingArray: [dataInfo] = []
     var dataInfoArray: [dataInfo] = []
-
+    
     var saveArray: [dataInfo] = []
     var selectedDate: String = ""
     var dateOfDataInfo: [String] = []
     var initCalendar: Bool = true
-
+    
     // LoginVC에서 가져오는 계정 정보 데이터
     var username: String?
     var password: String?
@@ -60,7 +61,7 @@ class ViewController: UIViewController {
     var currentDate: String?
     
     // 스크롤방향을 확인하려는 변수
-    // TODO: 방향을 담기좋은 효율적인 변수를 찾아
+    // TODO: 방향을 담기좋은 효율적인 변수를 찾아야 한다. 리펙토링 필요
     var swipeDirection: String = ""
     //###################################################################################
     lazy var contentScrollView: UIScrollView = {
@@ -129,7 +130,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         //###################################################################################
-
+        
         view.addSubview(contentScrollView)
         contentScrollView.topAnchor.constraint(equalTo: weekdayTitles.bottomAnchor).isActive = true
         contentScrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -137,44 +138,46 @@ class ViewController: UIViewController {
         contentScrollView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         let screenSize = UIScreen.main.bounds
         contentScrollView.contentSize = CGSize(width: screenSize.width, height: 300)
-
+        
         let width = screenSize.width
         let xPosition = self.view.frame.width * CGFloat(0)
         previousCalendarCollectionView.frame = CGRect(x: xPosition, y: 0, width: width, height: 300)
         contentScrollView.contentSize.width = self.view.frame.width * 1
-
+        
         contentScrollView.addSubview(previousCalendarCollectionView)
-
+        
         let xPosition1 = self.view.frame.width * CGFloat(1)
         currentCalendarCollectionView.frame = CGRect(x: xPosition1, y: 0, width: width, height: 300)
         contentScrollView.contentSize.width = self.view.frame.width * 2
         contentScrollView.addSubview(currentCalendarCollectionView)
-
+        
         let xPosition2 = self.view.frame.width * CGFloat(2)
         nextCalendarCollectionView.frame = CGRect(x: xPosition2, y: 0, width: width, height: 300)
         contentScrollView.contentSize.width = self.view.frame.width * 3
         contentScrollView.addSubview(nextCalendarCollectionView)
-
+        
         contentScrollView.setContentOffset(CGPoint(x: xPosition1, y: 0), animated: false)
         //###################################################################################
         
         guard let tableview else { return }
         guard let countLabel else { return }
+#if DEBUG
         guard let username = self.username else { return }
+#endif
         //print("4")
         //print("Chang MainVC Username = \(username)")
         
         self.overrideUserInterfaceStyle = .light
         getDatainfo()
-
+        
         tableview.layer.cornerRadius = 15
         countLabel.text = "총 \(dataInfoArray.count) 개의 메모가 있습니다."
         
         tableview.delegate = self
         tableview.dataSource = self
         tableview.dragInteractionEnabled = true
-//        tableview.dragDelegate = self
-//        tableview.dropDelegate = self
+        //        tableview.dragDelegate = self
+        //        tableview.dropDelegate = self
         
         // calendar 지정
         //calendarCollectionView.delegate = self
@@ -201,19 +204,19 @@ class ViewController: UIViewController {
         print("ViewController - addButtonClicked() called")
         isClickedButtonName = "addButton"
         
-
+        
         let storyboard = UIStoryboard.init(name: "PopUp", bundle: nil)
         let customPopUpVC = storyboard.instantiateViewController(withIdentifier: "AlertPopUpVC") as! CustomPopUpViewController
-
+        
         // 뷰컨트롤러가 보여지는 스타일
         customPopUpVC.modalPresentationStyle = .overCurrentContext
         // 뷰컨트롤러가 사라지는 스타일
         customPopUpVC.modalTransitionStyle = .crossDissolve
-
+        
         customPopUpVC.myPopUpDelegate = self
-
+        
         customPopUpVC.clickedAddBtn = true
-
+        
         //현재 VC위에 customPopVC를 보여준다. animation 효과 , 해당액션은 nil
         self.present(customPopUpVC, animated: true, completion: nil)
     }
@@ -236,6 +239,10 @@ class ViewController: UIViewController {
                         username: dataInfoArray[indexPath.row].attributes.UserName)
         }
         self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
+    }
+
+    @IBAction func menuButtonClicked(_ sender: UIButton) {
+        print("ViewController - menuButtonClicked called")
     }
 }
 

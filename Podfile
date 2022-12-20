@@ -13,6 +13,9 @@ target 'myTodoApp' do
   # 토스트 메시지
   pod 'Toast-Swift', '~> 5.0.1'
 
+  # Side Menu
+  pod 'SideMenu'
+
   target 'myTodoAppTests' do
     inherit! :search_paths
     # Pods for testing

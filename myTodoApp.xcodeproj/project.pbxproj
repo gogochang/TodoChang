@@ -10,6 +10,9 @@
 		09F7C0F81DE307380561E471 /* Pods_myTodoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09984FF054F45C2343B36B77 /* Pods_myTodoApp.framework */; };
 		95099732292FECF6009DF177 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95099731292FECF6009DF177 /* MyCollectionViewCell.swift */; };
 		95099735293CBA57009DF177 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 95099734293CBA57009DF177 /* Lottie */; };
+		9511B2082951BB5900A4DBB7 /* SideMenuNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9511B2072951BB5900A4DBB7 /* SideMenuNavigation.swift */; };
+		9511B20A2951BBB100A4DBB7 /* SideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9511B2092951BBB100A4DBB7 /* SideMenuVC.swift */; };
+		9511B20D2951BD9E00A4DBB7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9511B20C2951BD9E00A4DBB7 /* SnapKit */; };
 		9529DC34294B47CA0077588F /* LoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9529DC33294B47CA0077588F /* LoadingService.swift */; };
 		95691C7429409A290096B15C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95691C7329409A290096B15C /* LaunchScreen.storyboard */; };
 		95793F2929462D36002CF6D3 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95793F2829462D36002CF6D3 /* Login.storyboard */; };
@@ -69,6 +72,8 @@
 		737764E3A47CBA1957201ABA /* Pods-myTodoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myTodoAppTests.debug.xcconfig"; path = "Target Support Files/Pods-myTodoAppTests/Pods-myTodoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7DD89C2E17A3FCA8BDA6CE7A /* Pods-myTodoApp-myTodoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myTodoApp-myTodoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-myTodoApp-myTodoAppUITests/Pods-myTodoApp-myTodoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		95099731292FECF6009DF177 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
+		9511B2072951BB5900A4DBB7 /* SideMenuNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuNavigation.swift; sourceTree = "<group>"; };
+		9511B2092951BBB100A4DBB7 /* SideMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuVC.swift; sourceTree = "<group>"; };
 		9529DC33294B47CA0077588F /* LoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingService.swift; sourceTree = "<group>"; };
 		95691C7329409A290096B15C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		95793F2829462D36002CF6D3 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -111,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9511B20D2951BD9E00A4DBB7 /* SnapKit in Frameworks */,
 				09F7C0F81DE307380561E471 /* Pods_myTodoApp.framework in Frameworks */,
 				95099735293CBA57009DF177 /* Lottie in Frameworks */,
 			);
@@ -165,6 +171,8 @@
 				95A98DDA292A181C000D78A9 /* CustomPopUpViewController.swift */,
 				95793F2E294638A8002CF6D3 /* LoginVC.swift */,
 				95793F3D29487A4F002CF6D3 /* SignUpVC.swift */,
+				9511B2072951BB5900A4DBB7 /* SideMenuNavigation.swift */,
+				9511B2092951BBB100A4DBB7 /* SideMenuVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -284,6 +292,7 @@
 			name = myTodoApp;
 			packageProductDependencies = (
 				95099734293CBA57009DF177 /* Lottie */,
+				9511B20C2951BD9E00A4DBB7 /* SnapKit */,
 			);
 			productName = myTodoApp;
 			productReference = 95A98D9B29251503000D78A9 /* myTodoApp.app */;
@@ -362,6 +371,7 @@
 			mainGroup = 95A98D9229251503000D78A9;
 			packageReferences = (
 				95099733293CBA57009DF177 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				9511B20B2951BD9E00A4DBB7 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 95A98D9C29251503000D78A9 /* Products */;
 			projectDirPath = "";
@@ -515,6 +525,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				95793F3829478809002CF6D3 /* loginDataModel.swift in Sources */,
+				9511B2082951BB5900A4DBB7 /* SideMenuNavigation.swift in Sources */,
+				9511B20A2951BBB100A4DBB7 /* SideMenuVC.swift in Sources */,
 				95099732292FECF6009DF177 /* MyCollectionViewCell.swift in Sources */,
 				95793F3A29479EA2002CF6D3 /* loginService.swift in Sources */,
 				95793F3E29487A4F002CF6D3 /* SignUpVC.swift in Sources */,
@@ -894,6 +906,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		9511B20B2951BD9E00A4DBB7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -901,6 +921,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 95099733293CBA57009DF177 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		9511B20C2951BD9E00A4DBB7 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9511B20B2951BD9E00A4DBB7 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
