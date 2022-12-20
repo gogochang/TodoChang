@@ -20,14 +20,18 @@ class LoginVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         print("LoginVC - viewDidload() called")
+        autoLogin()
         self.overrideUserInterfaceStyle = .light
         hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        //self.checkLoginData(id: "bmn2526@naver.com", password: "password1234")
+        
         initButtonStyle()
+        
+       
     }
     
     private func initButtonStyle() {
@@ -89,8 +93,12 @@ class LoginVC: UIViewController {
             guard let id = idText.text else { return }
             guard let password = passwordText.text else { return }
             
+            
+            
             checkLoginData(id: id, password: password)
-
+            UserDefaults.standard.set(id, forKey: "ID")
+            UserDefaults.standard.set(password, forKey: "PASSWORD")
+            
         } else {
             LoadingService.hideLoading()
             self.view.makeToast("이메일 혹은 비밀번호를 확인해주세요.", duration: 1.0)
@@ -117,14 +125,16 @@ class LoginVC: UIViewController {
                     print("chang succes \(data.user)")
                     let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
                     let MainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
-                    
+                    LoadingService.hideLoading()
                     // 메인뷰컨트롤에 로그인한 유저네임 넘기기
                     MainVC.username = data.user.username
                     MainVC.email = data.user.email
                     
+                    UserDefaults.standard.set(data.user.username, forKey: "USERNAME")
+                    
                     self.changeRootViewController(MainVC)
                     self.view.makeToast("로그인", duration: 1.0)
-                    LoadingService.hideLoading()
+                    
                 }
             case .requestErr(let message):
                 print("requestErr", message)
@@ -140,7 +150,24 @@ class LoginVC: UIViewController {
         })
     }
     
-
+    private func autoLogin() {
+        
+        guard let id = UserDefaults.standard.string(forKey: "ID") else {return}
+        guard let password = UserDefaults.standard.string(forKey: "PASSWORD") else { return }
+        guard let username = UserDefaults.standard.string(forKey: "USERNAME") else { return }
+        
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let MainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+        
+        // 메인뷰컨트롤에 로그인한 유저네임 넘기기
+        MainVC.username = username
+        MainVC.email = id
+        
+        self.changeRootViewController(MainVC)
+        self.view.makeToast("로그인", duration: 1.0)
+        LoadingService.hideLoading()
+        
+    }
 }
 
 //MARK: - Keyboard
