@@ -15,5 +15,7 @@ class SideMenuNavigation: SideMenuNavigationController {
         
         self.presentationStyle = .menuSlideIn
         self.statusBarEndAlpha = 0.0
+//        let mainViewController = ViewController()
+//        mainViewController.disabledMainImageView.isHidden = true
     }
 }

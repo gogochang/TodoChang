@@ -12,7 +12,7 @@ import Lottie // 회원가입완료 애니메이션할 때 사용
 import SideMenu
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     
     @IBOutlet var tableview: UITableView!
     @IBOutlet var countLabel: UILabel!
@@ -56,6 +56,7 @@ class ViewController: UIViewController {
     
     // LoginVC에서 가져오는 계정 정보 데이터
     var username: String?
+    var email: String?
     var password: String?
     
     var currentDate: String?
@@ -64,6 +65,14 @@ class ViewController: UIViewController {
     // TODO: 방향을 담기좋은 효율적인 변수를 찾아야 한다. 리펙토링 필요
     var swipeDirection: String = ""
     //###################################################################################
+    
+    lazy var disabledMainImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .black
+        imageView.alpha = 0.7
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     lazy var contentScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .orange
@@ -124,12 +133,28 @@ class ViewController: UIViewController {
         return collectionView
     }()
     
+    func setUpSideMenuNavigationVC(vc: ViewController, menuNavVC: SideMenuNavigationController) {
+         menuNavVC.statusBarEndAlpha = 0
+         menuNavVC.dismissOnPresent = true
+         menuNavVC.dismissOnPush = true
+         menuNavVC.enableTapToDismissGesture = true
+         menuNavVC.enableSwipeToDismissGesture = true
+         menuNavVC.enableSwipeToDismissGesture = true
+         menuNavVC.sideMenuDelegate = vc
+         menuNavVC.menuWidth = 238
+         menuNavVC.presentationStyle = .menuSlideIn
+         SideMenuManager.default.rightMenuNavigationController = menuNavVC
+        SideMenuManager.default.rightMenuNavigationController = menuNavVC
+         SideMenuManager.default.rightMenuNavigationController?.setNavigationBarHidden(true, animated: true)
+     }
+    
     //###################################################################################
     override func viewDidLoad() {
         print("ViewController - viewDidLoad() called")
         super.viewDidLoad()
         
         //###################################################################################
+        
         
         view.addSubview(contentScrollView)
         contentScrollView.topAnchor.constraint(equalTo: weekdayTitles.bottomAnchor).isActive = true
@@ -157,6 +182,13 @@ class ViewController: UIViewController {
         contentScrollView.addSubview(nextCalendarCollectionView)
         
         contentScrollView.setContentOffset(CGPoint(x: xPosition1, y: 0), animated: false)
+        
+        view.addSubview(disabledMainImageView)
+        disabledMainImageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        disabledMainImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        disabledMainImageView.widthAnchor.constraint(equalToConstant: screenSize.width).isActive = true
+        disabledMainImageView.heightAnchor.constraint(equalToConstant: screenSize.height).isActive = true
+        
         //###################################################################################
         
         guard let tableview else { return }
@@ -166,7 +198,7 @@ class ViewController: UIViewController {
 #endif
         //print("4")
         //print("Chang MainVC Username = \(username)")
-        
+        disabledMainImageView.isHidden = true
         self.overrideUserInterfaceStyle = .light
         getDatainfo()
         
@@ -180,8 +212,6 @@ class ViewController: UIViewController {
         //        tableview.dropDelegate = self
         
         // calendar 지정
-        //calendarCollectionView.delegate = self
-        //calendarCollectionView.dataSource = self
         weekdayTitles.delegate = self
         weekdayTitles.dataSource = self
         
@@ -241,8 +271,21 @@ class ViewController: UIViewController {
         self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
     }
 
+    //MARK: - 사이드메뉴 버튼
     @IBAction func menuButtonClicked(_ sender: UIButton) {
         print("ViewController - menuButtonClicked called")
+        
+        let storyboard = UIStoryboard(name: "SideMenu", bundle: nil)
+        let sideMenuVC = storyboard.instantiateViewController(identifier: "SideMenuVC") as! SideMenuVC
+        let sideMenuNav = SideMenuNavigationController(rootViewController: sideMenuVC)
+        
+        setUpSideMenuNavigationVC(vc: self, menuNavVC: sideMenuNav)
+        
+        sideMenuVC.name = self.username
+        sideMenuVC.email = self.email
+        
+        let sideMenu = SideMenuManager.default.rightMenuNavigationController!
+        self.present(sideMenu, animated: true)
     }
 }
 
@@ -272,7 +315,7 @@ class DateCVCell: UICollectionViewCell {
         return label
     }()
 
-    var monthdayImage: UIImageView = {
+    var monthdayMarkImage: UIImageView = {
        var imageView = UIImageView()
         imageView.backgroundColor = .red
         imageView.layer.cornerRadius = 1.25
@@ -291,11 +334,11 @@ class DateCVCell: UICollectionViewCell {
         monthdayLabel.topAnchor.constraint(equalTo: topAnchor , constant: 5).isActive = true
         monthdayLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 5).isActive = true
         
-        addSubview(monthdayImage)
-        monthdayImage.leftAnchor.constraint(equalTo: monthdayLabel.rightAnchor, constant: 2.5).isActive = true
-        monthdayImage.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
-        monthdayImage.widthAnchor.constraint(equalToConstant: 2.5).isActive = true
-        monthdayImage.heightAnchor.constraint(equalToConstant: 2.5).isActive = true
+        addSubview(monthdayMarkImage)
+        monthdayMarkImage.leftAnchor.constraint(equalTo: monthdayLabel.rightAnchor, constant: 2.5).isActive = true
+        monthdayMarkImage.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
+        monthdayMarkImage.widthAnchor.constraint(equalToConstant: 2.5).isActive = true
+        monthdayMarkImage.heightAnchor.constraint(equalToConstant: 2.5).isActive = true
     }
 
     func configureMonthday(to month: String) {
@@ -745,7 +788,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         print("ViewController - collectionView() Cell 설정")
         if (collectionView == previousCalendarCollectionView) || (collectionView == currentCalendarCollectionView) || (collectionView == nextCalendarCollectionView){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DateCVCell", for: indexPath) as! DateCVCell
-            cell.monthdayImage.isHidden = true
+            cell.monthdayMarkImage.isHidden = true
             var testComponent = DateComponents()
             // ---------------init----------------
             cell.layer.cornerRadius = 5
@@ -775,10 +818,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 }
 
                 if self.dateOfDataInfo.contains(toastFormatter.string(from: testDate!)) && (prevDays[indexPath.row] != "") {
-                    cell.monthdayImage.isHidden = false
-                    cell.monthdayImage.backgroundColor = .orange
+                    cell.monthdayMarkImage.isHidden = false
+                    cell.monthdayMarkImage.backgroundColor = .orange
                 } else {
-                    cell.monthdayImage.isHidden = true
+                    cell.monthdayMarkImage.isHidden = true
                 }
                 
                 if toastFormatter.string(from: testDate!) == selectedDate {
@@ -810,10 +853,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 }
 
                 if self.dateOfDataInfo.contains(toastFormatter.string(from: testDate!)) && (crntDays[indexPath.row] != "") {
-                    cell.monthdayImage.isHidden = false
-                    cell.monthdayImage.backgroundColor = .orange
+                    cell.monthdayMarkImage.isHidden = false
+                    cell.monthdayMarkImage.backgroundColor = .orange
                 } else {
-                    cell.monthdayImage.isHidden = true
+                    cell.monthdayMarkImage.isHidden = true
                 }
                 
                 if toastFormatter.string(from: testDate!) == selectedDate {
@@ -834,10 +877,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 }
 
                 if self.dateOfDataInfo.contains(toastFormatter.string(from: testDate!)) && (nextDays[indexPath.row] != "") {
-                    cell.monthdayImage.isHidden = false
-                    cell.monthdayImage.backgroundColor = .orange
+                    cell.monthdayMarkImage.isHidden = false
+                    cell.monthdayMarkImage.backgroundColor = .orange
                 } else {
-                    cell.monthdayImage.isHidden = true
+                    cell.monthdayMarkImage.isHidden = true
                 }
                 
                 if toastFormatter.string(from: testDate!) == selectedDate {
@@ -965,3 +1008,4 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 //        self.dataInfoArray = resetDeletedIndex(self.dataInfoArray)
 //    }
 //}
+

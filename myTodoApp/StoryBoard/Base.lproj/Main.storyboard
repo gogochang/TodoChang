@@ -46,13 +46,13 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="efJ-Z6-MWW">
                                                     <rect key="frame" x="20" y="33" width="79.5" height="14.5"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="작성자 : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PG8-qR-Q1n">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="작성자 : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PG8-qR-Q1n">
                                                             <rect key="frame" x="0.0" y="0.0" width="41.5" height="14.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="writer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KXD-98-jub">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="writer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KXD-98-jub">
                                                             <rect key="frame" x="46.5" y="0.0" width="33" height="14.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -185,7 +185,6 @@
                                 <state key="normal" image="menu"/>
                                 <connections>
                                     <action selector="menuButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6yc-eD-Afc"/>
-                                    <segue destination="uxm-s3-56U" kind="show" id="0Yn-LH-ees"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -229,82 +228,8 @@
             </objects>
             <point key="canvasLocation" x="2513.04347826087" y="-466.07142857142856"/>
         </scene>
-        <!--Side Menu Navigation-->
-        <scene sceneID="zB1-jp-9H3">
-            <objects>
-                <navigationController wantsFullScreenLayout="YES" id="uxm-s3-56U" customClass="SideMenuNavigation" customModule="myTodoApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" id="oRj-uP-6dd"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GHz-x7-fRJ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="d0O-pk-jq7">
-                        <rect key="frame" x="0.0" y="-58" width="0.0" height="0.0"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="oGn-Ik-zo4" kind="relationship" relationship="rootViewController" id="e5e-Lq-Ugb"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1kS-gg-uuW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3375" y="28"/>
-        </scene>
-        <!--Side MenuVC-->
-        <scene sceneID="AuM-au-4XR">
-            <objects>
-                <viewController storyboardIdentifier="SideMenuNavigation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oGn-Ik-zo4" customClass="SideMenuVC" customModule="myTodoApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="m2r-wD-JCa">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenIcon_black" translatesAutoresizingMaskIntoConstraints="NO" id="Beo-QM-Pi9">
-                                <rect key="frame" x="20" y="56" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="cjB-90-JEe"/>
-                                    <constraint firstAttribute="height" constant="50" id="pVr-Vw-DNl"/>
-                                </constraints>
-                            </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Vf1-IA-tu2">
-                                <rect key="frame" x="80" y="62.5" width="131.5" height="37.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="관전왕" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vB7-f8-GQq">
-                                        <rect key="frame" x="0.0" y="0.0" width="39" height="18"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bmn2526@naver.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cHy-z2-iUG">
-                                        <rect key="frame" x="0.0" y="23" width="131.5" height="14.5"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                        <color key="textColor" systemColor="systemGrayColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="gST-lr-TJO"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="gST-lr-TJO" firstAttribute="top" secondItem="Beo-QM-Pi9" secondAttribute="top" id="Tgf-dz-DCa"/>
-                            <constraint firstItem="Vf1-IA-tu2" firstAttribute="leading" secondItem="Beo-QM-Pi9" secondAttribute="trailing" constant="10" id="VxQ-aM-Uk9"/>
-                            <constraint firstItem="Beo-QM-Pi9" firstAttribute="leading" secondItem="gST-lr-TJO" secondAttribute="leading" constant="20" id="mfq-wr-CQS"/>
-                            <constraint firstItem="Vf1-IA-tu2" firstAttribute="centerY" secondItem="Beo-QM-Pi9" secondAttribute="centerY" id="ww4-CD-cfZ"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="MH0-lP-bNi"/>
-                    <connections>
-                        <outlet property="profileIcon" destination="Beo-QM-Pi9" id="uwI-02-Hem"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ecw-eb-GLO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4106" y="27"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="LaunchScreenIcon_black" width="1024" height="1024"/>
         <image name="menu" width="32" height="32"/>
         <image name="text.badge.plus" catalog="system" width="128" height="107"/>
         <systemColor name="labelColor">
@@ -315,9 +240,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

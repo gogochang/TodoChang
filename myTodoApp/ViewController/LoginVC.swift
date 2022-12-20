@@ -120,6 +120,7 @@ class LoginVC: UIViewController {
                     
                     // 메인뷰컨트롤에 로그인한 유저네임 넘기기
                     MainVC.username = data.user.username
+                    MainVC.email = data.user.email
                     
                     self.changeRootViewController(MainVC)
                     self.view.makeToast("로그인", duration: 1.0)
