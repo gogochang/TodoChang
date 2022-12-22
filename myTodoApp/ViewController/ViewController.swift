@@ -49,7 +49,6 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     var addingArray: [dataInfo] = []
     var dataInfoArray: [dataInfo] = []
     
-    var saveArray: [dataInfo] = []
     var selectedDate: String = ""
     var dateOfDataInfo: [String] = []
     var initCalendar: Bool = true
@@ -75,7 +74,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     }()
     lazy var contentScrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .orange
+        scrollView.backgroundColor = .white
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
@@ -197,11 +196,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         
         guard let tableview else { return }
         guard let countLabel else { return }
-#if DEBUG
         guard let username = self.username else { return }
-#endif
-        //print("4")
-        //print("Chang MainVC Username = \(username)")
         disabledMainImageView.isHidden = true
         self.overrideUserInterfaceStyle = .light
         getDatainfo()
@@ -228,7 +223,6 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         self.calendarCalculation()
         self.nextCalendarCalculation()
         
-        //addButton.layer.cornerRadius = 25
         tableview.layer.borderWidth = 0.5
         
     }
@@ -272,7 +266,6 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
                         date: dataInfoArray[indexPath.row].attributes.date,
                         username: dataInfoArray[indexPath.row].attributes.UserName)
         }
-        self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
     }
 
     //MARK: - 사이드메뉴 버튼
@@ -377,12 +370,14 @@ extension ViewController: UITableViewDataSource,
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else {
             return UITableViewCell()
         }
-    
-        saveArray.append(dataInfoArray[indexPath.row])
+        
         
         cell.labelTitle.text = dataInfoArray[indexPath.row].attributes.title
         cell.UISwitch.isOn = dataInfoArray[indexPath.row].attributes.isDone
         cell.writerText.text = dataInfoArray[indexPath.row].attributes.UserName
+        
+        print("chang cell name = \(cell.labelTitle.text)")
+        
         return cell
     }
     
@@ -434,7 +429,7 @@ extension ViewController: UITableViewDataSource,
             dataInfoArray[self.currentIndexPath].attributes.title = title
             
             // 테이블뷰 아이템 배열을 리셋하겠다. ( didSet의 내용을 실행하겠다. )
-            self.isResetArray = true
+            //self.isResetArray = true
             
             // PUT
             putDatainfo(id: dataInfoArray[self.currentIndexPath].id,
@@ -559,13 +554,18 @@ extension ViewController {
                     
                     // 데이터 유무 날짜 표시
                     self.dateOfDataInfo.removeAll()
-                    
                     for i in 0 ..< data.count {
                         if self.dateOfDataInfo.contains(data[i].attributes.date) == false {
                             self.dateOfDataInfo.append(data[i].attributes.date)
                         }
                     }
-                    self.dataInfoArray = currentArray
+                    
+                    // datainfo.index의 순서를 기준으로 재정렬함.
+                    let ascending: (dataInfo, dataInfo) -> Bool = { (lhs, rhs) in
+                        return lhs.attributes.index < rhs.attributes.index
+                    }
+                    self.dataInfoArray = currentArray.sorted(by: ascending)
+                    
                     self.countLabel.text = "총 \(self.dataInfoArray.count) 개의 메모가 있습니다."
                     
                     self.currentCalendarCollectionView.reloadData()
@@ -606,11 +606,11 @@ extension ViewController {
                                        completion: { (response) in
             switch(response) {
             case .success:
-                self.tableview.reloadData()
+                //self.tableview.reloadData()
                 print("success put ")
                 self.getDatainfo()
-                self.currentCalendarCollectionView.reloadData()
-                self.tableview.reloadData()
+//                self.currentCalendarCollectionView.reloadData()
+//                self.tableview.reloadData()
                 self.view.makeToast("아이템이 수정되었습니다", duration: 1.0)
             case .requestErr(let message):
                 print("requestErr", message)

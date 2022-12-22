@@ -43,7 +43,6 @@ struct todoService {
         }
     }
     
-    
     //MARK: - Status Code
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode {
