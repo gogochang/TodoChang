@@ -15,6 +15,8 @@
 		9511B20D2951BD9E00A4DBB7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9511B20C2951BD9E00A4DBB7 /* SnapKit */; };
 		9511B20F2951EE5900A4DBB7 /* SideMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9511B20E2951EE5900A4DBB7 /* SideMenu.storyboard */; };
 		9529DC34294B47CA0077588F /* LoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9529DC33294B47CA0077588F /* LoadingService.swift */; };
+		952D2A5D2954700800F3F3BB /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 952D2A5C2954700800F3F3BB /* Search.storyboard */; };
+		952D2A5F295470C000F3F3BB /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952D2A5E295470C000F3F3BB /* SearchVC.swift */; };
 		95691C7429409A290096B15C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95691C7329409A290096B15C /* LaunchScreen.storyboard */; };
 		95793F2929462D36002CF6D3 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95793F2829462D36002CF6D3 /* Login.storyboard */; };
 		95793F2F294638A8002CF6D3 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95793F2E294638A8002CF6D3 /* LoginVC.swift */; };
@@ -24,6 +26,8 @@
 		95793F3E29487A4F002CF6D3 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95793F3D29487A4F002CF6D3 /* SignUpVC.swift */; };
 		95793F412948977D002CF6D3 /* signUpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95793F402948977D002CF6D3 /* signUpService.swift */; };
 		95793F43294897CB002CF6D3 /* usersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95793F42294897CB002CF6D3 /* usersDataModel.swift */; };
+		957B27F62956CC8F0016B2D0 /* MainNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957B27F52956CC8F0016B2D0 /* MainNavigationView.swift */; };
+		957B27F829587B0B0016B2D0 /* AccountSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957B27F729587B0B0016B2D0 /* AccountSettingVC.swift */; };
 		95A98D9F29251503000D78A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A98D9E29251503000D78A9 /* AppDelegate.swift */; };
 		95A98DA129251503000D78A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A98DA029251503000D78A9 /* SceneDelegate.swift */; };
 		95A98DA329251503000D78A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A98DA229251503000D78A9 /* ViewController.swift */; };
@@ -77,6 +81,8 @@
 		9511B2092951BBB100A4DBB7 /* SideMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuVC.swift; sourceTree = "<group>"; };
 		9511B20E2951EE5900A4DBB7 /* SideMenu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideMenu.storyboard; sourceTree = "<group>"; };
 		9529DC33294B47CA0077588F /* LoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingService.swift; sourceTree = "<group>"; };
+		952D2A5C2954700800F3F3BB /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
+		952D2A5E295470C000F3F3BB /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		95691C7329409A290096B15C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		95793F2829462D36002CF6D3 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		95793F2E294638A8002CF6D3 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -86,6 +92,8 @@
 		95793F3D29487A4F002CF6D3 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		95793F402948977D002CF6D3 /* signUpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signUpService.swift; sourceTree = "<group>"; };
 		95793F42294897CB002CF6D3 /* usersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = usersDataModel.swift; sourceTree = "<group>"; };
+		957B27F52956CC8F0016B2D0 /* MainNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationView.swift; sourceTree = "<group>"; };
+		957B27F729587B0B0016B2D0 /* AccountSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingVC.swift; sourceTree = "<group>"; };
 		95A98D9B29251503000D78A9 /* myTodoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myTodoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95A98D9E29251503000D78A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		95A98DA029251503000D78A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -175,6 +183,9 @@
 				95793F3D29487A4F002CF6D3 /* SignUpVC.swift */,
 				9511B2072951BB5900A4DBB7 /* SideMenuNavigation.swift */,
 				9511B2092951BBB100A4DBB7 /* SideMenuVC.swift */,
+				952D2A5E295470C000F3F3BB /* SearchVC.swift */,
+				957B27F52956CC8F0016B2D0 /* MainNavigationView.swift */,
+				957B27F729587B0B0016B2D0 /* AccountSettingVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -188,6 +199,7 @@
 				95793F2829462D36002CF6D3 /* Login.storyboard */,
 				95793F3B2948793D002CF6D3 /* SignUp.storyboard */,
 				9511B20E2951EE5900A4DBB7 /* SideMenu.storyboard */,
+				952D2A5C2954700800F3F3BB /* Search.storyboard */,
 			);
 			path = StoryBoard;
 			sourceTree = "<group>";
@@ -396,6 +408,7 @@
 				95A98DA829251504000D78A9 /* Assets.xcassets in Resources */,
 				95AD8E01294B55C9004B7383 /* 75407-firecrackers-loading-screen.json in Resources */,
 				9511B20F2951EE5900A4DBB7 /* SideMenu.storyboard in Resources */,
+				952D2A5D2954700800F3F3BB /* Search.storyboard in Resources */,
 				95793F2929462D36002CF6D3 /* Login.storyboard in Resources */,
 				95A98DA629251503000D78A9 /* Main.storyboard in Resources */,
 				95691C7429409A290096B15C /* LaunchScreen.storyboard in Resources */,
@@ -540,13 +553,16 @@
 				95A98DA329251503000D78A9 /* ViewController.swift in Sources */,
 				95A98DD329269336000D78A9 /* NetworkResult.swift in Sources */,
 				95A98D9F29251503000D78A9 /* AppDelegate.swift in Sources */,
+				952D2A5F295470C000F3F3BB /* SearchVC.swift in Sources */,
 				95A98DD529269348000D78A9 /* todoDataModel.swift in Sources */,
 				95A98DD72926935B000D78A9 /* todoService.swift in Sources */,
 				95793F43294897CB002CF6D3 /* usersDataModel.swift in Sources */,
 				95DC34E0294C5E4A00F76135 /* postDataModel.swift in Sources */,
 				95DC34F4294D831800F76135 /* CalendarVC.swift in Sources */,
 				95A98DDD292A3212000D78A9 /* PopUpDelegate.swift in Sources */,
+				957B27F62956CC8F0016B2D0 /* MainNavigationView.swift in Sources */,
 				95A98DA129251503000D78A9 /* SceneDelegate.swift in Sources */,
+				957B27F829587B0B0016B2D0 /* AccountSettingVC.swift in Sources */,
 				95793F412948977D002CF6D3 /* signUpService.swift in Sources */,
 				95A98DDB292A181C000D78A9 /* CustomPopUpViewController.swift in Sources */,
 			);

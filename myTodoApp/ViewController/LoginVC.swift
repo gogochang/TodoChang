@@ -84,7 +84,7 @@ class LoginVC: UIViewController {
                self.present(viewControllerToPresent, animated: true, completion: nil)
            }
        }
-    //MARK: - 로그인버튼
+    //MARK: - 로그인 버튼 클릭 이벤트
     @IBAction func clickedLoginBtn(sender: UIButton!) {
         print("LoginVC - clickedLoginBtn() called")
         LoadingService.showLoading()
@@ -105,6 +105,7 @@ class LoginVC: UIViewController {
         }
     }
     
+    //MARK: - 회원가입 버튼 클릭 이벤트
     @IBAction func clickedSignInBtn(sender: UIButton!) {
         print("LoginVC - clickedSignInBtn() called")
         
@@ -124,7 +125,11 @@ class LoginVC: UIViewController {
                 if let data = todoData as? loginDataModel {
                     print("chang succes \(data.user)")
                     let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-                    let MainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+                    //let MainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+                    let MainNav = storyboard.instantiateViewController(withIdentifier: "MainNavigationView") as! MainNavigationView
+                    // 메인뷰컨트롤에 로그인한 유저네임 넘기기
+                    let MainVC = MainNav.viewControllers.first as! ViewController
+                    
                     LoadingService.hideLoading()
                     // 메인뷰컨트롤에 로그인한 유저네임 넘기기
                     MainVC.username = data.user.username
@@ -132,7 +137,7 @@ class LoginVC: UIViewController {
                     
                     UserDefaults.standard.set(data.user.username, forKey: "USERNAME")
                     
-                    self.changeRootViewController(MainVC)
+                    self.changeRootViewController(MainNav)
                     self.view.makeToast("로그인", duration: 1.0)
                     
                 }
@@ -157,13 +162,14 @@ class LoginVC: UIViewController {
         guard let username = UserDefaults.standard.string(forKey: "USERNAME") else { return }
         
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let MainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
-        
+        //let MainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+        let MainNav = storyboard.instantiateViewController(withIdentifier: "MainNavigationView") as! MainNavigationView
         // 메인뷰컨트롤에 로그인한 유저네임 넘기기
+        let MainVC = MainNav.viewControllers.first as! ViewController
         MainVC.username = username
         MainVC.email = id
         
-        self.changeRootViewController(MainVC)
+        self.changeRootViewController(MainNav)
         self.view.makeToast("로그인", duration: 1.0)
         LoadingService.hideLoading()
         

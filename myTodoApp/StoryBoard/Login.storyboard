@@ -122,6 +122,7 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="rEt-eg-KRP" secondAttribute="bottom" id="qzl-2L-jtd"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="34d-81-6cS"/>
                     <connections>
                         <outlet property="idText" destination="2vh-y7-0gt" id="peC-kx-85d"/>
                         <outlet property="loginBtn" destination="jJT-8A-eMt" id="kKW-QS-YnZ"/>

@@ -20,6 +20,8 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     @IBOutlet var weekdayTitles: UICollectionView!
     @IBOutlet var addButton: UIButton!
     @IBOutlet var menuButton: UIButton!
+    @IBOutlet var searchButton: UIButton!
+    @IBOutlet var chatButton: UIButton!
     
     //달력 관련된 변수 선언부
     let nowDate = Date()
@@ -48,6 +50,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     var isResetArray: Bool = true
     var addingArray: [dataInfo] = []
     var dataInfoArray: [dataInfo] = []
+    var todayDataInfoArray: [dataInfo] = []
     
     var selectedDate: String = ""
     var dateOfDataInfo: [String] = []
@@ -74,7 +77,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     }()
     lazy var contentScrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = .orange
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
@@ -143,11 +146,11 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
          menuNavVC.menuWidth = 238
          menuNavVC.presentationStyle = .menuSlideIn
          SideMenuManager.default.rightMenuNavigationController = menuNavVC
-        SideMenuManager.default.rightMenuNavigationController = menuNavVC
+         SideMenuManager.default.rightMenuNavigationController = menuNavVC
          SideMenuManager.default.rightMenuNavigationController?.setNavigationBarHidden(true, animated: true)
      }
     
-    func sideMenuWillDisappear(menu: SideMenuNavigationController, animated: Bool) {
+    func sideMenuDidDisappear(menu: SideMenuNavigationController, animated: Bool) {
         self.disabledMainImageView.isHidden = true
     }
     
@@ -156,8 +159,11 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         print("ViewController - viewDidLoad() called")
         super.viewDidLoad()
         
-        //###################################################################################
+        disabledMainImageView.isHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         
+        print("viewcontroller chang username -> \(MainNavigationView.shared.username)")
+        //###################################################################################
         
         view.addSubview(contentScrollView)
         contentScrollView.topAnchor.constraint(equalTo: weekdayTitles.bottomAnchor).isActive = true
@@ -165,7 +171,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         contentScrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         contentScrollView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         let screenSize = UIScreen.main.bounds
-        contentScrollView.contentSize = CGSize(width: screenSize.width, height: 300)
+        contentScrollView.contentSize = CGSize(width: 300, height: 300)
         
         let width = screenSize.width
         let xPosition = self.view.frame.width * CGFloat(0)
@@ -194,13 +200,14 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         
         //###################################################################################
         
-        guard let tableview else { return }
-        guard let countLabel else { return }
-        guard let username = self.username else { return }
+//        guard let tableview else { return }
+//        guard let countLabel else { return }
+//        guard let username = self.username else { return }
         disabledMainImageView.isHidden = true
         self.overrideUserInterfaceStyle = .light
+        print("chang1")
         getDatainfo()
-        
+        print("chang2")
         tableview.layer.cornerRadius = 15
         countLabel.text = "총 \(dataInfoArray.count) 개의 메모가 있습니다."
         
@@ -227,7 +234,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         
     }
     
-    //MARK: - Add 버튼
+    //MARK: - Add 버튼 클릭 이벤트
     @IBAction func addButtonClicked(_ sender: UIButton) {
         print("ViewController - addButtonClicked() called")
         isClickedButtonName = "addButton"
@@ -268,7 +275,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         }
     }
 
-    //MARK: - 사이드메뉴 버튼
+    //MARK: - 사이드메뉴 버튼 클릭 이벤트
     @IBAction func menuButtonClicked(_ sender: UIButton) {
         print("ViewController - menuButtonClicked called")
         self.disabledMainImageView.isHidden = false
@@ -280,9 +287,49 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         
         sideMenuVC.name = self.username
         sideMenuVC.email = self.email
+        sideMenuVC.todayDatainfo = self.todayDataInfoArray
         
         let sideMenu = SideMenuManager.default.rightMenuNavigationController!
         self.present(sideMenu, animated: true)
+    }
+    
+//    //MARK: - 검색 버튼 클릭 이벤트
+    @IBAction func searchButtonClicked(_ sender: Any) {
+        print("ViewController - searchButtonClicked() called")
+        let storyboard = UIStoryboard(name: "Search", bundle: nil)
+//        let searchVC = storyboard.instantiateViewController(identifier: "SearchVC") as! SearchVC
+        print("chang1")
+        guard let pushVC = storyboard.instantiateViewController(withIdentifier: "SearchVC") as? SearchVC else { return }
+        print("chang2")
+//        let secondView = SearchVC()
+//        print("chang3")
+        //self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.pushViewController(pushVC, animated: true)
+//        self.navigationController?.pushViewController(secondView, animated: true)
+        
+        //self.navigationController?.pushViewController
+        
+        //let pushVC = self.storyboard?.instantiateViewController(withIdentifier: `where`)
+        //self.navigationController?.pushViewController(pushVC!, animated: true)
+        //let searchNav = UINavigationController(rootViewController: searchVC)
+        // 뷰컨트롤러가 보여지는 스타일
+//        searchVC.modalPresentationStyle = .overCurrentContext
+        // 뷰컨트롤러가 사라지는 스타일
+//        searchVC.modalTransitionStyle = .crossDissolve
+
+//        customPopUpVC.myPopUpDelegate = self
+
+        //현재 VC위에 customPopVC를 보여준다. animation 효과 , 해당액션은 nil
+//        self.present(searchNav, animated: true, completion: nil)
+//        self.present(searchVC, animated: true, completion: nil)
+        
+        
+
+    }
+    
+    //MARK: - 채팅 버튼 클릭 이벤트
+    @IBAction func chatButtonClicked(_ sender: Any) {
+        print("ViewController - chatButtonClicked() called")
     }
 }
 
@@ -353,13 +400,11 @@ class DateCVCell: UICollectionViewCell {
 
 
 //MARK: - 리스트 테이블뷰 Cell 개수, Cell 구현부
-extension ViewController: UITableViewDataSource,
-                          UITableViewDelegate,
-                          PopUpDelegate {
+extension ViewController: UITableViewDataSource, UITableViewDelegate, PopUpDelegate {
    
     // 테이블뷰의 갯수를 리턴해준다.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("ViewController - tableview() called count ")
+        print("ViewController - tableview() called count \(dataInfoArray.count)")
         return dataInfoArray.count
     }
     
@@ -370,14 +415,9 @@ extension ViewController: UITableViewDataSource,
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else {
             return UITableViewCell()
         }
-        
-        
         cell.labelTitle.text = dataInfoArray[indexPath.row].attributes.title
         cell.UISwitch.isOn = dataInfoArray[indexPath.row].attributes.isDone
         cell.writerText.text = dataInfoArray[indexPath.row].attributes.UserName
-        
-        print("chang cell name = \(cell.labelTitle.text)")
-        
         return cell
     }
     
@@ -443,12 +483,15 @@ extension ViewController: UITableViewDataSource,
         // 아이템 추가 버튼 클릭
         case "addButton":
             print("ViewController - onDelegateEditButtonClicked() - addButton called")
-            //print("chang username => \(self.username!)")
+            
             self.isResetArray = true
             // POST
-            postDatainfo(title: title, isDone: false, index: self.dataInfoArray.count, date: selectedDate, username: self.username!)
+            postDatainfo(title: title,
+                         isDone: false,
+                         index: self.dataInfoArray.count,
+                         date: selectedDate,
+                         username: self.username!)
 
-            //self.view.makeToast("아이템이 추가되었습니다", duration: 1.0)
         case .none:
             break
         case .some(_):
@@ -845,6 +888,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 if initCalendar {
                     if cal.isDateInToday(testDate!) && (crntDays[indexPath.row] != "") {
                         selectedDate = toastFormatter.string(from: testDate!)
+                        //print("chang today datainfoArray -> ",dataInfoArray)
+                        self.todayDataInfoArray = dataInfoArray
                         oldCell = cell
                  
                         cell.backgroundColor = .systemGray5
