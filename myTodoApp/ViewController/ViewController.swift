@@ -50,6 +50,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     var isResetArray: Bool = true
     var addingArray: [dataInfo] = []
     var dataInfoArray: [dataInfo] = []
+    var allDataInfoArray: [dataInfo] = []
     var todayDataInfoArray: [dataInfo] = []
     
     var selectedDate: String = ""
@@ -161,8 +162,6 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         
         disabledMainImageView.isHidden = true
         self.navigationController?.isNavigationBarHidden = true
-        
-        print("viewcontroller chang username -> \(MainNavigationView.shared.username)")
         //###################################################################################
         
         view.addSubview(contentScrollView)
@@ -205,9 +204,9 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
 //        guard let username = self.username else { return }
         disabledMainImageView.isHidden = true
         self.overrideUserInterfaceStyle = .light
-        print("chang1")
+
         getDatainfo()
-        print("chang2")
+        
         tableview.layer.cornerRadius = 15
         countLabel.text = "총 \(dataInfoArray.count) 개의 메모가 있습니다."
         
@@ -297,34 +296,9 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     @IBAction func searchButtonClicked(_ sender: Any) {
         print("ViewController - searchButtonClicked() called")
         let storyboard = UIStoryboard(name: "Search", bundle: nil)
-//        let searchVC = storyboard.instantiateViewController(identifier: "SearchVC") as! SearchVC
-        print("chang1")
         guard let pushVC = storyboard.instantiateViewController(withIdentifier: "SearchVC") as? SearchVC else { return }
-        print("chang2")
-//        let secondView = SearchVC()
-//        print("chang3")
-        //self.navigationController?.isNavigationBarHidden = false
+        pushVC.allDataInfoArray = self.allDataInfoArray
         self.navigationController?.pushViewController(pushVC, animated: true)
-//        self.navigationController?.pushViewController(secondView, animated: true)
-        
-        //self.navigationController?.pushViewController
-        
-        //let pushVC = self.storyboard?.instantiateViewController(withIdentifier: `where`)
-        //self.navigationController?.pushViewController(pushVC!, animated: true)
-        //let searchNav = UINavigationController(rootViewController: searchVC)
-        // 뷰컨트롤러가 보여지는 스타일
-//        searchVC.modalPresentationStyle = .overCurrentContext
-        // 뷰컨트롤러가 사라지는 스타일
-//        searchVC.modalTransitionStyle = .crossDissolve
-
-//        customPopUpVC.myPopUpDelegate = self
-
-        //현재 VC위에 customPopVC를 보여준다. animation 효과 , 해당액션은 nil
-//        self.present(searchNav, animated: true, completion: nil)
-//        self.present(searchVC, animated: true, completion: nil)
-        
-        
-
     }
     
     //MARK: - 채팅 버튼 클릭 이벤트
@@ -581,11 +555,12 @@ extension ViewController {
     //MARK: - Strapi GET
     private func getDatainfo() {
         print("ViewController - getDatainfo() called")
-        todoService.shared.getDataInfo { (response) in
+        todoService.shared.getDataInfo { [weak self] (response) in
             switch(response) {
             case .success(let todoData):
+                guard let self = self else { return }
                 if let data = todoData as? [dataInfo] {
-                    
+                    self.allDataInfoArray = data
                     var currentArray: [dataInfo] = []
                     
                     // 선택된 date의 배열을 저장하는 부분
@@ -616,12 +591,6 @@ extension ViewController {
                     
                     LoadingService.hideLoading()
                     
-//                    var testArray: [dataInfo] = self.resetDeletedIndex(ttempArray)
-//
-//                    self.dataInfoArray = self.resetIndex(testArray)
-//                    self.calendarCollectionView.reloadData()
-//                    self.tableview.reloadData()
-//
                 } else {
                     print("fail")
                 }
