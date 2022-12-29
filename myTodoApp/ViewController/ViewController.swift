@@ -16,7 +16,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     
     @IBOutlet var tableview: UITableView!
     @IBOutlet var countLabel: UILabel!
-    @IBOutlet var calendarTitle: UILabel!
+    @IBOutlet var calendarButtonTitle: UIButton!
     @IBOutlet var weekdayTitles: UICollectionView!
     @IBOutlet var addButton: UIButton!
     @IBOutlet var menuButton: UIButton!
@@ -250,7 +250,23 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         }
     }
     
-    
+    //MARK: - 달력 Title 클릭 시 현재 달력으로
+    @IBAction func calendarTitleClicked(_ sender: UIButton) {
+        print("ViewController - calendarTitleClicked")
+        
+        dateComponent.year = cal.component(.year, from: nowDate)
+        dateComponent.month = cal.component(.month, from: nowDate)
+        
+        self.prevCalendarCalculation()
+        self.calendarCalculation()
+        self.nextCalendarCalculation()
+
+        previousCalendarCollectionView.reloadData()
+        currentCalendarCollectionView.reloadData()
+        nextCalendarCollectionView.reloadData()
+        contentScrollView.setContentOffset(CGPoint(x: self.view.frame.width * CGFloat(1), y: 0), animated: false)
+        self.tableview.reloadData()
+    }
     //MARK: - Add 버튼 클릭 이벤트
     @IBAction func addButtonClicked(_ sender: UIButton) {
         print("ViewController - addButtonClicked() called")
@@ -656,7 +672,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
         weekdayAdding = 2 - firstWeekday
         
-        self.calendarTitle.text = dateFormatter.string(from: firstDayOfMonth!)
+        self.calendarButtonTitle.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        self.calendarButtonTitle.setTitle(dateFormatter.string(from: firstDayOfMonth!), for: .normal)
+        
         self.currentDate = dateFormatter.string(from: firstDayOfMonth!)
         self.crntDays.removeAll()
         for day in weekdayAdding...42 {

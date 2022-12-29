@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="NiE-tj-pEU">
-                                <rect key="frame" x="10" y="489" width="394" height="322"/>
+                                <rect key="frame" x="10" y="495" width="394" height="316"/>
                                 <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="54" id="PS4-hc-bDb" customClass="CustomCell" customModule="myTodoApp" customModuleProvider="target">
@@ -87,14 +87,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4GO-rb-dYx">
-                                <rect key="frame" x="144" y="97" width="126" height="24"/>
+                                <rect key="frame" x="107" y="97" width="200" height="30"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CalendarTitle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUD-SD-ksW">
-                                        <rect key="frame" x="0.0" y="0.0" width="126" height="24"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lT9-ku-ZQY">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="calendarTitleClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0HA-HU-Sou"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="via-S3-nxJ"/>
+                                </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Go5-KU-JHV">
                                 <rect key="frame" x="5" y="816" width="70" height="70"/>
@@ -114,7 +121,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="WeekDayCVCell" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0h1-Sd-VSA">
-                                <rect key="frame" x="10" y="129" width="394" height="50"/>
+                                <rect key="frame" x="10" y="135" width="394" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="0mS-pZ-Wfu"/>
                                 </constraints>
@@ -152,7 +159,7 @@
                                 </cells>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GOq-dk-ccm">
-                                <rect key="frame" x="10" y="179" width="394" height="300"/>
+                                <rect key="frame" x="10" y="185" width="394" height="300"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="MyS-2a-GL4"/>
@@ -175,7 +182,7 @@
                                 </cells>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tjN-Wm-yCE">
-                                <rect key="frame" x="312" y="99" width="82" height="20"/>
+                                <rect key="frame" x="312" y="102" width="82" height="20"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FmY-KP-MOS">
                                         <rect key="frame" x="0.0" y="0.0" width="22" height="20"/>
@@ -219,7 +226,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NiE-tj-pEU" secondAttribute="trailing" constant="10" id="0G9-ZX-HnQ"/>
-                            <constraint firstItem="tjN-Wm-yCE" firstAttribute="centerY" secondItem="RUD-SD-ksW" secondAttribute="centerY" id="1V8-sK-AGP"/>
                             <constraint firstItem="GOq-dk-ccm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="1vT-N1-Byp"/>
                             <constraint firstItem="Go5-KU-JHV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="3B6-0B-d7l"/>
                             <constraint firstItem="NiE-tj-pEU" firstAttribute="top" secondItem="GOq-dk-ccm" secondAttribute="bottom" constant="10" id="7Nh-Vw-Av2"/>
@@ -238,6 +244,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NiE-tj-pEU" secondAttribute="trailing" constant="10" id="pwv-lS-yqf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="GOq-dk-ccm" secondAttribute="trailing" constant="10" id="rLr-f7-6gw"/>
                             <constraint firstItem="wuu-kr-Mlu" firstAttribute="top" secondItem="NiE-tj-pEU" secondAttribute="bottom" constant="23" id="wiQ-jC-Exp"/>
+                            <constraint firstItem="tjN-Wm-yCE" firstAttribute="centerY" secondItem="4GO-rb-dYx" secondAttribute="centerY" id="xRR-lT-gqk"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="k0s-RU-EvA">
@@ -245,7 +252,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addButton" destination="Go5-KU-JHV" id="kvF-d5-NOe"/>
-                        <outlet property="calendarTitle" destination="RUD-SD-ksW" id="Gnu-WY-1ru"/>
+                        <outlet property="calendarButtonTitle" destination="lT9-ku-ZQY" id="Nfc-I5-4I1"/>
                         <outlet property="chatButton" destination="FmY-KP-MOS" id="k7u-YN-4Bj"/>
                         <outlet property="countLabel" destination="wuu-kr-Mlu" id="hEF-C6-JFP"/>
                         <outlet property="menuButton" destination="IaS-X2-bvV" id="YAV-38-b2M"/>
