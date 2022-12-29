@@ -232,11 +232,22 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        print("ViewController viewWillAppear() called")
-        print("ViewController viewWillAppear() called \(self.selectedDate)")
-        getDatainfo()
-        self.currentCalendarCollectionView.reloadData()
-        self.tableview.reloadData()
+        print("ViewController viewWillAppear() called")
+        let arr = selectedDate.split(separator: "-")
+        if arr.isEmpty == false {
+            getDatainfo()
+            dateComponent.month = Int(arr[1])
+            
+            self.prevCalendarCalculation()
+            self.calendarCalculation()
+            self.nextCalendarCalculation()
+            
+            previousCalendarCollectionView.reloadData()
+            currentCalendarCollectionView.reloadData()
+            nextCalendarCollectionView.reloadData()
+            contentScrollView.setContentOffset(CGPoint(x: self.view.frame.width * CGFloat(1), y: 0), animated: false)
+            self.tableview.reloadData()
+        }
     }
     
     
