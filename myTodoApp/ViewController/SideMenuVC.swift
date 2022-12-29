@@ -20,7 +20,7 @@ class SideMenuVC: UIViewController  {
     var todayDatainfo: [dataInfo]?
     
     override func viewDidLoad() {
-        print("SideMenuVC - viewDidLoad() called")
+        print("SideMenuVC - viewDidLoad() called \(todayDatainfo)")
         super.viewDidLoad()
         
         tableView.delegate = self

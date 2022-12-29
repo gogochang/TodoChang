@@ -740,7 +740,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         }
         
         // 리로드할때 오늘날짜로 자동 선택하도록 하는거 노노
-//        initCalendar = false
+        initCalendar = false
         
         cell.backgroundColor = .systemGray5
         oldCellDay = cell.monthdayLabel.text!
@@ -749,7 +749,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         dateComponent.day = Int(crntDays[indexPath.row])
         let toastDate = cal.date(from: dateComponent)
         selectedDate = toastFormatter.string(from: toastDate!)
-        print("chang222 click -> \(selectedDate)")
         self.view.makeToast(toastFormatter.string(from: toastDate!), duration: 1.0)
         getDatainfo()
 
@@ -832,7 +831,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                         self.todayDataInfoArray = dataInfoArray
                         oldCell = cell
                         cell.backgroundColor = .systemGray5
-                        initCalendar = false
+                        //initCalendar = false
                     } else {
                         cell.backgroundColor = .white
                     }
