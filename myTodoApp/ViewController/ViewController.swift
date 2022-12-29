@@ -213,9 +213,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         tableview.delegate = self
         tableview.dataSource = self
         tableview.dragInteractionEnabled = true
-        //        tableview.dragDelegate = self
-        //        tableview.dropDelegate = self
-        
+
         // calendar 지정
         weekdayTitles.delegate = self
         weekdayTitles.dataSource = self
@@ -232,6 +230,15 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         tableview.layer.borderWidth = 0.5
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+//        print("ViewController viewWillAppear() called")
+        print("ViewController viewWillAppear() called \(self.selectedDate)")
+        getDatainfo()
+        self.currentCalendarCollectionView.reloadData()
+        self.tableview.reloadData()
+    }
+    
     
     //MARK: - Add 버튼 클릭 이벤트
     @IBAction func addButtonClicked(_ sender: UIButton) {
@@ -484,71 +491,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, PopUpDeleg
     }
 }
 
-//MARK: - Strapi에서 가져운 순서를 index순서대로 재비치를 해준다
-//extension ViewController {
-//
-//    func resetIndex(_ array: [dataInfo]) -> [dataInfo] {
-//        print("ViewController - resetIndex() called")
-//        var changedArray: [dataInfo] = array
-//        for i in 0 ..< array.count {
-//            changedArray[array[i].attributes.index] = array[i]
-//        }
-//        return changedArray
-//    }
-//
-//    func resetDeletedIndex(_ array: [dataInfo]) -> [dataInfo] {
-//        print("ViewController - resetDeletedIndex() called")
-//        var changedArray: [dataInfo] = array
-//        var resultArray: [dataInfo] = []
-//        var sortedArray: [Int: dataInfo] = [:]
-//
-//        // i번째 인덱스값을 키로, i번째 datainfo를 값으로,
-//        for i in 0 ..< array.count {
-//            sortedArray.updateValue(changedArray[i], forKey: changedArray[i].attributes.index)
-//        }
-//
-//        // sortedArray의 키값으로 오름차순 정렬하여 실제로 사용하는 resultDic 딕셔너리에 저장
-//        let resultDic = sortedArray.sorted{ $0.0 < $1.0 }
-//
-//        //print("chang array.count => \(array.count), resultDic.count => \(resultDic.count)")
-//        // resultDic[i]번째의 값을 resultArray에 차례대로 넣는다.
-//        for i in 0 ..< array.count {
-//            resultArray.append(resultDic[i].value)
-//        }
-//
-//        // 오름차순으로 resultArray를 정렬을 했는데 이게, 0145 띄어질수도 있거든?
-//        // 그래서 어차피 오름차순으로 되어있으니 0부터 차례대로 1씩 다시 재 정렬을 해주는거야
-//        // 그리고 정렬이 완료 되면, strapi에다가 다시 인덱스 값을 넣어줄거야.
-//        for i in 0 ..< resultArray.count {
-//            resultArray[i].attributes.index = i
-//
-//            postService.shared.putDatainfo(id: resultArray[i].id,
-//                                           title: resultArray[i].attributes.title,
-//                                           isDone: resultArray[i].attributes.isDone,
-//                                           index: i,
-//                                           date: resultArray[i].attributes.date,
-//                                           completion: { (response) in
-//                switch(response) {
-//                case .success(let todoData):
-//                    //self.tableview.reloadData()
-//                    print("success - \(todoData)")
-//                case .requestErr(let message):
-//                    print("requestErr", message)
-//                case .pathErr:
-//                    print("pathErr")
-//                case .serverErr:
-//                    print("serverErr")
-//                case .networkFail:
-//                    print("networkFail")
-//                }
-//            })
-//        }
-//
-//        return resultArray
-//    }
-//
-//}
-
 //MARK: - Strapi Comunication ( GET, PUT, POST, DELETE )
 extension ViewController {
     
@@ -693,6 +635,7 @@ extension ViewController {
 //MARK: - 달력 컬렉션뷰 구현부
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
+    // 현재 달력
     private func calendarCalculation() {
         print("ViewController - calendarCalculation() called")
         
@@ -713,7 +656,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             }
         }
     }
-    
+    // 이전 달력
     private func prevCalendarCalculation() {
         print("ViewController - prevCalendarCalculation() called")
         dateComponent.day = 1
@@ -734,7 +677,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         }
         dateComponent.month = dateComponent.month! + 1
     }
-    
+    // 다음 달력
     private func nextCalendarCalculation() {
         print("ViewController - prevCalendarCalculation() called")
         dateComponent.day = 1
@@ -768,7 +711,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         }
         
         // 리로드할때 오늘날짜로 자동 선택하도록 하는거 노노
-        initCalendar = false
+//        initCalendar = false
         
         cell.backgroundColor = .systemGray5
         oldCellDay = cell.monthdayLabel.text!
@@ -777,7 +720,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         dateComponent.day = Int(crntDays[indexPath.row])
         let toastDate = cal.date(from: dateComponent)
         selectedDate = toastFormatter.string(from: toastDate!)
-        
+        print("chang222 click -> \(selectedDate)")
         self.view.makeToast(toastFormatter.string(from: toastDate!), duration: 1.0)
         getDatainfo()
 
@@ -822,7 +765,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 
             switch collectionView {
                 
-            case previousCalendarCollectionView: //cell.monthdayLabel.text = prevDays[indexPath.row]
+            case previousCalendarCollectionView:
                 cell.configureMonthday(to: prevDays[indexPath.row])
                 testComponent.year = dateComponent.year
                 testComponent.month = dateComponent.month! - 1
@@ -857,11 +800,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 if initCalendar {
                     if cal.isDateInToday(testDate!) && (crntDays[indexPath.row] != "") {
                         selectedDate = toastFormatter.string(from: testDate!)
-                        //print("chang today datainfoArray -> ",dataInfoArray)
                         self.todayDataInfoArray = dataInfoArray
                         oldCell = cell
-                 
                         cell.backgroundColor = .systemGray5
+                        initCalendar = false
                     } else {
                         cell.backgroundColor = .white
                     }
@@ -880,8 +822,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 if toastFormatter.string(from: testDate!) == selectedDate {
                     cell.backgroundColor = .systemGray5
                     oldCell = cell
+                } else {
+                    cell.backgroundColor = .white
                 }
-                
                 
             case nextCalendarCollectionView: //cell.monthdayLabel.text = nextDays[indexPath.row]
                 cell.configureMonthday(to: nextDays[indexPath.row])
@@ -987,43 +930,3 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         return CGSize(width: cellSize, height: cellSize)
     }
 }
-
-//MARK: - 테이블뷰 순서 바꾸기
-//extension ViewController: UITableViewDragDelegate, UITableViewDropDelegate {
-//    // Drag
-//    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-//        return [UIDragItem(itemProvider: NSItemProvider())]
-//    }
-//
-//    //Drop
-//    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-//        if session.localDragSession != nil {
-//            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-//        }
-//        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
-//    }
-//    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {}
-//
-//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        return true
-//    }
-//
-//    // 위치변화에 따라 index를 서로 교환해서 resetDeletedIndex에서 인덱스별로 순서를 재배치하도록 값을 변경함
-//    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//
-//        //let moveCell = self.dataInfoArray[sourceIndexPath.row]
-//        var tempDatainfo: dataInfo
-//
-//        tempDatainfo = self.dataInfoArray[sourceIndexPath.row]
-//
-//        self.dataInfoArray.remove(at: sourceIndexPath.row)
-//        self.dataInfoArray.insert(tempDatainfo, at: destinationIndexPath.row)
-//
-//        // 다시 0부터 순서대로 index 부여해준다.
-//        for i in 0 ..< self.dataInfoArray.count {
-//            self.dataInfoArray[i].attributes.index = i
-//        }
-//        self.dataInfoArray = resetDeletedIndex(self.dataInfoArray)
-//    }
-//}
-

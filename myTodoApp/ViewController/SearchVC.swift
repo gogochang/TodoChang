@@ -39,17 +39,15 @@ class SearchVC: UIViewController {
                 self.searchArray.removeAll()
                 for i in 0 ..< self.allDataInfoArray.count {
                     if self.allDataInfoArray[i].attributes.title.contains(receiveValue) {
-                        //self.myLabel.text = self.allDataInfoArray[i].attributes.title
-//                        print("self.allDataInfoArray[i].attributes.titls \(self.allDataInfoArray[i].attributes.title)")
                         self.searchArray.append(self.allDataInfoArray[i])
                     }
                 }
-                print("chang1 searchArray -> \(self.searchArray)")
                 self.tableView.reloadData()
             }.store(in: &mySubscription)
         
         tableView.delegate = self
         tableView.dataSource = self
+
     }
     
     private func initStyle() {
@@ -67,17 +65,19 @@ class SearchVC: UIViewController {
 }
 
 class SearchCell: UITableViewCell {
-    
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
 }
 
 //MARK: - TableView
 extension SearchVC: UITableViewDelegate, UITableViewDataSource {
+    
+    // TableView item 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchArray.count
     }
     
+    // TableView Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath) as? SearchCell else {
             return UITableViewCell() }
@@ -85,13 +85,16 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
         cell.dateLabel.text = searchArray[indexPath.row].attributes.date
         return cell
     }
-    
+     
+    // TableView Cell Clicked
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("SearchVC - tableView Clicked() called \(self.searchArray[indexPath.row].attributes.title)")
+        print("SearchVC - tableView Clicked() called")
+//        let PreVC =
+        guard let vc = self.navigationController?.viewControllers.first as? ViewController else { return }
+        vc.selectedDate = searchArray[indexPath.row].attributes.date
         
         self.navigationController?.popViewController(animated: true)
     }
-    
 }
 //MARK: - Combine을 이용한 NotificationCenter Publisher 구현부
 extension UISearchTextField {
