@@ -78,7 +78,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     }()
     lazy var contentScrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .orange
+        scrollView.backgroundColor = .white
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
