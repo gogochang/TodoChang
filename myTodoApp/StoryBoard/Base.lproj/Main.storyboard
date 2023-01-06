@@ -182,19 +182,10 @@
                                 </cells>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tjN-Wm-yCE">
-                                <rect key="frame" x="312" y="102" width="82" height="20"/>
+                                <rect key="frame" x="344" y="102" width="50" height="20"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FmY-KP-MOS">
-                                        <rect key="frame" x="0.0" y="0.0" width="22" height="20"/>
-                                        <color key="tintColor" systemColor="labelColor"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" image="message" catalog="system"/>
-                                        <connections>
-                                            <action selector="chatButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="n0B-hz-Vov"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ctB-aZ-hkz">
-                                        <rect key="frame" x="32" y="0.0" width="20" height="20"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="ZsG-t6-VFU"/>
                                             <constraint firstAttribute="height" constant="20" id="fJQ-mG-bJ9"/>
@@ -207,7 +198,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaS-X2-bvV">
-                                        <rect key="frame" x="62" y="0.0" width="20" height="20"/>
+                                        <rect key="frame" x="30" y="0.0" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="BzO-uE-Ylf"/>
                                             <constraint firstAttribute="width" constant="20" id="FzI-r3-YDl"/>
@@ -253,7 +244,6 @@
                     <connections>
                         <outlet property="addButton" destination="Go5-KU-JHV" id="kvF-d5-NOe"/>
                         <outlet property="calendarButtonTitle" destination="lT9-ku-ZQY" id="Nfc-I5-4I1"/>
-                        <outlet property="chatButton" destination="FmY-KP-MOS" id="k7u-YN-4Bj"/>
                         <outlet property="countLabel" destination="wuu-kr-Mlu" id="hEF-C6-JFP"/>
                         <outlet property="menuButton" destination="IaS-X2-bvV" id="YAV-38-b2M"/>
                         <outlet property="searchButton" destination="ctB-aZ-hkz" id="LcM-aE-0Vo"/>
@@ -288,7 +278,6 @@
     <resources>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="menu" width="32" height="32"/>
-        <image name="message" catalog="system" width="128" height="116"/>
         <image name="text.badge.plus" catalog="system" width="128" height="107"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

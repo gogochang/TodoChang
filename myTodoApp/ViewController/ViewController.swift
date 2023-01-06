@@ -21,7 +21,6 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     @IBOutlet var addButton: UIButton!
     @IBOutlet var menuButton: UIButton!
     @IBOutlet var searchButton: UIButton!
-    @IBOutlet var chatButton: UIButton!
     
     //달력 관련된 변수 선언부
     let nowDate = Date()
@@ -333,11 +332,6 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         guard let pushVC = storyboard.instantiateViewController(withIdentifier: "SearchVC") as? SearchVC else { return }
         pushVC.allDataInfoArray = self.allDataInfoArray
         self.navigationController?.pushViewController(pushVC, animated: true)
-    }
-    
-    //MARK: - 채팅 버튼 클릭 이벤트
-    @IBAction func chatButtonClicked(_ sender: Any) {
-        print("ViewController - chatButtonClicked() called")
     }
 }
 
