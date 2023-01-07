@@ -76,8 +76,8 @@
                                     <constraint firstAttribute="height" constant="1" id="BCW-Sf-42b"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오늘 할 일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GYq-L0-po6">
-                                <rect key="frame" x="20.000000000000004" y="153" width="59.333333333333343" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="나의 오늘 할 일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GYq-L0-po6">
+                                <rect key="frame" x="20" y="153" width="89" height="18"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -163,7 +163,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d2-CJ-uRk">
-                                <rect key="frame" x="20" y="69.333333333333329" width="20" height="20"/>
+                                <rect key="frame" x="20" y="69.333333333333329" width="20" height="20.000000000000014"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="PsM-Bk-Cev"/>
                                     <constraint firstAttribute="width" constant="20" id="QU9-4Z-lhf"/>

@@ -18,24 +18,34 @@ class SideMenuVC: UIViewController  {
     var name: String?
     var email: String?
     var todayDatainfo: [dataInfo]?
+    var myTodayDatainfo: [dataInfo] = []
     
     override func viewDidLoad() {
-        print("SideMenuVC - viewDidLoad() called \(todayDatainfo)")
+        print("SideMenuVC - viewDidLoad() called")
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
         
-        self.initStyle()
+        initStyle()
+        colanderTodayDatainfo()
         
         self.accountName.text = self.name
         self.accountEmail.text = self.email
-        
     }
     
     private func initStyle() {
         profileIcon.layer.cornerRadius = 25
         profileIcon.layer.borderWidth = 0.5
+    }
+    
+    private func colanderTodayDatainfo() {
+        guard let dataInfoArray = todayDatainfo else { return }
+        for i in 0 ..< dataInfoArray.count {
+            if (dataInfoArray[i].attributes.UserName == name) {
+                myTodayDatainfo.append(dataInfoArray[i])
+            }
+        }
     }
 }
 
@@ -46,12 +56,11 @@ class SideMenuCell: UITableViewCell {
 
 extension SideMenuVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if todayDatainfo!.count != 0 {
-            return todayDatainfo!.count
+        if myTodayDatainfo.count != 0 {
+            return myTodayDatainfo.count
         } else {
             return 1
         }
-        
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -60,11 +69,10 @@ extension SideMenuVC: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.sideMenuCellTitle.textColor = .black
         cell.sideMenuCellImageView.isHidden = true
-        
-        if todayDatainfo!.count != 0 {
-            cell.sideMenuCellTitle.text = todayDatainfo![indexPath.row].attributes.title
-            
-            if(todayDatainfo![indexPath.row].attributes.isDone) {
+    
+        if myTodayDatainfo.count != 0 {
+                cell.sideMenuCellTitle.text = myTodayDatainfo[indexPath.row].attributes.title
+            if(myTodayDatainfo[indexPath.row].attributes.isDone) {
                 cell.sideMenuCellImageView.isHidden = false
             }
         } else {
@@ -72,8 +80,5 @@ extension SideMenuVC: UITableViewDelegate, UITableViewDataSource {
             cell.sideMenuCellTitle.textColor = .systemGray2
         }
             return cell
-        
     }
-    
-    
 }

@@ -22,7 +22,7 @@ class LoginVC: UIViewController {
         super.viewDidLoad()
         
         print("LoginVC - viewDidload() called")
-        autoLogin()
+        //autoLogin()
         self.overrideUserInterfaceStyle = .light
         hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
