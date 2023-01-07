@@ -22,7 +22,7 @@ class LoginVC: UIViewController {
         super.viewDidLoad()
         
         print("LoginVC - viewDidload() called")
-        //autoLogin()
+        autoLogin()
         self.overrideUserInterfaceStyle = .light
         hideKeyboardWhenTappedAround()
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -30,8 +30,6 @@ class LoginVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         initButtonStyle()
-        
-       
     }
     
     private func initButtonStyle() {
@@ -83,7 +81,7 @@ class LoginVC: UIViewController {
                viewControllerToPresent.modalPresentationStyle = .overFullScreen
                self.present(viewControllerToPresent, animated: true, completion: nil)
            }
-       }
+    }
     //MARK: - 로그인 버튼 클릭 이벤트
     @IBAction func clickedLoginBtn(sender: UIButton!) {
         print("LoginVC - clickedLoginBtn() called")
@@ -162,7 +160,6 @@ class LoginVC: UIViewController {
         guard let username = UserDefaults.standard.string(forKey: "USERNAME") else { return }
         
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        //let MainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
         let MainNav = storyboard.instantiateViewController(withIdentifier: "MainNavigationView") as! MainNavigationView
         // 메인뷰컨트롤에 로그인한 유저네임 넘기기
         let MainVC = MainNav.viewControllers.first as! ViewController

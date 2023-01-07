@@ -163,7 +163,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d2-CJ-uRk">
-                                <rect key="frame" x="20" y="69.333333333333329" width="20" height="20.000000000000014"/>
+                                <rect key="frame" x="20" y="69.333333333333329" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="PsM-Bk-Cev"/>
                                     <constraint firstAttribute="width" constant="20" id="QU9-4Z-lhf"/>
@@ -202,6 +202,9 @@
                                                 <buttonConfiguration key="configuration" style="plain" title="프로필 설정">
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="0.0"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="profileSettingButtonClicked:" destination="TMI-9d-gBG" eventType="touchUpInside" id="61Y-Ks-Rga"/>
+                                                </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.forward" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vOk-fX-hEu">
                                                 <rect key="frame" x="333" y="2" width="20" height="16.333333333333332"/>
@@ -235,9 +238,12 @@
                                                 <rect key="frame" x="30" y="0.0" width="293" height="20"/>
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="아이디 변경">
+                                                <buttonConfiguration key="configuration" style="plain" title="이메일 변경">
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="0.0"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="emailChangeButtonClicked:" destination="TMI-9d-gBG" eventType="touchUpInside" id="bcT-lA-Rzd"/>
+                                                </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.forward" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="6Y4-af-dzA">
                                                 <rect key="frame" x="333" y="2" width="20" height="16.333333333333332"/>
@@ -274,6 +280,9 @@
                                                 <buttonConfiguration key="configuration" style="plain" title="비밀번호 변경">
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="0.0"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="passwordChangeButtonClicked:" destination="TMI-9d-gBG" eventType="touchUpInside" id="Mmu-ab-A8k"/>
+                                                </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.forward" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="nBx-5T-0Dg">
                                                 <rect key="frame" x="333" y="2" width="20" height="16.333333333333332"/>
@@ -309,6 +318,9 @@
                                                 <buttonConfiguration key="configuration" style="plain" title="로그아웃">
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="0.0"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="logOutButtonClicked:" destination="TMI-9d-gBG" eventType="touchUpInside" id="erj-Kb-Lda"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -337,6 +349,9 @@
                                                 <buttonConfiguration key="configuration" style="plain" title="계정삭제">
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="0.0"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="accountDeleteButtonClicked:" destination="TMI-9d-gBG" eventType="touchUpInside" id="Xap-tB-2TZ"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -386,7 +401,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="wpg-hM-BS4"/>
                     <connections>
+                        <outlet property="accountDeleteButton" destination="tzX-UD-LUE" id="djq-Hz-ZTj"/>
                         <outlet property="backButton" destination="3d2-CJ-uRk" id="dfX-od-iwo"/>
+                        <outlet property="emailChangeButton" destination="Pws-Za-QzA" id="ObZ-b5-tIB"/>
+                        <outlet property="logOutButton" destination="miT-OY-pIf" id="PhQ-vw-HYo"/>
+                        <outlet property="passwordChangeButton" destination="qqn-gI-TcI" id="AyI-Zu-kZW"/>
+                        <outlet property="profileSettingButton" destination="aSG-1X-6Z2" id="0u2-UL-CGn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yKg-9D-giK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
