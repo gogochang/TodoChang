@@ -235,6 +235,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         let arr = selectedDate.split(separator: "-")
         if arr.isEmpty == false {
             getDatainfo()
+            dateComponent.year = Int(arr[0])
             dateComponent.month = Int(arr[1])
             
             self.prevCalendarCalculation()

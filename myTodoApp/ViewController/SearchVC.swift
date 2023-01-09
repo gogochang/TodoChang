@@ -89,10 +89,9 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     // TableView Cell Clicked
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("SearchVC - tableView Clicked() called")
-//        let PreVC =
+        
         guard let vc = self.navigationController?.viewControllers.first as? ViewController else { return }
         vc.selectedDate = searchArray[indexPath.row].attributes.date
-        
         self.navigationController?.popViewController(animated: true)
     }
 }

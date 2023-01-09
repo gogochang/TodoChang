@@ -42,6 +42,7 @@ class AccountSettingVC: UIViewController {
         //TODO: password 변경화면으로 이동
     }
     
+    //로그아웃 클릭 함수
     @IBAction func logOutButtonClicked(_ sender: UIButton) {
         print("AccountSettingVC - logOutButtonClicked() called")
         
