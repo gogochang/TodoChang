@@ -92,10 +92,7 @@ class LoginVC: UIViewController {
             guard let id = idText.text else { return }
             guard let password = passwordText.text else { return }
             
-            
-            
             checkLoginData(id: id, password: password)
-            
             
         } else {
             LoadingService.hideLoading()
@@ -133,8 +130,9 @@ class LoginVC: UIViewController {
                     MainVC.email = data.user.email
                     MainVC.idNum = data.user.id
                     
-                    UserDefaults.standard.set(data.user.username, forKey: "ID")
-                    UserDefaults.standard.set(data.user.email, forKey: "PASSWORD")
+                    UserDefaults.standard.set(password, forKey:"PASSWORD")
+                    UserDefaults.standard.set(data.user.email, forKey: "ID")
+                    UserDefaults.standard.set(data.user.username, forKey: "USERNAME")
                     UserDefaults.standard.set(data.user.id, forKey: "IDNUMBER")
                     
                     self.changeRootViewController(MainNav)
@@ -166,6 +164,7 @@ class LoginVC: UIViewController {
         let MainNav = storyboard.instantiateViewController(withIdentifier: "MainNavigationView") as! MainNavigationView
         // 메인뷰컨트롤에 로그인한 유저네임 넘기기
         let MainVC = MainNav.viewControllers.first as! ViewController
+
         MainVC.username = username
         MainVC.email = id
         MainVC.idNum = idNum

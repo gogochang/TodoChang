@@ -11,9 +11,9 @@ import UIKit
 class AccountSettingVC: UIViewController {
     
     @IBOutlet var backButton: UIButton!
-    @IBOutlet var profileSettingButton: UIButton!
-    @IBOutlet var emailChangeButton: UIButton!
-    @IBOutlet var passwordChangeButton: UIButton!
+//    @IBOutlet var profileSettingButton: UIButton!
+//    @IBOutlet var emailChangeButton: UIButton!
+//    @IBOutlet var passwordChangeButton: UIButton!
     @IBOutlet var logOutButton: UIButton!
     @IBOutlet var accountDeleteButton: UIButton!
     
@@ -29,20 +29,20 @@ class AccountSettingVC: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func profileSettingButtonClicked(_ sender: UIButton) {
-        print("AccountSettingVC - profileSettingButtonClicked() called")
-        //TODO: profile 세팅화면으로 이동
-    }
-    
-    @IBAction func emailChangeButtonClicked(_ sender: UIButton) {
-        print("AccountSettingVC - emailChangeButtonClicked() called")
-        //TODO: email 변경화면으로 이동
-    }
-    
-    @IBAction func passwordChangeButtonClicked(_ sender: UIButton) {
-        print("AccountSettingVC - passwordChangedButtonClicked() called")
-        //TODO: password 변경화면으로 이동
-    }
+//    @IBAction func profileSettingButtonClicked(_ sender: UIButton) {
+//        print("AccountSettingVC - profileSettingButtonClicked() called")
+//        //TODO: profile 세팅화면으로 이동
+//    }
+//
+//    @IBAction func emailChangeButtonClicked(_ sender: UIButton) {
+//        print("AccountSettingVC - emailChangeButtonClicked() called")
+//        //TODO: email 변경화면으로 이동
+//    }
+//
+//    @IBAction func passwordChangeButtonClicked(_ sender: UIButton) {
+//        print("AccountSettingVC - passwordChangedButtonClicked() called")
+//        //TODO: password 변경화면으로 이동
+//    }
     
     //MARK: - 로그아웃 클릭 함수
     @IBAction func logOutButtonClicked(_ sender: UIButton) {
