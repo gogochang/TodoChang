@@ -257,7 +257,6 @@ extension SignUpVC {
                         print("clicked end Edit")
                     }
                     
-                    print("Chang -> \(self.isPasses)")
                     if self.isPasses["username"] == true &&
                        self.isPasses["email"] == true &&
                        self.isPasses["password"] == true &&
@@ -289,7 +288,6 @@ extension SignUpVC {
         loginService.shared.registerUser(username: username, email: email, password: password, completion: {response in
             switch(response) {
             case .success(let todoData):
-                print("chang 0> success - \(todoData)")
                 self.view.makeToast("회원가입 완료!!", duration: 1.0)
                 LoadingService.hideLoading()
                 self.animationView.play(completion: { (result ) in

@@ -1,58 +1,47 @@
 //
-//  signUpService.swift
+//  accountService.swift
 //  myTodoApp
 //
-//  Created by 김창규 on 2022/12/13.
+//  Created by 김창규 on 2023/01/09.
 //
 
 import Foundation
 import Alamofire
 
-struct signUpService {
+struct accountService {
+    static let shared = accountService()
     
-    static let shared = signUpService()
-    
-    //MARK: - Get Users
-    func getUsersData(completion: @escaping (NetworkResult<Any>) -> Void) {
-        print("signUpService - getUsersData() called")
-        let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/users"
-        let header : HTTPHeaders = ["Content-Type": "application/json"]
-        
+    func deleteUsers(id: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
+        print("accountService - deleteUser() called")
+        let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/users/" + String(id)
         let dataRequest = AF.request(url,
-                                     method: .get,
-                                     encoding: JSONEncoding.default,
-                                     headers: header)
-    
-        dataRequest.responseData { dataResponse in
-            dump(dataResponse)
+                                     method: .delete,
+                                     parameters: nil,
+                                     headers: nil)
+        dataRequest.responseData{ dataResponse in
+            //dump(dataResponse)
             switch dataResponse.result {
             case .success:
                 guard let statusCode = dataResponse.response?.statusCode else { return }
                 guard let value = dataResponse.value else { return }
                 
                 let networkResult = self.judgeStatus(by: statusCode, value)
-                
                 completion(networkResult)
-
             case .failure: completion(.pathErr)
             }
         }
     }
-        
+    
     //MARK: - Status Code
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode {
         case 200:
-            //print("statuscode 200")
             return isValidData(data: data)
         case 400:
-            //print("statuscode 400")
             return .pathErr
         case 500:
-            //print("statuscode 500")
             return .serverErr
         default:
-            //print("networkFail")
             return .networkFail
         }
     }
@@ -62,8 +51,7 @@ struct signUpService {
         print("signUpService - isValidData() called")
         let decoder = JSONDecoder()
         
-        guard let decodeData = try? decoder.decode([usersDataModel].self, from: data) else { return .pathErr }
+        guard let decodeData = try? decoder.decode(usersDataModel.self, from: data) else { return .pathErr }
         return .success(decodeData)
     }
-    
 }

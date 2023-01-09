@@ -17,6 +17,8 @@ class AccountSettingVC: UIViewController {
     @IBOutlet var logOutButton: UIButton!
     @IBOutlet var accountDeleteButton: UIButton!
     
+    var idNum: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("AccountSettingVC - viewDidLoad() called")
@@ -42,7 +44,7 @@ class AccountSettingVC: UIViewController {
         //TODO: password 변경화면으로 이동
     }
     
-    //로그아웃 클릭 함수
+    //MARK: - 로그아웃 클릭 함수
     @IBAction func logOutButtonClicked(_ sender: UIButton) {
         print("AccountSettingVC - logOutButtonClicked() called")
         
@@ -55,9 +57,38 @@ class AccountSettingVC: UIViewController {
         changeRootViewController(LoginVC)
     }
     
+    //MARK: - 계정 삭제 버튼
     @IBAction func accountDeleteButtonClicked(_ sender: UIButton) {
         print("AccountSettingVC - accountDeleteButtonClicked() called")
+        guard let id = idNum else {
+            print("ID Number is nil")
+            return }
+        
         //TODO: 계정 삭제
+        accountService.shared.deleteUsers(id: id, completion: { [weak self] (response) in
+            switch(response) {
+            case .success:
+                print("success delete user")
+                
+                guard let self = self else { return }
+                let storyboard = UIStoryboard.init(name: "Login", bundle: nil)
+                let LoginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC")
+                
+                UserDefaults.standard.removeObject(forKey: "ID")
+                UserDefaults.standard.removeObject(forKey: "PASSWORD")
+                
+                self.changeRootViewController(LoginVC)
+                
+            case .requestErr(let message):
+                print("requestErr", message)
+            case .pathErr:
+                print("pathErr put")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        })
     }
     
     // Rootview 변경함수 코드정리필요

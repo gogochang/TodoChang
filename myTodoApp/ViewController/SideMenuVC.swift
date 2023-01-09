@@ -14,9 +14,11 @@ class SideMenuVC: UIViewController  {
     @IBOutlet var accountName: UILabel!
     @IBOutlet var accountEmail: UILabel!
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var settings: UIButton!
     
     var name: String?
     var email: String?
+    var idNum: Int?
     var todayDatainfo: [dataInfo]?
     var myTodayDatainfo: [dataInfo] = []
     
@@ -47,6 +49,17 @@ class SideMenuVC: UIViewController  {
             }
         }
     }
+    
+    @IBAction func settingsButtonClicked(_ sender: UIButton) {
+        print("SideMenuVC - settingsButtonClicked() called")
+        let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "AccountSettingVC") as! AccountSettingVC
+
+        settingsVC.idNum = idNum
+        
+        self.navigationController?.pushViewController(settingsVC, animated: true)
+        
+    }
+    
 }
 
 class SideMenuCell: UITableViewCell {

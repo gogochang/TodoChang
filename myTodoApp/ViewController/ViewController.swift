@@ -60,6 +60,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
     var username: String?
     var email: String?
     var password: String?
+    var idNum: Int?
     
     var currentDate: String?
     
@@ -310,7 +311,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
 
     //MARK: - 사이드메뉴 버튼 클릭 이벤트
     @IBAction func menuButtonClicked(_ sender: UIButton) {
-        print("ViewController - menuButtonClicked called")
+        print("ViewController - menuButtonClicked called \(self.idNum)")
         self.disabledMainImageView.isHidden = false
         let storyboard = UIStoryboard(name: "SideMenu", bundle: nil)
         let sideMenuVC = storyboard.instantiateViewController(identifier: "SideMenuVC") as! SideMenuVC
@@ -320,6 +321,7 @@ class ViewController: UIViewController, SideMenuNavigationControllerDelegate {
         
         sideMenuVC.name = self.username
         sideMenuVC.email = self.email
+        sideMenuVC.idNum = self.idNum
         sideMenuVC.todayDatainfo = self.todayDataInfoArray
         
         let sideMenu = SideMenuManager.default.rightMenuNavigationController!
@@ -470,9 +472,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, PopUpDeleg
             // currentIndexPath에 저장된 클릭된 테이블뷰의 인덱스값을 가져와서
             // tempArray에 대응하는 title과 content에 대입.
             dataInfoArray[self.currentIndexPath].attributes.title = title
-            
-            // 테이블뷰 아이템 배열을 리셋하겠다. ( didSet의 내용을 실행하겠다. )
-            //self.isResetArray = true
             
             // PUT
             putDatainfo(id: dataInfoArray[self.currentIndexPath].id,

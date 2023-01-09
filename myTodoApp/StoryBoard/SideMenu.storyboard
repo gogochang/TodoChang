@@ -47,7 +47,7 @@
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="setting"/>
                                                 <connections>
-                                                    <segue destination="TMI-9d-gBG" kind="show" id="kME-lZ-INA"/>
+                                                    <action selector="settingsButtonClicked:" destination="2j9-cO-bb7" eventType="touchUpInside" id="jnF-ZO-3tK"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -147,6 +147,7 @@
                         <outlet property="accountEmail" destination="nK9-Gg-neh" id="k25-PP-lbI"/>
                         <outlet property="accountName" destination="9xH-UU-ciI" id="uwj-F8-6dW"/>
                         <outlet property="profileIcon" destination="ZhG-FZ-fBX" id="pno-Ur-Yep"/>
+                        <outlet property="settings" destination="p2f-1h-Glz" id="vA8-Po-vrr"/>
                         <outlet property="tableView" destination="kap-dm-bo4" id="m4x-Zg-bjX"/>
                     </connections>
                 </viewController>
@@ -157,9 +158,9 @@
         <!--Account SettingVC-->
         <scene sceneID="nfw-X6-tk2">
             <objects>
-                <viewController id="TMI-9d-gBG" customClass="AccountSettingVC" customModule="myTodoApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AccountSettingVC" id="TMI-9d-gBG" customClass="AccountSettingVC" customModule="myTodoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IkE-Ty-J1N">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d2-CJ-uRk">

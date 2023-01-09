@@ -17,6 +17,7 @@ class LoginVC: UIViewController {
     @IBOutlet var loginBtn: UIButton!
     @IBOutlet var signInBtn: UIButton!
 
+    var testnumber: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,8 +95,7 @@ class LoginVC: UIViewController {
             
             
             checkLoginData(id: id, password: password)
-            UserDefaults.standard.set(id, forKey: "ID")
-            UserDefaults.standard.set(password, forKey: "PASSWORD")
+            
             
         } else {
             LoadingService.hideLoading()
@@ -121,7 +121,6 @@ class LoginVC: UIViewController {
             switch(response) {
             case .success(let todoData):
                 if let data = todoData as? loginDataModel {
-                    print("chang succes \(data.user)")
                     let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
                     //let MainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
                     let MainNav = storyboard.instantiateViewController(withIdentifier: "MainNavigationView") as! MainNavigationView
@@ -132,8 +131,11 @@ class LoginVC: UIViewController {
                     // 메인뷰컨트롤에 로그인한 유저네임 넘기기
                     MainVC.username = data.user.username
                     MainVC.email = data.user.email
+                    MainVC.idNum = data.user.id
                     
-                    UserDefaults.standard.set(data.user.username, forKey: "USERNAME")
+                    UserDefaults.standard.set(data.user.username, forKey: "ID")
+                    UserDefaults.standard.set(data.user.email, forKey: "PASSWORD")
+                    UserDefaults.standard.set(data.user.id, forKey: "IDNUMBER")
                     
                     self.changeRootViewController(MainNav)
                     self.view.makeToast("로그인", duration: 1.0)
@@ -158,6 +160,7 @@ class LoginVC: UIViewController {
         guard let id = UserDefaults.standard.string(forKey: "ID") else {return}
         guard let password = UserDefaults.standard.string(forKey: "PASSWORD") else { return }
         guard let username = UserDefaults.standard.string(forKey: "USERNAME") else { return }
+        guard let idNum = UserDefaults.standard.integer(forKey: "IDNUMBER") as Int? else { return }
         
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let MainNav = storyboard.instantiateViewController(withIdentifier: "MainNavigationView") as! MainNavigationView
@@ -165,6 +168,7 @@ class LoginVC: UIViewController {
         let MainVC = MainNav.viewControllers.first as! ViewController
         MainVC.username = username
         MainVC.email = id
+        MainVC.idNum = idNum
         
         self.changeRootViewController(MainNav)
         self.view.makeToast("로그인", duration: 1.0)
