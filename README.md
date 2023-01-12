@@ -4,6 +4,7 @@
 * 할 일을 생성, 수정, 삭제, 검색할 수 있습니다.
 * 사이드 메뉴를 통해 나의 정보를 확인할 수 있습니다.
 * 앱스토어 링크 : https://apps.apple.com/kr/app/%ED%88%AC%EB%91%90%EC%B0%BD/id1658165242
+* 노션 링크: https://inexpensive-octagon-6dd.notion.site/892bb558c8c44be3a3956397e156f234
 ## 주요기능
 * 달력
   * UICollectionView를 이용하여 구현
