@@ -13,7 +13,7 @@ struct accountService {
     
     func deleteUsers(id: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         print("accountService - deleteUser() called")
-        let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/users/" + String(id)
+        let url = "https://shark-app-kofkm.ondigitalocean.app/api/users/" + String(id)
         let dataRequest = AF.request(url,
                                      method: .delete,
                                      parameters: nil,

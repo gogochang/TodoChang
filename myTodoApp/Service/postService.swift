@@ -23,7 +23,7 @@ struct postService {
     
     //MARK: - POST
     func postDatainfo(title: String, isDone: Bool, index: Int, date: String, username: String, completion: @escaping (NetworkResult<Any>) -> Void) {
-        let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/todos"
+        let url = "https://shark-app-kofkm.ondigitalocean.app/api/todos"
         
         let header: HTTPHeaders = ["Content-Type": "application/json"]
         let dataRequest = AF.request(url,
@@ -55,7 +55,7 @@ struct postService {
     func putDatainfo(id: Int, title: String, isDone: Bool, index: Int, date: String, username: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         print("postService - putDatainfo() called")
         
-        let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/todos/" + String(id)
+        let url = "https://shark-app-kofkm.ondigitalocean.app/api/todos/" + String(id)
         let header: HTTPHeaders = ["Content-Type": "application/json"]
         
         let dataRequest = AF.request(url,
@@ -84,7 +84,7 @@ struct postService {
     func deleteDatainfo(id: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         print("todoService - deleteDatainfo() called id = \(String(id))")
         
-        let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/todos/" + String(id)
+        let url = "https://shark-app-kofkm.ondigitalocean.app/api/todos/" + String(id)
         
         let dataRequest = AF.request(url,
                                      method: .delete,

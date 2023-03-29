@@ -22,7 +22,7 @@ struct loginService {
     func postLoginData(id: String, password: String, completion: @escaping (NetworkResult<Any>) -> Void) {
         print("loginService - postLoginData() called")
         
-        let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/auth/local"
+        let url = "https://shark-app-kofkm.ondigitalocean.app/api/auth/local"
         let header: HTTPHeaders = ["Content-Type": "application/json"]
         
         let dataRequest = AF.request(url,
@@ -53,7 +53,7 @@ struct loginService {
     }
     func registerUser(username: String, email: String, password: String, completion: @escaping (NetworkResult<Any>) -> Void){
         print("loginService - registerUser() called")
-        let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/auth/local/register"
+        let url = "https://shark-app-kofkm.ondigitalocean.app/api/auth/local/register"
         let header: HTTPHeaders = ["Content-Type": "application/json"]
         
         let dataRequest = AF.request(url,

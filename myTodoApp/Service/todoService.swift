@@ -16,7 +16,7 @@ struct todoService {
     //MARK: - GET
     func getDataInfo(completion: @escaping (NetworkResult<Any>) -> Void) {
         
-        let URL = "https://clownfish-app-kr7st.ondigitalocean.app/api/todos"
+        let URL = "https://shark-app-kofkm.ondigitalocean.app/api/todos"
         let header : HTTPHeaders = ["Content-Type": "application/json"]
         
         // HTTP 통신 요청부분

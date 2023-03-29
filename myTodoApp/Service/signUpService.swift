@@ -15,7 +15,7 @@ struct signUpService {
     //MARK: - Get Users
     func getUsersData(completion: @escaping (NetworkResult<Any>) -> Void) {
         print("signUpService - getUsersData() called")
-        let url = "https://clownfish-app-kr7st.ondigitalocean.app/api/users"
+        let url = "https://shark-app-kofkm.ondigitalocean.app/api/users"
         let header : HTTPHeaders = ["Content-Type": "application/json"]
         
         let dataRequest = AF.request(url,
@@ -43,16 +43,16 @@ struct signUpService {
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode {
         case 200:
-            //print("statuscode 200")
+            print("statuscode 200")
             return isValidData(data: data)
         case 400:
-            //print("statuscode 400")
+            print("statuscode 400")
             return .pathErr
         case 500:
-            //print("statuscode 500")
+            print("statuscode 500")
             return .serverErr
         default:
-            //print("networkFail")
+            print("networkFail")
             return .networkFail
         }
     }
