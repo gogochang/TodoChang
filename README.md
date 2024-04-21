@@ -2,7 +2,6 @@
 ![Group 1](https://user-images.githubusercontent.com/54075367/211333924-4eb16d8f-5a6e-4037-ab7f-1de03ac4a626.png)
 
 # 🔗 Link
-* 앱스토어 링크 : https://apps.apple.com/kr/app/%ED%88%AC%EB%91%90%EC%B0%BD/id1658165242
 * 노션 링크: https://inexpensive-octagon-6dd.notion.site/892bb558c8c44be3a3956397e156f234
 
 # 📝 프로젝트 소개
