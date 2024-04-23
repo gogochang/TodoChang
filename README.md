@@ -2,7 +2,7 @@
 ![Group 1](https://user-images.githubusercontent.com/54075367/211333924-4eb16d8f-5a6e-4037-ab7f-1de03ac4a626.png)
 
 # 🔗 Link
-* 노션 링크: https://inexpensive-octagon-6dd.notion.site/892bb558c8c44be3a3956397e156f234
+* 노션 링크: https://inexpensive-octagon-6dd.notion.site/892bb558c8c44be3a3956397e156f234?pvs=4
 
 # 📝 프로젝트 소개
 - 할 일을 다른 사람과 공유할 수 있습니다.
